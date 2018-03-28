@@ -1,4 +1,4 @@
-﻿@model App.ViewModels.UserViewModel
+﻿@model UserViewModel
 
 <h2>Create new user</h2>
 @using (Html.BeginForm("Create", "User"))
@@ -10,6 +10,7 @@
     <input asp-for="Infix" name="infix" />
     <input asp-for="Lastname" name="lastname" />
     <input asp-for="Telnr" name="telnr" />
+    <!--<input asp-for="RoleID" name="roleID" />-->
 
 
     <input type="submit" value="Create Account" />

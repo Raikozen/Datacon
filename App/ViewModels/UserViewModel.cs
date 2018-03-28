@@ -31,7 +31,11 @@ namespace App.ViewModels
 		public string Infix { get; set; }
 
         [Required(ErrorMessage ="Telephone number is required.")]
-		[Display(Name = "TelNr", Prompt = "Tel nr")]
+		[Display(Name = "TelNr", Prompt = "Telephone number")]
 		public string Telnr { get; set; }
+
+        [Required(ErrorMessage ="Assigning a roleID is required.")]
+        [Display(Name ="RoleID", Prompt ="RoleID")]
+        public int RoleID { get; set; }
     }
 }
