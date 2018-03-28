@@ -8,7 +8,7 @@ using App.Models;
 
 namespace App.Repositorys
 {
-    class UserRepository
+    public class UserRepository
     {
         public static User loggedinUser = null;
         private IUserContext _Context;
@@ -46,9 +46,14 @@ namespace App.Repositorys
             _Context.UpdateUserRole(user, role);
         }
 
-        public void Register(string email, string password, string firstName, string infix, string lastName, string telnr, int roleID)
+        public void RegisterwInfix(string email, string password, string firstName, string infix, string lastName, string telnr)
         {
-            _Context.Register(email, password, firstName, infix, lastName, telnr, roleID);
+            _Context.RegisterInfix(email, password, firstName, infix, lastName, telnr);
+        }
+
+        public void RegisterNoInfix(string email, string password, string firstName, string lastName, string telnr)
+        {
+            _Context.RegisterNoInfix(email, password, firstName, lastName, telnr);
         }
     }
 }

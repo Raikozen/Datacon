@@ -1,38 +1,20 @@
-﻿@model App.ViewModels.UserViewModel
+﻿@model UserViewModel
 
 <h2>Create new user</h2>
-<!--
-<form method="post" action="User/Create" name="CreateUser">
-    Email: <input type="text" name="email" />
-    <br />
-    Password: <input type="password" name="password" />
-    <br />
-    First name: <input type="text" name="firstname" />
-    <br />
-    Infix: <input type="text" name="infix" />
-    <br />
-    Last name: <input type="text" name="lastname" />
-    <br />
-    Telephone Number: <input type="text" name="telnr" />
-    <br />
-    Role: <input type="text" name="role" />
-    <br />
-    <input type="submit" value="Create User" name="submit" />
-</form>
-    -->
-
 @using (Html.BeginForm("Create", "User"))
 {
-    @Html.TextBoxFor(m => m.Email)
-    @Html.PasswordFor(m => m.Password)
-    @Html.TextBoxFor(m => m.Firstname)
-    @Html.TextBoxFor(m => m.Infix)
-    @Html.TextBoxFor(m => m.Lastname)
-    @Html.TextBoxFor(m => m.Telnr)
-    @Html.TextBoxFor(m => m.Role)
+
+    <input asp-for="Email" name="email" />
+    <input asp-for="Password" type="password" name="password" />
+    <input asp-for="Firstname" name="firstname" />
+    <input asp-for="Infix" name="infix" />
+    <input asp-for="Lastname" name="lastname" />
+    <input asp-for="Telnr" name="telnr" />
+    <!--<input asp-for="RoleID" name="roleID" />-->
+
 
     <input type="submit" value="Create Account" />
-
-
-}
     
+    <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
+    <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
+}

@@ -12,23 +12,30 @@ namespace App.ViewModels
         //Email
         [Required(ErrorMessage ="Email is required.")]
         [EmailAddress(ErrorMessage ="Email needs to be a valid Email Adress")]
-        public string Email { get; }
+		[Display(Name = "Email", Prompt = "Email address")]
+        public string Email { get; set; }
         //Password
         [Required(ErrorMessage ="Password is required.")]
-        public string Password { get; }
+		[Display(Name = "Password", Prompt = "password")]
+		public string Password { get; set; }
         //First Name
         [Required(ErrorMessage ="First name is required.")]
-        public string Firstname { get; }
+		[Display(Name = "FirstName", Prompt = "First name")]
+		public string Firstname { get; set; }
 
         [Required(ErrorMessage ="Last name is required.")]
-        public string Lastname { get; }
+		[Display(Name = "LastName", Prompt = "Last name")]
+		public string Lastname { get; set; }
 
-        public string Infix { get; }
+		[Display(Name = "infix", Prompt = "Infix")]
+		public string Infix { get; set; }
 
         [Required(ErrorMessage ="Telephone number is required.")]
-        public string Telnr { get; }
+		[Display(Name = "TelNr", Prompt = "Telephone number")]
+		public string Telnr { get; set; }
 
-        [Required(ErrorMessage ="Assigning a role is required.")]
-        public Role Role { get; }
+        [Required(ErrorMessage ="Assigning a roleID is required.")]
+        [Display(Name ="RoleID", Prompt ="RoleID")]
+        public int RoleID { get; set; }
     }
 }
