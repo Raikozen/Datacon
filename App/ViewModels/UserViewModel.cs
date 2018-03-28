@@ -9,11 +9,23 @@ namespace App.ViewModels
 {
     public class UserViewModel
     {
-        public string Emailaddress { get; }
+        //Email
+        [Required(ErrorMessage ="Email is required.")]
+        [EmailAddress(ErrorMessage ="Email needs to be a valid Email Adress")]
+        public string Email { get; }
+        //First Name
+        [Required(ErrorMessage ="First name is required.")]
         public string Firstname { get; }
+
+        [Required(ErrorMessage ="Last name is required.")]
         public string Lastname { get; }
+
         public string Infix { get; }
+
+        [Required(ErrorMessage ="Telephone number is required.")]
         public string Telnr { get; }
+
+        [Required(ErrorMessage ="Assigning a role is required.")]
         public Role Role { get; }
     }
 }
