@@ -20,6 +20,12 @@ namespace App.Controllers
 			return View("Create");
 		}
 
+        [HttpPost]
+        public IActionResult Create(UserViewModel viewModel)
+        {
+            return View();
+        }
+
         public IActionResult ContactList()
         {
             return View("ContactList");
