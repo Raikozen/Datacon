@@ -3,12 +3,14 @@
 <h2>Create new user</h2>
 @using (Html.BeginForm("Create", "User"))
 {
-    @Html.TextBoxFor(m => m.Email)
-    @Html.PasswordFor(m => m.Password)
-    @Html.TextBoxFor(m => m.Firstname)
-    @Html.TextBoxFor(m => m.Infix)
-    @Html.TextBoxFor(m => m.Lastname)
-    @Html.TextBoxFor(m => m.Telnr)
+
+    <input asp-for="Email" name="email" />
+    <input asp-for="Password" type="password" name="password" />
+    <input asp-for="Firstname" name="firstname" />
+    <input asp-for="Infix" name="infix" />
+    <input asp-for="Lastname" name="lastname" />
+    <input asp-for="Telnr" name="telnr" />
+
 
     <input type="submit" value="Create Account" />
     
