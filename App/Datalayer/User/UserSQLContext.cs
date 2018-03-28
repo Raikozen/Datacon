@@ -315,7 +315,7 @@ namespace App.Datalayer
         }
 
         /// <summary>
-        /// Register a new user
+        /// Register a new user with infix
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
@@ -324,11 +324,11 @@ namespace App.Datalayer
         /// <param name="lastName"></param>
         /// <param name="telnr"></param>
         /// <param name="roleID"></param>
-        public void Register(string email, string password, string firstName, string infix, string lastName, string telnr, int roleID)
+        public void RegisterInfix(string email, string password, string firstName, string infix, string lastName, string telnr)
         {
 
-            string query = "INSERT INTO proftaak.[User](email, password, firstName, lastName, infix, telNr, roleID) " +
-                           "VALUES (@emailaddress, @password, @firstname, @lastname, @infix, @telNr, @roleID)";
+            string query = "INSERT INTO proftaak.[User](email, password, firstName, lastName, infix, telNr) " +
+                           "VALUES (@emailaddress, @password, @firstname, @lastname, @infix, @telNr)";
             SqlCommand command = new SqlCommand(query);
             command.Connection = connection;
             command.Parameters.AddWithValue("@emailaddress", email);
@@ -337,7 +337,35 @@ namespace App.Datalayer
             command.Parameters.AddWithValue("@lastname", lastName);
             command.Parameters.AddWithValue("@infix", infix);
             command.Parameters.AddWithValue("@telNr", telnr);
-            command.Parameters.AddWithValue("@roleID", roleID);
+
+
+            command.Connection.Open();
+            command.ExecuteNonQuery();
+            command.Connection.Close();
+        }
+
+        /// <summary>
+        /// Register a new user without infix
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="telnr"></param>
+        /// <param name="roleID"></param>
+        public void RegisterNoInfix(string email, string password, string firstName, string lastName, string telnr)
+        {
+
+            string query = "INSERT INTO proftaak.[User](email, password, firstName, lastName, telNr) " +
+                           "VALUES (@emailaddress, @password, @firstname, @lastname, @telNr)";
+            SqlCommand command = new SqlCommand(query);
+            command.Connection = connection;
+            command.Parameters.AddWithValue("@emailaddress", email);
+            command.Parameters.AddWithValue("@password", password);
+            command.Parameters.AddWithValue("@firstname", firstName);
+            command.Parameters.AddWithValue("@lastname", lastName);
+            command.Parameters.AddWithValue("@telNr", telnr);
+
 
             command.Connection.Open();
             command.ExecuteNonQuery();

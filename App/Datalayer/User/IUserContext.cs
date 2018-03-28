@@ -14,7 +14,7 @@ namespace App.Datalayer
         List<User> GetUserList();
         User GetUser(int userId);
 
-        void Register(string email, string password, string firstName, string infix, string lastName, string telnr, int roleID);
-        
+        void RegisterInfix(string email, string password, string firstName, string infix, string lastName, string telnr);
+        void RegisterNoInfix(string email, string password, string firstName, string lastName, string telnr);
     }
 }
