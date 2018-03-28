@@ -23,12 +23,6 @@ namespace App.Controllers
 			return View("Create");
 		}
 
-        public IActionResult ContactList()
-        {
-            List<User> users = new UserRepository(new UserSQLContext()).GetUserList();
-            return View("ContactList", users);
-        }
-
         [HttpPost]
         public IActionResult Create(UserViewModel viewModel)
         {
@@ -55,9 +49,19 @@ namespace App.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult ContactList()
+        {
+            List<User> users = new UserRepository(new UserSQLContext()).GetUserList();
+            return View("ContactList", users);
+        }
+
+        [HttpPost]
         public IActionResult ContactList(List<User> _users, string sort)
         {
+            //sort
 
+            return View("ContactList", _users);
         }
     }
 }
