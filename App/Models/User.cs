@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace App
 {
-    class User
+    public class User
     {
         public int Id { get; }
         public string Emailaddress { get; }

@@ -10,7 +10,7 @@ using App.Repositorys;
 
 namespace App.Datalayer
 {
-    class UserSQLContext : IUserContext
+    public class UserSQLContext : IUserContext
     {
         private SqlConnection connection;
 
