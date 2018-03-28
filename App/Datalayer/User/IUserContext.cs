@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Proftaak_portal.Models;
+using App.Models;
 
-namespace Proftaak_portal.Datalayer
+namespace App.Datalayer
 {
     interface IUserContext
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proftaak_portal
+namespace App
 {
     class Room
     {

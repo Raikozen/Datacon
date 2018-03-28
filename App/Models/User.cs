@@ -1,11 +1,11 @@
-﻿using Proftaak_portal.Models;
+﻿using App.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proftaak_portal
+namespace App
 {
     class User
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Proftaak_portal.Datalayer;
+using App.Datalayer;
 
-namespace Proftaak_portal.Repositorys
+namespace App.Repositorys
 {
     public class RoleRepository
     {

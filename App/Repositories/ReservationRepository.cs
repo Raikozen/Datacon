@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proftaak_portal.Repositorys
+namespace App.Repositorys
 {
     class ReservationRepository
     {
