@@ -1,18 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    App.Repositorys.UserRepository userRep = new App.Repositorys.UserRepository(new App.Datalayer.UserSQLContext());
+    List<User> users = userRep.GetUserList();
 
-<html>
-<head>
-    <link rel="stylesheet" href="~/css/ContactList.css" />
-    <meta name="viewport" content="width=device-width" />
-    <title>ContactList</title>
-</head>
-<body>
+}
     <h1>Contact List</h1>
-    
-    <ul class="ContactList">
-        <li>hoi</li>
-        <li>doei</li>
+    <ul>
+        @foreach (User user in users)
+        {
+            <li>@user.FullName | @user.Role.name | @user.Emailaddress | @user.Telnr</li>
+        }
     </ul>
 
-</body>
-</html>

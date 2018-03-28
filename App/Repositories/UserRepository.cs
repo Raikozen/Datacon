@@ -8,7 +8,7 @@ using App.Models;
 
 namespace App.Repositorys
 {
-    class UserRepository
+    public class UserRepository
     {
         public static User loggedinUser = null;
         private IUserContext _Context;

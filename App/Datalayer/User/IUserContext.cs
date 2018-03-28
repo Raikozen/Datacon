@@ -7,7 +7,7 @@ using App.Models;
 
 namespace App.Datalayer
 {
-    interface IUserContext
+    public interface IUserContext
     {
         User Login(string email, string password);
         void UpdateUserRole(User user, Models.Role role);
