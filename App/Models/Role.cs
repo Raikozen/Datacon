@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Proftaak_portal.Datalayer;
+using Proftaak_portal.Repositorys;
+
+namespace Proftaak_portal.Models
+{
+    public class Role
+    {
+        private List<Right> rights;
+
+        public int id { get; }
+        public string name { get; }
+        public List<Right> Rights
+        {
+            get
+            {
+                return this.rights;
+            }
+        }
+
+        public Role(int id, string name, List<Right> rights)
+        {
+            this.id = id;
+            this.name = name;
+            this.rights = rights;
+        }
+
+        /// <summary>
+        /// Function to update (change) all rights of the role
+        /// </summary>
+        public void UpdateRights(List<Right> rights)
+        {
+            this.rights = rights;
+
+            List<int> IDrights = new List<int>();
+            foreach (Right right in rights)
+            {
+                IDrights.Add(right.id);
+            }
+            RoleSQLContext roleSQLContext = new RoleSQLContext();
+            RoleRepository roleRepository = new RoleRepository(roleSQLContext);
+            roleRepository.UpdateRightsOfRole(this.id, IDrights);
+        }
+    }
+}
