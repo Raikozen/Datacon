@@ -13,6 +13,9 @@ namespace App.ViewModels
         [Required(ErrorMessage ="Email is required.")]
         [EmailAddress(ErrorMessage ="Email needs to be a valid Email Adress")]
         public string Email { get; }
+        //Password
+        [Required(ErrorMessage ="Password is required.")]
+        public string Password { get; }
         //First Name
         [Required(ErrorMessage ="First name is required.")]
         public string Firstname { get; }
