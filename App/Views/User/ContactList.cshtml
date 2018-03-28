@@ -1,13 +1,9 @@
-﻿@{ 
-    App.Repositorys.UserRepository userRep = new App.Repositorys.UserRepository(new App.Datalayer.UserSQLContext());
-    List<User> users = userRep.GetUserList();
-
-}
-    <h1>Contact List</h1>
+﻿    <h1>Contact List</h1>
     <ul>
-        @foreach (User user in users)
+        @foreach (User user in Model)
         {
             <li>@user.FullName | @user.Role.name | @user.Emailaddress | @user.Telnr</li>
+			
         }
     </ul>
 
