@@ -18,5 +18,10 @@ namespace App.Controllers
 		{
 			return View("Create");
 		}
+
+        public IActionResult ContactList()
+        {
+            return View("ContactList");
+        }
     }
 }
