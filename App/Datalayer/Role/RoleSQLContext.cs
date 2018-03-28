@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proftaak_portal.Datalayer
+namespace App.Datalayer
 {
     public class RoleSQLContext : IRoleContext
     {

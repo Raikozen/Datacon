@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Proftaak_portal.Models;
+using App.Models;
 using System.Data.SqlClient;
 using System.Data;
-using Proftaak_portal.Repositorys;
+using App.Repositorys;
 
-namespace Proftaak_portal.Datalayer
+namespace App.Datalayer
 {
     class UserSQLContext : IUserContext
     {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Proftaak_portal.Datalayer;
-using Proftaak_portal.Models;
+using App.Datalayer;
+using App.Models;
 
-namespace Proftaak_portal.Repositorys
+namespace App.Repositorys
 {
     class RightRepository
     {
