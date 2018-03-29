@@ -23,6 +23,35 @@ namespace App.Controllers
 			return View("Create");
 		}
 
+		[HttpGet]
+		public IActionResult Login()
+		{
+			return View("Login");
+		}
+
+		[HttpPost]
+		public IActionResult Login(UserViewModel viewModel)
+		{
+			UserSQLContext context = new UserSQLContext();
+			UserRepository repoUser = new UserRepository(context);
+
+			if(ModelState.IsValid)
+			{
+				User user = repoUser.Login(viewModel.Email, viewModel.Password);
+
+				if(user != null)
+				{
+					Response.Cookies.Append("accountId", Convert.ToString(user.Id));
+
+					return RedirectToAction("Index", "Home");
+				}
+
+				ModelState.AddModelError("ErrorMessage", "Invald login credentials");
+			}
+
+			return View("Login");
+		}
+
         [HttpPost]
         public IActionResult Create(UserViewModel viewModel)
         {
@@ -31,15 +60,7 @@ namespace App.Controllers
                 UserSQLContext context = new UserSQLContext();
                 UserRepository repository = new UserRepository(context);
 
-                if (viewModel.Infix == null)
-                {
-                    
-                    repository.RegisterNoInfix(viewModel.Email, viewModel.Password, viewModel.Firstname, viewModel.Lastname, viewModel.Telnr);
-                }
-                else
-                {
-                    repository.RegisterwInfix(viewModel.Email, viewModel.Password, viewModel.Firstname, viewModel.Infix, viewModel.Lastname, viewModel.Telnr);
-                }
+				repository.Register(viewModel.Email, viewModel.Password, viewModel.Firstname, viewModel.Lastname, viewModel.Telnr, viewModel.Infix);
 
                 return RedirectToAction("Create", "User");
             }
@@ -63,5 +84,17 @@ namespace App.Controllers
 
             return View("ContactList", _users);
         }
-    }
+
+		[HttpGet]
+		public IActionResult CallInSick()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult CallInSick(UserViewModel viewModel)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
