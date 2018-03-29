@@ -2,14 +2,7 @@
 <ul>
     @foreach (Room room in Model)
     {
-        <li>@room.RoomName</li>
-    }
-</ul>
-
-<br />
-<ul>
-    @foreach (Reservation reservation in Model)
-    {
-        <li></li>
+        <li><a href='@Url.Action("Transfer", new { id = room.Id })'>@room.RoomName</a></li>
+        
     }
 </ul>
