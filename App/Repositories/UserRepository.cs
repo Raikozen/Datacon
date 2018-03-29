@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using App.Datalayer;
 using App.Models;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.AspNetCore.Http;
 
 namespace App.Repositorys
 {
@@ -27,9 +30,16 @@ namespace App.Repositorys
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
-        public void Login(string email, string password)
+        public User Login(string email, string password)
         {
             loggedinUser = _Context.Login(email, password);
+
+			if(loggedinUser != null)
+			{
+				return loggedinUser;
+			}
+
+			return null;
         }
 
         /// <summary>
@@ -46,14 +56,33 @@ namespace App.Repositorys
             _Context.UpdateUserRole(user, role);
         }
 
-        public void RegisterwInfix(string email, string password, string firstName, string infix, string lastName, string telnr)
-        {
-            _Context.RegisterInfix(email, password, firstName, infix, lastName, telnr);
-        }
+		/// <summary>
+		/// Create a new user account
+		/// </summary>
+		/// <param name="email"></param>
+		/// <param name="password"></param>
+		/// <param name="firstName"></param>
+		/// <param name="lastName"></param>
+		/// <param name="telNr"></param>
+		/// <param name="infix"></param>
+		public void Register(string email, string password, string firstName, string lastName, string telNr, string infix=null)
+		{
+			//Geneate a salt
+			byte[] salt = new byte[128 / 8];
+			using (var rng = RandomNumberGenerator.Create())
+			{
+				rng.GetBytes(salt);
+			}
 
-        public void RegisterNoInfix(string email, string password, string firstName, string lastName, string telnr)
-        {
-            _Context.RegisterNoInfix(email, password, firstName, lastName, telnr);
-        }
-    }
+			//Hash the password
+			string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+			password: password,
+			salt: salt,
+			prf: KeyDerivationPrf.HMACSHA256,
+			iterationCount: 10000,
+			numBytesRequested: 256 / 8));
+
+			_Context.Register(email, hashedPassword, salt, firstName, lastName, telNr, infix);
+		}
+	}
 }

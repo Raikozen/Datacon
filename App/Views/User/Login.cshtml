@@ -1,0 +1,12 @@
+﻿@model UserViewModel
+
+@using (Html.BeginForm("Login", "User"))
+{
+	<input asp-for="Email" name="email" />
+	<input asp-for="Password" name="password" type="password" />
+
+	<input type="submit" />
+
+	<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
+	<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
+}
