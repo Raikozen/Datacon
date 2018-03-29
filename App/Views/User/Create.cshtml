@@ -1,9 +1,7 @@
 ﻿@model UserViewModel
 
 <h2>Create new user</h2>
-@using (Html.BeginForm("Create", "User"))
-{
-
+<form asp-action="Create" asp-controller="User">
     <input asp-for="Email" name="email" />
     <input asp-for="Password" type="password" name="password" />
     <input asp-for="Firstname" name="firstname" />
@@ -13,7 +11,6 @@
     <!--<input asp-for="RoleID" name="roleID" />-->
 
     <input type="submit" value="Create Account" />
-    
     <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
     <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
-}
+</form>
