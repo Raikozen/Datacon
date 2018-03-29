@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace App
 {
-    class Room
+    public class Room
     {
         public int Id { get; }
         public string RoomName { get; }
