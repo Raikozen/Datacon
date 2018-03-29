@@ -23,7 +23,7 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public IActionResult Transfer(ModelTransfer m)
+        public IActionResult Transfer()
         {
             
             return View("ReserveRoom");
