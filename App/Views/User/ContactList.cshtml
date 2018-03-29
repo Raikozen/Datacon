@@ -1,8 +1,34 @@
-﻿    <h1>Contact List</h1>
-    <ul>
-        @foreach (User user in Model)
-        {
-            <li>@user.FullName | @user.Role.name | @user.Emailaddress | @user.Telnr</li>			
-        }
-    </ul>
+﻿@model UserViewModel;
+<h1>Contact List</h1>
+<ul>
+	@foreach (User user in Model.users)
+	{
+		<li>@user.FullName | @user.Role.name | @user.Emailaddress | @user.Telnr</li>
+	}
+</ul>
 
+@using (Html.BeginForm("ContactList", "User"))
+{
+	<select name="Sort">
+		@if (Model.sortBy == "Name")
+		{
+			<option selected>Name</option>
+			<option>Email Address</option>
+			<option>Role</option>
+		}
+		else if (Model.sortBy == "Email Address")
+		{
+			<option>Name</option>
+			<option selected>Email Address</option>
+			<option>Role</option>
+		}
+		else if (Model.sortBy == "Role")
+		{
+			<option>Name</option>
+			<option>Email Address</option>
+			<option selected>Role</option>
+		}
+	</select>
+
+	<input type="submit" value="Sort" />
+}

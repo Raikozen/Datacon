@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "ReserveRoom";
+}
+
+<h2>Reserve room:</h2> 
+<h4>Current Reservations: </h4>
+<ul>
+    @foreach (Reservation reservation in Model)
+    {
+        <li>@reservation.ReservationName | @reservation.Room | @reservation.ReservationStart | @reservation.ReservationEnd | By @reservation.User</li>
+    }
+</ul>
