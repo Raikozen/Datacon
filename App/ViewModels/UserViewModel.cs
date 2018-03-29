@@ -37,5 +37,9 @@ namespace App.ViewModels
         [Required(ErrorMessage ="Assigning a roleID is required.")]
         [Display(Name ="RoleID", Prompt ="RoleID")]
         public int RoleID { get; set; }
+
+        //ContactList
+        public List<User> users { get; set; }
+        public string sortBy { get; set; }
     }
 }
