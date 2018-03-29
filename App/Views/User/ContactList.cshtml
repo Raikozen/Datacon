@@ -9,7 +9,8 @@
 
 @using (Html.BeginForm("ContactList", "User"))
 {
-	<select name="Sort">
+	<p>Sort: </p>
+	<select name="Sort" onchange="this.form.submit()">
 		@if (Model.sortBy == "Name")
 		{
 			<option selected>Name</option>
@@ -29,6 +30,4 @@
 			<option selected>Role</option>
 		}
 	</select>
-
-	<input type="submit" value="Sort" />
 }
