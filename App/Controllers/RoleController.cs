@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using App.Models;
 using App.Repositorys;
 using App.Datalayer;
+using App.ViewModels;
 
 namespace App.Controllers
 {
@@ -16,20 +17,17 @@ namespace App.Controllers
         [HttpGet]
         public IActionResult Change()
         {
-            ViewData["Message"] = "Your changerole page.";
-            return View();
+            RoleViewModel roleviewmodel = new RoleViewModel();
+            roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
+            roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
+
+            return View("Change", roleviewmodel);
         }
 
-        public IActionResult GetRoles()
-        {
-            RoleRepository roleRep = new RoleRepository(new RoleSQLContext());
-            List<Role> roles = roleRep.GetRoles();
-            return View("Change", roles);
-        }
+        // insert HttpPost method 
+       
 
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
+        
     }
 }
