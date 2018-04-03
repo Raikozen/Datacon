@@ -21,9 +21,20 @@ namespace App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+			//Configure cookie settings
+			services.ConfigureApplicationCookie(options =>
+			{
+				options.Cookie.HttpOnly = true;
+				options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+				options.LoginPath = "/User/Login";
+				options.AccessDeniedPath = "/User/Login";
+				options.SlidingExpiration = true;
+			});
+
+			services.AddSession();
+			services.AddMvc();
             services.AddDistributedMemoryCache();
-        }
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -40,11 +51,11 @@ namespace App
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
+			app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=User}/{action=Login}");
             });
         }
     }

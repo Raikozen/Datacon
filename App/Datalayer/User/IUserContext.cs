@@ -16,5 +16,7 @@ namespace App.Datalayer
 
         void RegisterInfix(string email, string password, string firstName, string infix, string lastName, string telnr);
         void RegisterNoInfix(string email, string password, string firstName, string lastName, string telnr);
-    }
+		void Register(string email, string hashedPassword, byte[] salt, string firstName, string lastName, string telNr, string infix);
+
+	}
 }

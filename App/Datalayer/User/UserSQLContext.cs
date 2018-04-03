@@ -7,6 +7,7 @@ using App.Models;
 using System.Data.SqlClient;
 using System.Data;
 using App.Repositorys;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace App.Datalayer
 {
@@ -25,85 +26,115 @@ namespace App.Datalayer
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public User Login(string emailaddress, string password)
+        public User Login(string emailAddress, string password)
         {
-            SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandText = "SELECT " +
-                "proftaak.[User].id as userId, proftaak.[User].email as email, proftaak.[User].password as password, proftaak.[User].firstName as firstName, proftaak.[User].lastName as lastName, proftaak.[User].infix as infix, proftaak.[User].telNr as telNr, proftaak.[User].roleId, " +
-                "proftaak.[Right].id as rightId, proftaak.[Right].name as rightName, " +
-                "proftaak.[Role].name as roleName " +
-                "FROM " +
-                "proftaak.[User] " +
-                "INNER JOIN proftaak.[Role_Right] on proftaak.[Role_Right].roleId = proftaak.[User].roleId " +
-                "INNER JOIN proftaak.[Right] on proftaak.[Role_Right].rightId = proftaak.[Right].id " +
-                "INNER JOIN proftaak.[Role] on proftaak.[Role_Right].roleId = proftaak.[Role].id " +
-                "WHERE proftaak.[Role_Right].hasRight != 0 AND email = @email AND password LIKE @password " +
-                "ORDER BY userId";
+			//Get the salt
+			SqlCommand command = new SqlCommand();
 
-            command.Parameters.Add("@email", SqlDbType.VarChar);
-            command.Parameters.Add("@password", SqlDbType.Text);
+			command.Connection = connection;
+			command.CommandText = "SELECT salt FROM proftaak.[User] WHERE email = @email";
 
-            command.Parameters["@email"].Value = emailaddress;
-            command.Parameters["@password"].Value = password;
+			command.Parameters.Add("@email", SqlDbType.VarChar);
+			command.Parameters["@email"].Value = emailAddress;
 
-            connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
+			connection.Open();
+			SqlDataReader reader = command.ExecuteReader();
 
-            //rights
-            List<Right> rights = new List<Right>();
-            //role
-            int roleId = 0;
-            string roleName = "";
-            //user
-            int userId = 0;
-            string firstName = "";
-            string lastName = "";
-            string email = "";
-            string infix = "";
-            string telNr = "";
+			byte[] salt;
 
-            while (reader.Read())
-            {
-                //rights
-                rights.Add(new Right(
-                    Convert.ToInt32(reader["rightId"]),
-                    Convert.ToString(reader["rightName"])
-                ));
+			if(reader.HasRows)
+			{
+				salt = (byte[])reader["salt"];
+			} else
+			{
+				connection.Close();
+				return null;
+			}
 
-                //role
-                roleId = Convert.ToInt32(reader["roleId"]);
-                roleName = Convert.ToString(reader["roleName"]);
+			connection.Close();
 
-                //user
-                userId = Convert.ToInt32(reader["userId"]);
-                firstName = Convert.ToString(reader["firstName"]);
-                lastName = Convert.ToString(reader["lastName"]);
-                infix = Convert.ToString(reader["infix"]);
-                telNr = Convert.ToString(reader["telNr"]);
-                email = Convert.ToString(reader["email"]);
-            }
+			//Hash the entered password with the retrieved salt
+			string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+				password: password,
+				salt: salt,
+				prf: KeyDerivationPrf.HMACSHA256,
+				iterationCount: 10000,
+				numBytesRequested: 256 / 8
+			));
 
+			//Get the user from the database
+			command.CommandText = "SELECT " +
+				"proftaak.[User].id as userId, proftaak.[User].email as email, proftaak.[User].password as password, proftaak.[User].firstName as firstName, proftaak.[User].lastName as lastName, proftaak.[User].infix as infix, proftaak.[User].telNr as telNr, proftaak.[User].roleId, " +
+				"proftaak.[Right].id as rightId, proftaak.[Right].name as rightName, " +
+				"proftaak.[Role].name as roleName " +
+				"FROM " +
+				"proftaak.[User] " +
+				"INNER JOIN proftaak.[Role_Right] on proftaak.[Role_Right].roleId = proftaak.[User].roleId " +
+				"INNER JOIN proftaak.[Right] on proftaak.[Role_Right].rightId = proftaak.[Right].id " +
+				"INNER JOIN proftaak.[Role] on proftaak.[Role_Right].roleId = proftaak.[Role].id " +
+				"WHERE proftaak.[Role_Right].hasRight != 0 AND email = @email AND password LIKE @password " +
+				"ORDER BY userId";
 
-            if(userId != 0 && firstName != "" && lastName != "" && email != "" && roleId != 0 && roleName != "")
-            {
-                connection.Close();
+			command.Parameters.Add("@password", SqlDbType.VarChar);
+			command.Parameters["@password"].Value = hashedPassword;
 
-                //return the user
-                return new User(
-                    userId,
-                    email,
-                    firstName,
-                    lastName,
-                    infix,
-                    telNr,
-                    new Role(roleId, roleName, rights)
-                );
-            }
+			connection.Open();
+			reader = command.ExecuteReader();
 
-            connection.Close();
-            return null;
-        }
+			//rights
+			List<Right> rights = new List<Right>();
+			//role
+			int roleId = 0;
+			string roleName = "";
+			//user
+			int userId = 0;
+			string firstName = "";
+			string lastName = "";
+			string email = "";
+			string infix = "";
+			string telNr = "";
+
+			while (reader.Read())
+			{
+				//rights
+				rights.Add(new Right(
+					Convert.ToInt32(reader["rightId"]),
+					Convert.ToString(reader["rightName"])
+				));
+
+				//role
+				roleId = Convert.ToInt32(reader["roleId"]);
+				roleName = Convert.ToString(reader["roleName"]);
+
+				//user
+				userId = Convert.ToInt32(reader["userId"]);
+				firstName = Convert.ToString(reader["firstName"]);
+				lastName = Convert.ToString(reader["lastName"]);
+				infix = Convert.ToString(reader["infix"]);
+				telNr = Convert.ToString(reader["telNr"]);
+				email = Convert.ToString(reader["email"]);
+			}
+
+			//Check if all the needed data is present
+			if (userId != 0 && firstName != "" && lastName != "" && email != "" && roleId != 0 && roleName != "")
+			{
+				connection.Close();
+
+				//return the user
+				return new User(
+					userId,
+					email,
+					firstName,
+					lastName,
+					infix,
+					telNr,
+					new Role(roleId, roleName, rights)
+				);
+			}
+
+			connection.Close();
+			return null;
+		}
 
 
         /// <summary>
@@ -366,10 +397,51 @@ namespace App.Datalayer
             command.Parameters.AddWithValue("@lastname", lastName);
             command.Parameters.AddWithValue("@telNr", telnr);
 
-
             command.Connection.Open();
             command.ExecuteNonQuery();
             command.Connection.Close();
         }
+
+		/// <summary>
+		/// Register a new user
+		/// </summary>
+		public void Register(string email, string hashedPassword, byte[] salt, string firstName, string lastName, string telNr, string infix)
+		{
+			SqlCommand command = new SqlCommand();
+			command.Connection = connection;
+
+			if(infix != null)
+			{
+				command.CommandText = "INSERT INTO proftaak.[User] " +
+				"(email, password, salt, firstName, lastName, telNr, infix) " +
+				"VALUES (@email, @password, @salt, @firstName, @lastName, @telNr, @infix);";
+
+				command.Parameters.Add("@infix", SqlDbType.VarChar);
+				command.Parameters["@infix"].Value = infix;
+			} else
+			{
+				command.CommandText = "INSERT INTO proftaak.[User] " +
+				"(email, password, salt, firstName, lastName, telNr) " +
+				"VALUES (@email, @password, @salt, @firstName, @lastName, @telNr);";
+			}
+
+			command.Parameters.Add("@email", SqlDbType.VarChar);
+			command.Parameters.Add("@password", SqlDbType.VarChar);
+			command.Parameters.Add("@salt", SqlDbType.VarBinary);
+			command.Parameters.Add("@firstName", SqlDbType.VarChar);
+			command.Parameters.Add("@lastName", SqlDbType.VarChar);
+			command.Parameters.Add("@telNr", SqlDbType.VarChar);
+
+			command.Parameters["@email"].Value = email;
+			command.Parameters["@password"].Value = hashedPassword;
+			command.Parameters["@salt"].Value = salt;
+			command.Parameters["@firstName"].Value = firstName;
+			command.Parameters["@lastName"].Value = lastName;
+			command.Parameters["@telNr"].Value = telNr;
+
+			connection.Open();
+			command.ExecuteNonQuery();
+			connection.Close();
+		}
     }
 }
