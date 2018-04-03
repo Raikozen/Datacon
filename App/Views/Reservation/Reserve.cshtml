@@ -1,0 +1,8 @@
+﻿<h2>Reserve a room</h2>
+<ul>
+    @foreach (Room room in Model)
+    {
+        <li><a href='@Url.Action("Transfer", new { id = room.Id })'>@room.RoomName</a></li>
+        
+    }
+</ul>

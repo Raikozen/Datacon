@@ -1,19 +1,25 @@
-﻿
-@model App.Controllers.RoleController
-<div class="row accountForm col-sm-6 col-sm-offset-3">
+﻿<div class="row accountForm col-sm-6 col-sm-offset-3">
     @using (Html.BeginForm("Change", "Role"))
     {
         <h2>Change</h2>
 
             <select>
-            @foreach (Role role in Model)
-                {
-                    
-                }
-        </select>
+              @foreach (User user in Model.Users)
+              {
+                  <option>
+                    @user.Firstname
+                  </option>
+              }
+            </select>    
         
-
-
-       
+        
+            <select>
+                @foreach (Role role in Model.Roles)
+                {
+                 <option>
+                     @role.name
+                 </option>
+                }
+            </select>
     }
 </div>

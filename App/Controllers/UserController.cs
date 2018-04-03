@@ -73,16 +73,31 @@ namespace App.Controllers
         [HttpGet]
         public IActionResult ContactList()
         {
-            List<User> users = new UserRepository(new UserSQLContext()).GetUserList();
-            return View("ContactList", users);
+            UserViewModel userViewModel = new UserViewModel();
+            userViewModel.users = new UserRepository(new UserSQLContext()).GetUserList().OrderBy(o => o.FullName).ToList();
+            userViewModel.sortBy = "Name";
+            return View("ContactList", userViewModel);
         }
 
         [HttpPost]
-        public IActionResult ContactList(List<User> _users, string sort)
+        public IActionResult ContactList(string sort)
         {
-            //sort
-
-            return View("ContactList", _users);
+            UserViewModel userViewModel = new UserViewModel();
+            List<User> users = new UserRepository(new UserSQLContext()).GetUserList();
+            if (sort == "Name")
+            {
+                userViewModel.users = users.OrderBy(o => o.FullName).ToList();
+            }
+            else if (sort == "Email Address")
+            {
+                userViewModel.users = users.OrderBy(o => o.Emailaddress).ToList();
+            }
+            else if (sort == "Role")
+            {
+                userViewModel.users = users.OrderBy(o => o.Role.name).ToList();
+            }
+            userViewModel.sortBy = sort;
+            return View("ContactList", userViewModel);
         }
 
 		[HttpGet]
