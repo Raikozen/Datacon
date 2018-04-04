@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace App
 {
-    class Reservation
+    public class Reservation
     {
         public int Id { get; }
         public User User { get; }
@@ -16,7 +16,7 @@ namespace App
         public DateTime ReservationStart { get; }
         public DateTime ReservationEnd { get; }
 
-        public Reservation(int id, User user, Room room, string reservationName, DateTime reservationStart, DateTime reservationEnd)
+        internal Reservation(int id, User user, Room room, string reservationName, DateTime reservationStart, DateTime reservationEnd)
         {
             Id = id;
             User = user;
