@@ -9,11 +9,6 @@
     @foreach (Reservation reservation in Model)
     {
         <li>@reservation.ReservationName | @reservation.ConvertDateTime(reservation.ReservationStart) | @reservation.ConvertDateTime(reservation.ReservationEnd) | By @reservation.User.FullName</li>
+        <li class="list-unstyled"><a asp-controller="Reservation" asp-action="DeleteReservation" asp-route-reservationId="@reservation.Id">Delete reservation</a></li>
     }
 </ul>
-<br />
-<br />
-<form asp-controller="Reservation" asp-action="AddReservation">
-    <input asp-for="" />
-    <input type="submit" />
-</form>
