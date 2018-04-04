@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace App.Models
 {
@@ -10,6 +12,9 @@ namespace App.Models
     {
         public int id { get; }
         public string name { get; }
+
+		[NotMapped]
+		public bool CheckBoxAnswer { get; set; }
 
         public Right(int id, string name)
         {
