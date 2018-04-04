@@ -8,6 +8,6 @@
 <ul>
     @foreach (Reservation reservation in Model)
     {
-        <li>@reservation.ReservationName | @reservation.ReservationStart | @reservation.ReservationEnd | By @reservation.User.FullName</li>
+        <li>@reservation.ReservationName | @reservation.ConvertDateTime(reservation.ReservationStart) | @reservation.ConvertDateTime(reservation.ReservationEnd) | By @reservation.User.FullName</li>
     }
 </ul>
