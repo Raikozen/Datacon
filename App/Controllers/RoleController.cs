@@ -41,7 +41,6 @@ namespace App.Controllers
             return View("Change", roleviewmodel);
         }
 
-<<<<<<< HEAD
 		[HttpGet]
 		public IActionResult ChangeRights()
 		{
