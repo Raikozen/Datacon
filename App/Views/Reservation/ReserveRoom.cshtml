@@ -1,4 +1,4 @@
-﻿
+﻿@model List<App.Reservation>
 @{
     ViewData["Title"] = "ReserveRoom";
 }
@@ -8,6 +8,6 @@
 <ul>
     @foreach (Reservation reservation in Model)
     {
-        <li>@reservation.ReservationName | @reservation.Room | @reservation.ReservationStart | @reservation.ReservationEnd | By @reservation.User</li>
+        <li>@reservation.ReservationName | @reservation.ReservationStart | @reservation.ReservationEnd | By @reservation.User.FullName</li>
     }
 </ul>
