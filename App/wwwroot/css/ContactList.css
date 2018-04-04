@@ -11,7 +11,9 @@
 .tableheader {
 	border: 1px solid #ccc;
 	font-weight: bold;
+	color: whitesmoke;
 	text-align: left;
+	background-color: steelblue;
 	padding: 8px;
 }
 
@@ -19,4 +21,8 @@
 	float: left;
 	margin-right: 10px;
 	clear: none;
+}
+
+tr:nth-child(odd) {
+	background-color: whitesmoke;
 }
