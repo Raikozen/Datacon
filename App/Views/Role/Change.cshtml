@@ -1,25 +1,53 @@
-﻿<div class="row accountForm col-sm-6 col-sm-offset-3">
+﻿@model RoleViewModel
+
+<div class="row accountForm col-sm-6 col-sm-offset-3">
     @using (Html.BeginForm("Change", "Role"))
     {
         <h2>Change</h2>
 
-            <select>
-              @foreach (User user in Model.Users)
-              {
-                  <option>
-                    @user.Firstname
-                  </option>
-              }
-            </select>    
-        
-        
-            <select>
-                @foreach (Role role in Model.Roles)
+        <select name="user" onchange="">
+            @foreach (User user in Model.Users)
+            {
+
+                if (Model.selectedUserId == user.Id)
                 {
-                 <option>
-                     @role.name
-                 </option>
+                    <option selected value="@user.Id">
+                        @user.Firstname
+                    </option>
                 }
-            </select>
+
+                else
+                {
+                    <option value="@user.Id">
+                        @user.Firstname
+                    </option>
+
+                }
+            }
+        </select>
+
+
+        <select name="role">
+            @foreach (Role role in Model.Roles)
+            {
+
+                if (Model.selectedRoleId == role.id)
+                {
+                    <option selected value="@role.id">
+                        @role.name
+                    </option>
+                }
+
+                else
+                {
+                    <option value="@role.id">
+                        @role.name
+                    </option>
+                }
+            }
+        </select>
+
+        <input type="submit" value="BEVESTIGEN" />
     }
+
 </div>

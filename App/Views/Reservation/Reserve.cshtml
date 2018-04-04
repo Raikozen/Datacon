@@ -2,7 +2,6 @@
 <ul>
     @foreach (Room room in Model)
     {
-        <li><a href='@Url.Action("Transfer", new { id = room.Id })'>@room.RoomName</a></li>
-        
+    <li><button asp-controller="Reservation" asp-action="LoadReservations" value="@room.Id">@room.RoomName</button></li>
     }
 </ul>
