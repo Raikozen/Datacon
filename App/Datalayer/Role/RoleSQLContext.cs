@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App.Models;
 
 namespace App.Datalayer
 {
@@ -47,7 +48,7 @@ namespace App.Datalayer
         /// <returns>
         /// List<Role> roles
         /// </returns>
-        public List<Models.Role> GetRoles()
+        public List<Role> GetRoles()
         {
             string query =
                 "SELECT " +
@@ -114,7 +115,39 @@ namespace App.Datalayer
                 ));
             }
 
+			connection.Close();
             return roles;
         }
+
+		/*
+		public Role GetRoleById(int roleId)
+		{
+			SqlCommand command = new SqlCommand();
+			command.Connection = connection;
+
+			command.CommandText = "SELECT " +
+				"proftaak.[Role_Right].roleId as roleId, " +
+				"proftaak.[Role_Right].rightId as rightId, " +
+				"proftaak.[Role_Right].hasRight as hasRight, " +
+				"proftaak.[Role].name as roleName, " +
+				"proftaak.[Right].name as rightName " +
+				"FROM " +
+				"proftaak.[Role_Right] " +
+				"INNER JOIN proftaak.[Role] on proftaak.[Role].id = roleId " +
+				"INNER JOIN proftaak.[Right] on proftaak.[Right].id = rightId " +
+				"WHERE [Role_Right].hasRight = 1 AND [Role].id = @roleId " +
+				"ORDER BY roleId, rightId ";
+
+			connection.Open();
+
+			SqlDataReader reader = command.ExecuteReader();
+
+			//while reader has rows
+			while (reader.Read())
+			{
+
+			}
+		}
+		*/
     }
 }

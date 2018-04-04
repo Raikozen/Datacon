@@ -9,6 +9,6 @@ namespace App.Datalayer
 {
     interface IRightContext
     {
-        List<Models.Right> GetRights();
+        List<Right> GetRights();
     }
 }

@@ -1,0 +1,45 @@
+﻿@model ChangeRightsViewModel
+
+<form name="selectedRole" asp-controller="Role" asp-action="ChangeSelectedRole" method="post">
+	<select name="SelectedRoleId" onchange="this.form.submit()">
+		@foreach (Role role in Model.Roles)
+		{
+			if(role.id == Model.SelectedRole.id)
+			{
+				<option value="@role.id" selected>@role.name</option>
+			} else
+			{
+				<option value="@role.id">@role.name</option>
+			}
+		}
+	</select>
+</form>
+
+<form name="changeRights" asp-controller="Role" asp-action="ChangeRights">
+	@if (Model.SelectedRole != null)
+	{
+		for (int i = 0; i < Model.Rights.Count; i++)
+		{
+			bool hasRight = false;
+
+			foreach (Right roleRight in Model.SelectedRole.Rights)
+			{
+				if (Model.Rights[i].id == roleRight.id)
+				{
+					hasRight = true;
+				}
+			}
+
+			if (hasRight)
+			{
+				@Model.Rights[i].name <input asp-for="@Model.Rights[i].CheckBoxAnswer" type="checkbox" checked /><br />
+			}
+			else
+			{
+				@Model.Rights[i].name <input asp-for="@Model.Rights[i].CheckBoxAnswer" type="checkbox" /><br />
+			}
+		}
+	}
+
+	<input type="submit" />
+</form>
