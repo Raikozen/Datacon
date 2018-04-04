@@ -24,13 +24,13 @@ namespace App.Datalayer
         {
             string query =
                 string.Format(
-                    "UPDATE proftaak.[Role_Right]" +
-                    "SET proftaak.[Role_Right].hasRight = 0" +
-                    "WHERE proftaak.[Role_Right].roleId = @roleId;" +
-                    "UPDATE proftaak.[Role_Right]" +
-                    "SET proftaak.[Role_Right].hasRight = 1" +
+                    "UPDATE proftaak.[Role_Right] " +
+                    "SET proftaak.[Role_Right].hasRight = 0 " +
+                    "WHERE proftaak.[Role_Right].roleId = @roleId; " +
+                    "UPDATE proftaak.[Role_Right] " +
+                    "SET proftaak.[Role_Right].hasRight = 1 " +
                     "WHERE proftaak.[Role_Right].roleId = @roleId " +
-                    "AND rightId IN ({0})",
+                    "AND rightId IN ({0}) ",
                     string.Join(",", rightIDs));
 
             SqlCommand command = new SqlCommand(query, connection);

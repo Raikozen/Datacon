@@ -1,6 +1,6 @@
 ﻿@model ChangeRightsViewModel
 
-<form name="selectedRole" asp-controller="Role" asp-action="ChangeSelectedRole" method="post">
+<form asp-controller="Role" asp-action="ChangeSelectedRole" method="post">
 	<select name="SelectedRoleId" onchange="this.form.submit()">
 		@foreach (Role role in Model.Roles)
 		{
@@ -15,7 +15,7 @@
 	</select>
 </form>
 
-<form name="changeRights" asp-controller="Role" asp-action="ChangeRights">
+<form asp-controller="Role" asp-action="changeRights">
 	@if (Model.SelectedRole != null)
 	{
 		for (int i = 0; i < Model.Rights.Count; i++)
@@ -32,14 +32,15 @@
 
 			if (hasRight)
 			{
-				@Model.Rights[i].name <input asp-for="@Model.Rights[i].CheckBoxAnswer" type="checkbox" checked /><br />
+				@Model.Rights[i].name <input name="selectedRights" value="@Model.Rights[i].id" type="checkbox" checked /><br />
 			}
 			else
 			{
-				@Model.Rights[i].name <input asp-for="@Model.Rights[i].CheckBoxAnswer" type="checkbox" /><br />
+				@Model.Rights[i].name <input name="selectedRights" value="@Model.Rights[i].id" type="checkbox" /><br />
 			}
 		}
 	}
 
-	<input type="submit" />
+	<input type="text" name="SelectedRoleId" value="@Model.SelectedRole.id" style="display:none;"/>
+	<input type="submit" name="submit"/>
 </form>

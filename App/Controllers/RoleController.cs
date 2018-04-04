@@ -41,7 +41,10 @@ namespace App.Controllers
             return View("Change", roleviewmodel);
         }
 
-<<<<<<< HEAD
+		/// <summary>
+		/// Show the ChangeRights view
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		public IActionResult ChangeRights()
 		{
@@ -62,6 +65,11 @@ namespace App.Controllers
 			return View("ChangeRights", model);
 		}
 
+		/// <summary>
+		/// Change the selected role in the ChangeRights view
+		/// </summary>
+		/// <param name="selectedRoleId"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public IActionResult ChangeSelectedRole(int selectedRoleId)
 		{
@@ -79,22 +87,36 @@ namespace App.Controllers
 
 			//Linq query
 			var result = from role in roleList
-						where role.id == selectedRoleId
-						select role;
+						 where role.id == selectedRoleId
+						 select role;
 
 			//Iterate through Linq query result
-			foreach(var role in result)
+			foreach (var role in result)
 			{
 				model.SelectedRole = role;
 			}
 
 			return View("ChangeRights", model);
 		}
-        
+
+		/// <summary>
+		/// Update the role's rights
+		/// </summary>
+		/// <param name="selectedRoleId"></param>
+		/// <param name="selectedRights"></param>
+		/// <returns></returns>
 		[HttpPost]
-		public IActionResult ChangeRights(ChangeRightsViewModel viewModel)
+		public IActionResult changeRights(int selectedRoleId, List<int> selectedRights)
 		{
-			return View("ChangeRights");
+			RoleSQLContext contextRole = new RoleSQLContext();
+			RoleRepository repoRole = new RoleRepository(contextRole);
+
+			if(selectedRights.Count > 0)
+			{
+				repoRole.UpdateRightsOfRole(selectedRoleId, selectedRights);
+			}
+
+			return RedirectToAction("ChangeRights", "Role");
 		}
-    }
+	}
 }
