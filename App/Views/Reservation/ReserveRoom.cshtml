@@ -11,3 +11,9 @@
         <li>@reservation.ReservationName | @reservation.ConvertDateTime(reservation.ReservationStart) | @reservation.ConvertDateTime(reservation.ReservationEnd) | By @reservation.User.FullName</li>
     }
 </ul>
+<br />
+<br />
+<form asp-controller="Reservation" asp-action="AddReservation">
+    <input asp-for="" />
+    <input type="submit" />
+</form>
