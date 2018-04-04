@@ -23,6 +23,13 @@ namespace App.Controllers
         }
 
         [HttpGet]
+        public IActionResult LoadReservations(Room rooms)
+        {
+            List<Reservation> reservations = new ReservationRepository(new ReservationSQLContext()).GetReservations(rooms);
+            return View("ReserveRoom", reservations);
+        }
+
+        [HttpGet]
         public IActionResult Transfer()
         {
             
