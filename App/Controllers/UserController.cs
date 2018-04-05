@@ -41,7 +41,7 @@ namespace App.Controllers
 
 				if(user != null)
 				{
-					Response.Cookies.Append("accountId", Convert.ToString(user.Id));
+					Response.Cookies.Append("userId", Convert.ToString(user.Id));
 
 					return RedirectToAction("Index", "Home");
 				}
@@ -103,25 +103,26 @@ namespace App.Controllers
 		[HttpGet]
 		public IActionResult CallInSick()
 		{
-            //int id = Convert.ToInt32(Request.Cookies["userId"]);
             UserRepository userRep = new UserRepository(new UserSQLContext());
-            bool IsSick = userRep.IsSick(21);//Temp hard coded userID
+            bool IsSick = userRep.IsSick(Convert.ToInt32(Request.Cookies["userId"]));//Temp hard coded userID
 			return View("CallInSick", IsSick);
 		}
 
 		[HttpPost]
 		public IActionResult CallInSickPost()
 		{
-            UserRepository userRep = new UserRepository(new UserSQLContext());
-            if (userRep.IsSick(21) == false) //temp hard coded userID
+			int id = Convert.ToInt32(Request.Cookies["userId"]);
+
+			UserRepository userRep = new UserRepository(new UserSQLContext());
+            if (userRep.IsSick(id) == false) //temp hard coded userID
             {
-                userRep.ReportSick(21);//Temp hard coded userID
+                userRep.ReportSick(id);//Temp hard coded userID
             }
             else
             {
-                userRep.SicknessRestored(21); //Temp hard coded userID
+                userRep.SicknessRestored(id); //Temp hard coded userID
             }
-            return View("CallInSick", userRep.IsSick(21)); //Temp hard coded userID
+            return View("CallInSick", userRep.IsSick(id)); //Temp hard coded userID
 		}
 	}
 }
