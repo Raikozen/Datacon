@@ -84,5 +84,20 @@ namespace App.Repositorys
 
 			_Context.Register(email, hashedPassword, salt, firstName, lastName, telNr, infix);
 		}
+
+        public void ReportSick(int userID)
+        {
+            _Context.ReportSick(userID);
+        }
+
+        public bool IsSick(int userID)
+        {
+            return _Context.IsSick(userID);
+        }
+
+        public void SicknessRestored(int userID)
+        {
+            _Context.SicknessRestored(userID);
+        }
 	}
 }

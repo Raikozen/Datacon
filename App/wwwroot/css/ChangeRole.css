@@ -1,12 +1,14 @@
 ﻿.dropdown {
-    height: 34px;
-    width: 240px;
-    color: midnightblue;
+    height: 45px;
+    width: 250px;
+    color: black;
 }
 
-.dropdown select {
-    border: 1px solid #ccc;
-    font-size: 16px;
-    height: 34px;
-    width: 268px;
-}
+    .dropdown select {
+        border: 1px solid #ccc;
+        background-color: midnightblue;
+        color: green
+        font-size: 16px;
+        height: 34px;
+        width: 268px;
+    }
