@@ -1,9 +1,19 @@
 ﻿.RightSideOfScreen {
-	position: absolute; /*or fixed*/
+	position: absolute;
 	right: 10px;
-	background-color: white;
+	top: 61px;
+	margin-bottom: 10px;
 	height: 100%;
-	width: 100px;
+	width: 350px;
+	text-align: center;
+	font-weight: bold;
+	border: solid;
+	border-color: black;
+	border-width: 1px;
+}
+
+.hrBlack {
+	border: 0.5px solid black;
 }
 
 .add-margin-top {
