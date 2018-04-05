@@ -1,0 +1,7 @@
+﻿.RightSideOfScreen {
+	position: absolute; /*or fixed*/
+	right: 10px;
+	background-color: white;
+	height: 100%;
+	width: 100px;
+}
