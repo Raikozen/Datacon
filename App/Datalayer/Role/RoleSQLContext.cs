@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App.Models;
 
 namespace App.Datalayer
 {
@@ -23,13 +24,13 @@ namespace App.Datalayer
         {
             string query =
                 string.Format(
-                    "UPDATE proftaak.[Role_Right]" +
-                    "SET proftaak.[Role_Right].hasRight = 0" +
-                    "WHERE proftaak.[Role_Right].roleId = @roleId;" +
-                    "UPDATE proftaak.[Role_Right]" +
-                    "SET proftaak.[Role_Right].hasRight = 1" +
+                    "UPDATE proftaak.[Role_Right] " +
+                    "SET proftaak.[Role_Right].hasRight = 0 " +
+                    "WHERE proftaak.[Role_Right].roleId = @roleId; " +
+                    "UPDATE proftaak.[Role_Right] " +
+                    "SET proftaak.[Role_Right].hasRight = 1 " +
                     "WHERE proftaak.[Role_Right].roleId = @roleId " +
-                    "AND rightId IN ({0})",
+                    "AND rightId IN ({0}) ",
                     string.Join(",", rightIDs));
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -47,7 +48,7 @@ namespace App.Datalayer
         /// <returns>
         /// List<Role> roles
         /// </returns>
-        public List<Models.Role> GetRoles()
+        public List<Role> GetRoles()
         {
             string query =
                 "SELECT " +
@@ -114,6 +115,7 @@ namespace App.Datalayer
                 ));
             }
 
+			connection.Close();
             return roles;
         }
     }

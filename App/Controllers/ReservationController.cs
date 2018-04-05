@@ -23,9 +23,11 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public IActionResult LoadReservations(Room rooms)
+        public IActionResult LoadReservations(int roomId)
         {
-            List<Reservation> reservations = new ReservationRepository(new ReservationSQLContext()).GetReservations(rooms);
+            Room room = new Room(roomId,"test");
+            
+            List<Reservation> reservations = new ReservationRepository(new ReservationSQLContext()).GetReservations(room);
             return View("ReserveRoom", reservations);
         }
 
@@ -34,6 +36,15 @@ namespace App.Controllers
         {
             
             return View("ReserveRoom");
+        }
+        
+        [HttpPost]
+        public IActionResult DeleteReservation(int reservationId)
+        {
+            ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
+            repo.DeleteReservation(reservationId);
+
+            return View("Reserve");
         }
     }
 }

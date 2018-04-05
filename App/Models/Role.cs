@@ -12,8 +12,8 @@ namespace App.Models
     {
         private List<Right> rights;
 
-        public int id { get; }
-        public string name { get; }
+        public int Id { get; }
+        public string Name { get; }
         public List<Right> Rights
         {
             get
@@ -24,8 +24,8 @@ namespace App.Models
 
         public Role(int id, string name, List<Right> rights)
         {
-            this.id = id;
-            this.name = name;
+            this.Id = id;
+            this.Name = name;
             this.rights = rights;
         }
 
@@ -39,11 +39,11 @@ namespace App.Models
             List<int> IDrights = new List<int>();
             foreach (Right right in rights)
             {
-                IDrights.Add(right.id);
+                IDrights.Add(right.Id);
             }
             RoleSQLContext roleSQLContext = new RoleSQLContext();
             RoleRepository roleRepository = new RoleRepository(roleSQLContext);
-            roleRepository.UpdateRightsOfRole(this.id, IDrights);
+            roleRepository.UpdateRightsOfRole(this.Id, IDrights);
         }
     }
 }

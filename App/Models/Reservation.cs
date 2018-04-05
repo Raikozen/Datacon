@@ -26,10 +26,16 @@ namespace App
             ReservationEnd = reservationEnd;
         }
 
+        public string ConvertDateTime(DateTime datetime)
+        {
+            return datetime.ToShortDateString() + " " + datetime.ToShortTimeString();
+        }
+
         public override string ToString()
         {
             return ReservationName + " by " + User.Lastname + " (" + ReservationStart.ToShortDateString() + " " + ReservationStart.ToShortTimeString() +
             " - " + ReservationEnd.ToShortDateString() + " " + ReservationEnd.ToShortTimeString() + ")";
         }
+
     }
 }
