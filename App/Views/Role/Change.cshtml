@@ -5,7 +5,7 @@
     {
         <h2>Change</h2>
 
-        <select name="user" onchange="">
+        <select class="dropdown" name="user" onchange="">
             @foreach (User user in Model.Users)
             {
 
@@ -27,7 +27,7 @@
         </select>
 
 
-        <select name="role">
+        <select class="dropdown" name="role">
             @foreach (Role role in Model.Roles)
             {
 
