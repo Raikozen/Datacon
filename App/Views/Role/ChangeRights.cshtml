@@ -8,18 +8,18 @@
 			<select name="SelectedRoleId" onchange="this.form.submit()">
 				@foreach (Role role in Model.Roles)
 				{
-					if(role.id == Model.SelectedRole.id)
+					if(role.Id == Model.SelectedRole.Id)
 					{
-						<option value="@role.id" selected>@role.name</option>
+						<option value="@role.Id" selected>@role.Name</option>
 					} else
 					{
-						<option value="@role.id">@role.name</option>
+						<option value="@role.Id">@role.Name</option>
 					}
 				}
 			</select>
 		</form>
 	</div>
-	<div class="col-md-12 checkbox-holder">
+	<div class="col-md-12">
 		<form asp-controller="Role" asp-action="changeRights">
 			@if (Model.SelectedRole != null)
 			{
@@ -29,7 +29,7 @@
 
 					foreach (Right roleRight in Model.SelectedRole.Rights)
 					{
-						if (Model.Rights[i].id == roleRight.id)
+						if (Model.Rights[i].Id == roleRight.Id)
 						{
 							hasRight = true;
 						}
@@ -37,16 +37,26 @@
 
 					if (hasRight)
 					{
-						@Model.Rights[i].name <input name="selectedRights" value="@Model.Rights[i].id" type="checkbox" checked /><br />
+						<div class="col-md-1 col-xs-2">
+							<input class="checkbox-style" name="selectedRights" value="@Model.Rights[i].Id" type="checkbox" checked />
+						</div>
+						<div class="col-md-11 col-xs-10">
+							@Model.Rights[i].Name
+						</div>
 					}
 					else
 					{
-						@Model.Rights[i].name <input name="selectedRights" value="@Model.Rights[i].id" type="checkbox" /><br />
+						<div class="col-md-1 col-xs-2">
+							<input class="checkbox-style" name="selectedRights" value="@Model.Rights[i].Id" type="checkbox" />
+						</div>
+						<div class="col-md-11 col-xs-10">
+							@Model.Rights[i].Name
+						</div>
 					}
 				}
 			}
 
-			<input type="text" name="SelectedRoleId" value="@Model.SelectedRole.id" style="display:none;"/>
+			<input type="text" name="SelectedRoleId" value="@Model.SelectedRole.Id" style="display:none;"/>
 			<input type="submit" name="submit"/>
 		</form>
 	</div>

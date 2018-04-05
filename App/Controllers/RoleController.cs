@@ -31,7 +31,7 @@ namespace App.Controllers
             roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
             roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
             UserRepository userRepository = new UserRepository(new UserSQLContext());
-            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f=>f.Id==user), roleviewmodel.Roles.Find(kaas=>kaas.id==role));
+            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f=>f.Id==user), roleviewmodel.Roles.Find(kaas=>kaas.Id==role));
 
             roleviewmodel.selectedRoleId = role;
             roleviewmodel.selectedUserId = user;
@@ -39,10 +39,6 @@ namespace App.Controllers
             return View("Change", roleviewmodel);
         }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> cb120202351b5e0e82c248315a32a17122950a47
 		/// <summary>
 		/// Show the ChangeRights view
 		/// </summary>
@@ -89,7 +85,7 @@ namespace App.Controllers
 
 			//Linq query
 			var result = from role in roleList
-						 where role.id == selectedRoleId
+						 where role.Id == selectedRoleId
 						 select role;
 
 			//Iterate through Linq query result
