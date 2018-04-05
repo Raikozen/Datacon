@@ -39,7 +39,10 @@ namespace App.Controllers
             return View("Change", roleviewmodel);
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb120202351b5e0e82c248315a32a17122950a47
 		/// <summary>
 		/// Show the ChangeRights view
 		/// </summary>
