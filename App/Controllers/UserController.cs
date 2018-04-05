@@ -30,7 +30,7 @@ namespace App.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Login(UserViewModel viewModel)
+		public IActionResult Login(LoginViewModel viewModel)
 		{
 			UserSQLContext context = new UserSQLContext();
 			UserRepository repoUser = new UserRepository(context);

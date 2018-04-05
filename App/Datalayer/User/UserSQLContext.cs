@@ -32,7 +32,7 @@ namespace App.Datalayer
 			SqlCommand command = new SqlCommand();
 
 			command.Connection = connection;
-			command.CommandText = "SELECT salt FROM proftaak.[User] WHERE email = @email";
+			command.CommandText = "SELECT salt as salt FROM proftaak.[User] WHERE email = @email";
 
 			command.Parameters.Add("@email", SqlDbType.VarChar);
 			command.Parameters["@email"].Value = emailAddress;
@@ -42,7 +42,7 @@ namespace App.Datalayer
 
 			byte[] salt;
 
-			if(reader.HasRows)
+			if(reader.Read())
 			{
 				salt = (byte[])reader["salt"];
 			} else
