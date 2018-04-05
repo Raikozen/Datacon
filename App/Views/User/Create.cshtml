@@ -1,19 +1,16 @@
 ﻿@model UserViewModel
 
 <h2>Create new user</h2>
-<div class="row">
-	<form asp-action="Create" asp-controller="User">
+<form asp-action="Create" asp-controller="User">
+    <input asp-for="Email" name="email" />
+    <input asp-for="Password" type="password" name="password" />
+    <input asp-for="Firstname" name="firstname" />
+    <input asp-for="Infix" name="infix" />
+    <input asp-for="Lastname" name="lastname" />
+    <input asp-for="Telnr" name="telnr" />
+    <!--<input asp-for="RoleID" name="roleID" />-->
 
-		<span class="col-xs-12"><input asp-for="Email" name="email" /></span>
-		<span class="col-xs-12"><input asp-for="Password" type="password" name="password" /></span>
-		<span class="col-xs-12"><input asp-for="Firstname" name="firstname" /></span>
-		<span class="col-xs-12"><input asp-for="Infix" name="infix" /></span>
-		<span class="col-xs-12"><input asp-for="Lastname" name="lastname" /></span>
-		<span class="col-xs-12"><input asp-for="Telnr" name="telnr" /></span>
-
-		<span class="col-xs-12 add-margin-top"><input type="submit" value="Create Account" /></span>
-		<span class="col-xs-12">@Html.ValidationMessageFor(m => m.Email)</span>
-		<span class="col-xs-12">@Html.ValidationMessageFor(m => m.Password)</span>
-
-	</form>
-</div>
+    <input type="submit" value="Create Account" />
+    <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
+    <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
+</form>

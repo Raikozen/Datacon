@@ -9,11 +9,41 @@ namespace App.ViewModels
 {
     public class ReservationViewModel
     {
-        public int Id { get; }
-        public User User { get; }
-        //public Room Room { get; }
-        public string ReservationName { get; }
-        public DateTime ReservationStart { get; }
-        public DateTime ReservationEnd { get; }
+        //List of current Reservations
+        public List<Reservation> Reservations { get; set; }
+        //Id of the reservation
+        public int Id { get; set; }
+        //User object of who created the reservation
+        public User User { get; set; }
+        //Room object of where the reservation is located.
+        public int RoomId { get; set;}
+        //Name of Reservation
+        [Required(ErrorMessage ="Name of Reservation is required")]
+        [Display(Name ="ReservationName", Prompt ="Name of Reservation")]
+        public string ReservationName { get; set; }
+        //Starttime and date of Reservation
+        [Required(ErrorMessage ="Start time of Reservation is required.")]
+        [Display(Name ="ReservationStart")]
+        public DateTime ReservationStart { get; set; }
+
+        internal void AddRoomId(int roomId)
+        {
+            this.RoomId = roomId;
+        }
+
+        //Endtime and date of Reservation
+        [Required(ErrorMessage = "End time of Reservation is required.")]
+        [Display(Name ="ReservationEnd")]
+        public DateTime ReservationEnd { get; set; }
+
+        internal void AddReservationList(List<Reservation> reservations)
+        {
+            this.Reservations = reservations;
+        }
+
+        public ReservationViewModel()
+        {
+
+        }
     }
 }

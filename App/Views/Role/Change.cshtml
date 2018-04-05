@@ -1,13 +1,15 @@
 ﻿@model RoleViewModel
 
 <div class="row accountForm col-sm-6 col-sm-offset-3">
-    @using (Html.BeginForm("Change", "Role"))
-    {
+    <form asp-controller="Role" asp-action="Change" method="post">
+    
         <h2>Change</h2>
 
-        <select name="user" onchange="">
+
+        <select name="selecteduser" onchange="this.form.submit()" >
             @foreach (User user in Model.Users)
             {
+
 
                 if (Model.selectedUserId == user.Id)
                 {
@@ -27,27 +29,35 @@
         </select>
 
 
-        <select name="role">
+        <select name="selectedrole">
             @foreach (Role role in Model.Roles)
             {
 
-                if (Model.selectedRoleId == role.id)
+                if (Model.SelectedRole == null)
                 {
-                    <option selected value="@role.id">
-                        @role.name
+
+                    if (Model.SelectedRole.Id == role.Id)
+                    {
+                    <option selected value="@role.Id">
+                        @role.Name
                     </option>
+                    }
+
+
+                    else
+                    {
+                    <option value="@role.Id">
+                        @role.Name
+                    </option>
+                    }
                 }
 
-                else
-                {
-                    <option value="@role.id">
-                        @role.name
-                    </option>
-                }
             }
+
         </select>
 
         <input type="submit" value="BEVESTIGEN" />
-    }
+    
+        </form>
 
 </div>

@@ -1,3 +1,18 @@
-﻿<form asp-action="CallInSick" asp-controller="User" method="post">
-	<input type="submit" name="submit"/>
-</form>
+﻿@model bool;
+<h1>Sick Report</h1>
+@if (Model == true)
+{
+	<form asp-action="CallInSickPost" asp-controller="User" method="post">
+		<input type="submit" value="I am restored of sickness"/>
+	</form>
+}
+else
+{
+	<form asp-action="CallInSickPost" asp-controller="User" method="post">
+		<input type="submit" value="Report Sick"/>
+	</form>
+}
+
+<select>
+
+</select>
