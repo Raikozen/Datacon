@@ -1,46 +1,63 @@
 ﻿@model ChangeRightsViewModel
 
-<form asp-controller="Role" asp-action="ChangeSelectedRole" method="post">
-	<select name="SelectedRoleId" onchange="this.form.submit()">
-		@foreach (Role role in Model.Roles)
-		{
-			if(role.id == Model.SelectedRole.id)
-			{
-				<option value="@role.id" selected>@role.name</option>
-			} else
-			{
-				<option value="@role.id">@role.name</option>
-			}
-		}
-	</select>
-</form>
+<h1>Change rights</h1>
 
-<form asp-controller="Role" asp-action="changeRights">
-	@if (Model.SelectedRole != null)
-	{
-		for (int i = 0; i < Model.Rights.Count; i++)
-		{
-			bool hasRight = false;
-
-			foreach (Right roleRight in Model.SelectedRole.Rights)
-			{
-				if (Model.Rights[i].id == roleRight.id)
+<div class="row">
+	<div class="col-md-12">
+		<form asp-controller="Role" asp-action="ChangeSelectedRole" method="post">
+			<select name="SelectedRoleId" onchange="this.form.submit()">
+				@foreach (Role role in Model.Roles)
 				{
-					hasRight = true;
+					if(role.Id == Model.SelectedRole.Id)
+					{
+						<option value="@role.Id" selected>@role.Name</option>
+					} else
+					{
+						<option value="@role.Id">@role.Name</option>
+					}
+				}
+			</select>
+		</form>
+	</div>
+	<div class="col-md-12">
+		<form asp-controller="Role" asp-action="changeRights">
+			@if (Model.SelectedRole != null)
+			{
+				for (int i = 0; i < Model.Rights.Count; i++)
+				{
+					bool hasRight = false;
+
+					foreach (Right roleRight in Model.SelectedRole.Rights)
+					{
+						if (Model.Rights[i].Id == roleRight.Id)
+						{
+							hasRight = true;
+						}
+					}
+
+					if (hasRight)
+					{
+						<div class="col-md-1 col-xs-2">
+							<input class="checkbox-style" name="selectedRights" value="@Model.Rights[i].Id" type="checkbox" checked />
+						</div>
+						<div class="col-md-11 col-xs-10">
+							@Model.Rights[i].Name
+						</div>
+					}
+					else
+					{
+						<div class="col-md-1 col-xs-2">
+							<input class="checkbox-style" name="selectedRights" value="@Model.Rights[i].Id" type="checkbox" />
+						</div>
+						<div class="col-md-11 col-xs-10">
+							@Model.Rights[i].Name
+						</div>
+					}
 				}
 			}
 
-			if (hasRight)
-			{
-				@Model.Rights[i].name <input name="selectedRights" value="@Model.Rights[i].id" type="checkbox" checked /><br />
-			}
-			else
-			{
-				@Model.Rights[i].name <input name="selectedRights" value="@Model.Rights[i].id" type="checkbox" /><br />
-			}
-		}
-	}
-
-	<input type="text" name="SelectedRoleId" value="@Model.SelectedRole.id" style="display:none;"/>
-	<input type="submit" name="submit"/>
-</form>
+			<input type="text" name="SelectedRoleId" value="@Model.SelectedRole.Id" style="display:none;"/>
+			<input type="submit" name="submit"/>
+		</form>
+	</div>
+</div>

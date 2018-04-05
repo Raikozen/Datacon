@@ -94,7 +94,7 @@ namespace App.Controllers
             }
             else if (sort == "Role")
             {
-                userViewModel.users = users.OrderBy(o => o.Role.name).ToList();
+                userViewModel.users = users.OrderBy(o => o.Role.Name).ToList();
             }
             userViewModel.sortBy = sort;
             return View("ContactList", userViewModel);

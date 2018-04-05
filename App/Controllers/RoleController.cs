@@ -24,8 +24,6 @@ namespace App.Controllers
             return View("Change", roleviewmodel);
         }
 
-        // insert HttpPost method 
-       
         [HttpPost]
         public IActionResult Change(int user, int role)
         {
@@ -33,7 +31,7 @@ namespace App.Controllers
             roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
             roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
             UserRepository userRepository = new UserRepository(new UserSQLContext());
-            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f=>f.Id==user), roleviewmodel.Roles.Find(kaas=>kaas.id==role));
+            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f=>f.Id==user), roleviewmodel.Roles.Find(kaas=>kaas.Id==role));
 
             roleviewmodel.selectedRoleId = role;
             roleviewmodel.selectedUserId = user;
@@ -87,7 +85,7 @@ namespace App.Controllers
 
 			//Linq query
 			var result = from role in roleList
-						 where role.id == selectedRoleId
+						 where role.Id == selectedRoleId
 						 select role;
 
 			//Iterate through Linq query result
