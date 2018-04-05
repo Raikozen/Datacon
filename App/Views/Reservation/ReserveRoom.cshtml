@@ -4,8 +4,16 @@
     ViewData["Title"] = "ReserveRoom";
 }
 
-<h2>Reserve room:</h2> 
+<h2>Reserve room:</h2>
 <h4>Current Reservations: </h4>
+<form asp-controller="Reservation" asp-action="AddReservation" asp-route-roomId="@Model.RoomId" asp-route-userId="21">
+    <input asp-for="ReservationName" name="reservationName" />
+    <input asp-for="ReservationStart" value="@DateTime.Now" />
+    <input asp-for="ReservationEnd" value="@DateTime.Now" />
+    <input onclick="ConfirmReservation()" type="submit" value="Submit Reservation" />
+</form>
+<br />
+<br />
 <ul>
     @foreach (Reservation reservation in Model.Reservations)
     {
@@ -13,13 +21,7 @@
         <li class="list-unstyled"><a asp-controller="Reservation" asp-action="DeleteReservation" asp-route-reservationId="@reservation.Id">Delete reservation</a></li>
     }
 </ul>
-<br />
-<br />
-<form asp-controller="Reservation" asp-action="AddReservation" asp-route-roomId="@Model.RoomId" asp-route-userId="21">
-    <input asp-for="ReservationName" name="reservationName" />
-    <input asp-for="ReservationStart" value="@DateTime.Now"/>
-    <input asp-for="ReservationEnd"  value="@DateTime.Now" />
-    <input onclick="ConfirmReservation()" type="submit" value="Submit Reservation"  />
-</form>
+
+
 
 
