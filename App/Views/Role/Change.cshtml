@@ -6,10 +6,9 @@
         <h2>Change</h2>
 
 
-        <select name="selecteduser" onchange="this.form.submit()" >
+        <select class ="dropdown" name="selecteduser" onchange="this.form.submit()" >
             @foreach (User user in Model.Users)
             {
-
 
                 if (Model.selectedUserId == user.Id)
                 {
@@ -29,14 +28,13 @@
         </select>
 
 
-        <select name="selectedrole">
+        <select class="dropdown" name="selectedrole">
             @foreach (Role role in Model.Roles)
             {
 
-                if (Model.SelectedRole == null)
-                {
+                                
 
-                    if (Model.SelectedRole.Id == role.Id)
+                    if (Model.selectedRoleId == role.Id)
                     {
                     <option selected value="@role.Id">
                         @role.Name
@@ -50,7 +48,7 @@
                         @role.Name
                     </option>
                     }
-                }
+                
 
             }
 
