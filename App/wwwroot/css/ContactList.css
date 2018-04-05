@@ -1,6 +1,28 @@
-﻿.ContactList
-{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+﻿.ContactTable {
+	width : 100%;
+}
+
+.tableitem {
+	border: 1px solid #ccc;
+	text-align: left;
+	padding: 8px;
+}
+
+.tableheader {
+	border: 1px solid #ccc;
+	font-weight: bold;
+	color: whitesmoke;
+	text-align: left;
+	background-color: lightsteelblue;
+	padding: 8px;
+}
+
+.aParent {
+	float: left;
+	margin-right: 10px;
+	clear: none;
+}
+
+tr:nth-child(odd) {
+	background-color: whitesmoke;
 }

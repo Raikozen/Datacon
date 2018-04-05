@@ -23,10 +23,28 @@ namespace App.Controllers
         }
 
         [HttpGet]
+        public IActionResult LoadReservations(int roomId)
+        {
+            Room room = new Room(roomId,"test");
+            
+            List<Reservation> reservations = new ReservationRepository(new ReservationSQLContext()).GetReservations(room);
+            return View("ReserveRoom", reservations);
+        }
+
+        [HttpGet]
         public IActionResult Transfer()
         {
             
             return View("ReserveRoom");
+        }
+        
+        [HttpPost]
+        public IActionResult DeleteReservation(int reservationId)
+        {
+            ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
+            repo.DeleteReservation(reservationId);
+
+            return View("Reserve");
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿<h2>Reserve a room</h2>
+﻿@model List<App.Room>
+<h2>Reserve a room</h2>
 <ul>
     @foreach (Room room in Model)
     {
-        <li><a href='@Url.Action("Transfer", new { id = room.Id })'>@room.RoomName</a></li>
-        
+        <li><a asp-controller="Reservation" asp-action="LoadReservations" asp-route-roomId="@room.Id">@room.RoomName</a></li>
     }
 </ul>

@@ -337,7 +337,7 @@ namespace App.Datalayer
 
             SqlCommand command = new SqlCommand(query, connection);
 
-            command.Parameters.AddWithValue("@roleId", role.id);
+            command.Parameters.AddWithValue("@roleId", role.Id);
             command.Parameters.AddWithValue("@email", user.Emailaddress.ToString());
 
             command.Connection.Open();

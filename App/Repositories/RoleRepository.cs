@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using App.Datalayer;
+using App.Models;
 
 namespace App.Repositorys
 {
@@ -21,7 +22,7 @@ namespace App.Repositorys
             _Context.UpdateRoleRights(roleID, rightIDs);
         }
 
-        public List<Models.Role> GetRoles()
+        public List<Role> GetRoles()
         {
             return _Context.GetRoles();
         }
