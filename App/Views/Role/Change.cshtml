@@ -36,9 +36,9 @@
                 if (Model.SelectedRole == null)
                 {
 
-                    if (Model.SelectedRole.id == role.id)
+                    if (Model.SelectedRole.Id == role.Id)
                     {
-                    <option selected value="@role.id">
+                    <option selected value="@role.Id">
                         @role.Name
                     </option>
                     }
@@ -46,7 +46,7 @@
 
                     else
                     {
-                    <option value="@role.id">
+                    <option value="@role.Id">
                         @role.Name
                     </option>
                     }
