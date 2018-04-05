@@ -41,13 +41,10 @@ namespace App.Controllers
             return View("Change", roleviewmodel);
         }
 
-<<<<<<< HEAD
 		/// <summary>
 		/// Show the ChangeRights view
 		/// </summary>
 		/// <returns></returns>
-=======
->>>>>>> 80c31a1911adaac474e6b68f5c7fa75d331e3dd3
 		[HttpGet]
 		public IActionResult ChangeRights()
 		{
