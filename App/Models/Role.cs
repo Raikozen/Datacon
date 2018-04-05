@@ -13,7 +13,7 @@ namespace App.Models
         private List<Right> rights;
 
         public int id { get; }
-        public string name { get; }
+        public string Name { get; }
         public List<Right> Rights
         {
             get
@@ -25,7 +25,7 @@ namespace App.Models
         public Role(int id, string name, List<Right> rights)
         {
             this.id = id;
-            this.name = name;
+            this.Name = name;
             this.rights = rights;
         }
 

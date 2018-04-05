@@ -24,20 +24,33 @@ namespace App.Controllers
             return View("Change", roleviewmodel);
         }
 
-        // insert HttpPost method 
-       
+               
         [HttpPost]
-        public IActionResult Change(int user, int role)
+        public IActionResult Change(int selectedUserId, int selectedRoleId)
         {
             RoleViewModel roleviewmodel = new RoleViewModel();
             roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
             roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
-            UserRepository userRepository = new UserRepository(new UserSQLContext());
-            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f=>f.Id==user), roleviewmodel.Roles.Find(kaas=>kaas.id==role));
-
-            roleviewmodel.selectedRoleId = role;
-            roleviewmodel.selectedUserId = user;
             
+            roleviewmodel.selectedUserId = selectedUserId;
+            roleviewmodel.selectedRoleId = selectedRoleId;
+
+            Role selectedRole = null;
+            
+            var result = from user in roleviewmodel.Users
+                         where selectedUserId == user.Id
+                         select user;
+
+            foreach(var user in result)
+            {
+                selectedRole = user.Role;
+            }
+
+            roleviewmodel.SelectedRole = selectedRole;
+
+            UserRepository userRepository = new UserRepository(new UserSQLContext());
+            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f => f.Id == selectedUserId), roleviewmodel.Roles.Find(kaas => kaas.id == selectedRoleId));
+
             return View("Change", roleviewmodel);
         }
 
