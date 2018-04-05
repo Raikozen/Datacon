@@ -49,7 +49,7 @@ namespace App.Controllers
             roleviewmodel.SelectedRole = selectedRole;
 
             UserRepository userRepository = new UserRepository(new UserSQLContext());
-            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f => f.Id == selectedUserId), roleviewmodel.Roles.Find(kaas => kaas.id == selectedRoleId));
+            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f => f.Id == selectedUserId), roleviewmodel.Roles.Find(kaas => kaas.Id == selectedRoleId));
 
             return View("Change", roleviewmodel);
         }
