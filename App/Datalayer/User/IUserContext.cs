@@ -18,5 +18,8 @@ namespace App.Datalayer
         void RegisterNoInfix(string email, string password, string firstName, string lastName, string telnr);
 		void Register(string email, string hashedPassword, byte[] salt, string firstName, string lastName, string telNr, string infix);
 
+        void ReportSick(int userID);
+        bool IsSick(int userID);
+        void SicknessRestored(int userID);
 	}
 }

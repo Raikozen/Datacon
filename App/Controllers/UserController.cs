@@ -103,13 +103,25 @@ namespace App.Controllers
 		[HttpGet]
 		public IActionResult CallInSick()
 		{
-			return View();
+            //int id = Convert.ToInt32(Request.Cookies["userId"]);
+            UserRepository userRep = new UserRepository(new UserSQLContext());
+            bool IsSick = userRep.IsSick(21);//Temp hard coded userID
+			return View("CallInSick", IsSick);
 		}
 
 		[HttpPost]
-		public IActionResult CallInSick(UserViewModel viewModel)
+		public IActionResult CallInSickPost()
 		{
-			throw new NotImplementedException();
+            UserRepository userRep = new UserRepository(new UserSQLContext());
+            if (userRep.IsSick(21) == false) //temp hard coded userID
+            {
+                userRep.ReportSick(21);//Temp hard coded userID
+            }
+            else
+            {
+                userRep.SicknessRestored(21); //Temp hard coded userID
+            }
+            return View("CallInSick", userRep.IsSick(21)); //Temp hard coded userID
 		}
 	}
 }
