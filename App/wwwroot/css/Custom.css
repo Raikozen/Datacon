@@ -1,4 +1,12 @@
-﻿.RightSideOfScreen {
+﻿body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    color: #6e7a88;
+    line-height: 1.8;
+}
+
+.RightSideOfScreen {
 	position: absolute;
 	right: 10px;
 	top: 61px;
@@ -48,5 +56,4 @@
     color:midnightblue;
     transition: all 0.4s ease;
     transform: scale(1.1);
-    
 }
