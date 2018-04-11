@@ -1,10 +1,20 @@
 ﻿@model LoginViewModel
 
-@using (Html.BeginForm("Login", "User"))
-{
-	<input asp-for="Email" name="email" />
-	<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
-	<input asp-for="Password" name="password" type="password" />
-	<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
-	<input type="submit" />
-}
+<div class="row loginForm">
+	<div class="col-xs-6 col-xs-offset-3">
+		@using (Html.BeginForm("Login", "User"))
+		{	
+			<div class="col-xs-12">
+				<input asp-for="Email" name="email" />
+				<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
+			</div>
+			<div class="col-xs-12">
+				<input asp-for="Password" name="password" type="password" />
+				<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
+			</div>
+			<div class="col-xs-12">
+				<input type="submit" />
+			</div>
+		}
+	</div>
+</div>

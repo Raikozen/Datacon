@@ -57,3 +57,13 @@
     transition: all 0.4s ease;
     transform: scale(1.1);
 }
+
+/*login form*/
+.loginForm {
+	margin-top: 22vh;
+	text-align: center;
+}
+.loginForm input{
+	padding: 2px;
+	width: 90%;
+}
