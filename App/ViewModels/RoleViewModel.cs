@@ -12,14 +12,12 @@ namespace App.ViewModels
                 
         public List<User> Users { get; set; }
 
-        public int SelectedRoleId { get; set; }
+		public int SelectedRoleId { get; set; }
 
         public int SelectedUserId { get; set; }
 
-        public Role SelectedRole { get; set; }
+		public Role SelectedRole { get; set; }
 
         public User SelectedUser { get; set; }
-
-                
     }
 }

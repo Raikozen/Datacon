@@ -6,7 +6,7 @@
         <h2 class="Headers">Change</h2>
 
 
-        <select class ="dropdown" name="SelectedUserId" onchange="this.form.submit()" >
+        <select class ="dropdown" name="SelectedUserId" >
             @foreach (User user in Model.Users)
             {
 
@@ -22,7 +22,6 @@
                     <option value="@user.Id">
                         @user.Firstname
                     </option>
-
                 }
             }
         </select>
