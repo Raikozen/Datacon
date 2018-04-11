@@ -10,6 +10,11 @@ namespace App.Controllers
 {
     public class HomeController : Controller
     {
+		public IActionResult Index()
+		{
+			return View("Index");
+		}
+
         public void CheckForLogin()
 		{
 			if(Request.Cookies["userId"] != "" && Convert.ToInt32(Convert.ToInt32(Request.Cookies["userId"])) != 0)
