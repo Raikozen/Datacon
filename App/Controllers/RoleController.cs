@@ -24,20 +24,33 @@ namespace App.Controllers
             return View("Change", roleviewmodel);
         }
 
-        // insert HttpPost method 
-       
+               
         [HttpPost]
-        public IActionResult Change(int user, int role)
+        public IActionResult Change(int selectedUserId, int selectedRoleId)
         {
             RoleViewModel roleviewmodel = new RoleViewModel();
             roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
             roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
-            UserRepository userRepository = new UserRepository(new UserSQLContext());
-            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f=>f.Id==user), roleviewmodel.Roles.Find(kaas=>kaas.id==role));
-
-            roleviewmodel.selectedRoleId = role;
-            roleviewmodel.selectedUserId = user;
             
+            roleviewmodel.selectedUserId = selectedUserId;
+            roleviewmodel.selectedRoleId = selectedRoleId;
+
+            Role selectedRole = null;
+            
+            var result = from user in roleviewmodel.Users
+                         where selectedUserId == user.Id
+                         select user;
+
+            foreach(var user in result)
+            {
+                selectedRole = user.Role;
+            }
+
+            roleviewmodel.SelectedRole = selectedRole;
+
+            UserRepository userRepository = new UserRepository(new UserSQLContext());
+            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f => f.Id == selectedUserId), roleviewmodel.Roles.Find(werknemer => werknemer.Id == selectedRoleId));
+
             return View("Change", roleviewmodel);
         }
 
@@ -88,7 +101,7 @@ namespace App.Controllers
 
 			//Linq query
 			var result = from role in roleList
-						 where role.id == selectedRoleId
+						 where role.Id == selectedRoleId
 						 select role;
 
 			//Iterate through Linq query result
@@ -112,7 +125,7 @@ namespace App.Controllers
 			RoleSQLContext contextRole = new RoleSQLContext();
 			RoleRepository repoRole = new RoleRepository(contextRole);
 
-			if(selectedRights.Count > 0)
+			if (selectedRights.Count > 0)
 			{
 				repoRole.UpdateRightsOfRole(selectedRoleId, selectedRights);
 			}

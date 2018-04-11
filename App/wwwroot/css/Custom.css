@@ -1,0 +1,59 @@
+﻿body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    color: #6e7a88;
+    line-height: 1.8;
+}
+
+.RightSideOfScreen {
+	position: absolute;
+	right: 10px;
+	top: 61px;
+	margin-bottom: 10px;
+	height: 100%;
+	width: 350px;
+	text-align: center;
+	font-weight: bold;
+	border: solid;
+	border-color: black;
+	border-width: 1px;
+	background-color: ghostwhite;
+}
+
+.hrBlack {
+	border: 0.5px solid black;
+}
+
+.add-margin-top {
+	margin-top: 1vh;
+}
+
+
+/*RoomReservation*/
+
+.ReserveHeader{
+    text-align: left;
+    margin-bottom: 20px; 
+    margin-top: 20px;
+}
+
+.RoomList {
+    text-decoration: none;
+    list-style-type: none;
+    text-align: left;
+}
+
+.Link {
+    text-decoration: none;
+    color: #000000;
+    transition: all 0.4s ease-in;
+    font-size: 17px;
+    margin: 6px 10px 7.5px 6px
+}
+.Link:hover{
+    text-decoration: none;
+    color:midnightblue;
+    transition: all 0.4s ease;
+    transform: scale(1.1);
+}

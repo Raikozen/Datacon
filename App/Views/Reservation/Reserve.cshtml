@@ -1,8 +1,8 @@
 ﻿@model List<App.Room>
-<h2>Reserve a room</h2>
+<h2 class="ReserveHeader">Reserve a room</h2>
 <ul>
     @foreach (Room room in Model)
     {
-        <li><a asp-controller="Reservation" asp-action="LoadReservations" asp-route-roomId="@room.Id">@room.RoomName</a></li>
+    <li><a class="Link" asp-controller="Reservation" asp-action="LoadReservations" asp-route-roomId="@room.Id">@room.RoomName</a></li>
     }
 </ul>

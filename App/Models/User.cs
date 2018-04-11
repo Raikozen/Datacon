@@ -17,7 +17,7 @@ namespace App
         public string Telnr { get; }
         public Role Role { get; }
 
-        //Fullname (used to set DisplayMember on Changerole screen)
+        //Fullname (used for fields that require the full name to be present.)
         public string FullName { get; }
 
         public User(int id, string emailAddress, string firstName, string lastName, string infix, string telNr, Role role)

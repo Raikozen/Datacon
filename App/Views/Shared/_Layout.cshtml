@@ -9,6 +9,8 @@
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/ContactList.css" />
         <link rel="stylesheet" href="~/css/StyleSheet.css" />
+        <link rel="stylesheet" href="~/css/Custom.css" />
+        <link rel="stylesheet" href="~/css/ChangeRole.css" />
         <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
     </environment>
     <environment exclude="Development">
@@ -17,6 +19,15 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <script>
+        function ConfirmReservation() {
+            alert("Your reservation is added.")
+        }
+        function ConfirmAccount() {
+            alert("The account has been created.")
+
+        }
+    </script>
 </head>
 <body>
 	<!--Navbar-->
@@ -29,7 +40,6 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">App</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -39,6 +49,7 @@
 					<li><a asp-area="" asp-controller="Role" asp-action="Change">Change Role</a></li>
 					<li><a asp-area="" asp-controller="User" asp-action="ContactList">Contact List</a></li>
 					<li><a asp-area="" asp-controller="Role" asp-action="ChangeRights">Change rights</a></li>
+					<li><a asp-area="" asp-controller="User" asp-action="CallInSick">Sick Report</a></li>
 				</ul>
 			</div>
 		</div>

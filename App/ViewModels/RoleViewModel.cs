@@ -15,5 +15,9 @@ namespace App.ViewModels
         public int selectedRoleId { get; set; }
 
         public int selectedUserId { get; set; }
+
+        public Role SelectedRole { get; set; } = null;
+
+                
     }
 }

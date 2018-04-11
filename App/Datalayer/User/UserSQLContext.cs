@@ -337,7 +337,7 @@ namespace App.Datalayer
 
             SqlCommand command = new SqlCommand(query, connection);
 
-            command.Parameters.AddWithValue("@roleId", role.id);
+            command.Parameters.AddWithValue("@roleId", role.Id);
             command.Parameters.AddWithValue("@email", user.Emailaddress.ToString());
 
             command.Connection.Open();
@@ -439,9 +439,70 @@ namespace App.Datalayer
 			command.Parameters["@lastName"].Value = lastName;
 			command.Parameters["@telNr"].Value = telNr;
 
-			connection.Open();
+			command.Connection.Open();
 			command.ExecuteNonQuery();
-			connection.Close();
+			command.Connection.Close();
 		}
+
+        public void ReportSick(int userID)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "INSERT INTO proftaak.[SickReport] " +
+                "(UserId, DateTimeStart) " +
+                "VALUES (@userId, @datetimeStart)";
+            command.Parameters.AddWithValue("@userId", userID);
+            command.Parameters.AddWithValue("@datetimeStart", DateTime.Today);
+
+            command.Connection.Open();
+            command.ExecuteNonQuery();
+            command.Connection.Close();
+        }
+
+        public bool IsSick(int userID)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT DateTimeEnd FROM proftaak.[SickReport] WHERE UserId = @userID";
+            command.Parameters.AddWithValue("@userID", userID);
+            using (command)
+            {
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.IsDBNull(0))
+                        {
+                            command.Connection.Close();
+                            return true;
+                        }
+                    }
+                    command.Connection.Close();
+                    return false;
+                }
+                else
+                {
+                    command.Connection.Close();
+                    return false;
+                }
+            }
+        }
+
+        public void SicknessRestored(int userID)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "UPDATE proftaak.[SickReport] " +
+                "SET DateTimeEnd = @datetimeEnd " +
+                "WHERE UserId = @userID";
+            command.Parameters.AddWithValue("@datetimeEnd", DateTime.Today);
+            command.Parameters.AddWithValue("userID", userID);
+
+            command.Connection.Open();
+            command.ExecuteNonQuery();
+            command.Connection.Close();
+        }
     }
 }
