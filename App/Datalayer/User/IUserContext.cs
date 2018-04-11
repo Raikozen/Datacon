@@ -10,7 +10,7 @@ namespace App.Datalayer
     public interface IUserContext
     {
         User Login(string email, string password);
-        void UpdateUserRole(User user, Models.Role role);
+        void UpdateUserRole(User user, Role role);
         List<User> GetUserList();
         User GetUser(int userId);
 
