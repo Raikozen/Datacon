@@ -4,22 +4,35 @@
     ViewData["Title"] = "ReserveRoom";
 }
 
-<h2>Reserve room:</h2> 
-<h4>Current Reservations: </h4>
-<ul>
-    @foreach (Reservation reservation in Model.Reservations)
-    {
-        <li>@reservation.ReservationName | @reservation.ConvertDateTime(reservation.ReservationStart) | @reservation.ConvertDateTime(reservation.ReservationEnd) | By @reservation.User.FullName</li>
-        <li class="list-unstyled"><a asp-controller="Reservation" asp-action="DeleteReservation" asp-route-reservationId="@reservation.Id">Delete reservation</a></li>
-    }
-</ul>
-<br />
-<br />
+<h2>Reserve room:</h2>
+<h4>Reserve this room:</h4>
 <form asp-controller="Reservation" asp-action="AddReservation" asp-route-roomId="@Model.RoomId" asp-route-userId="21">
     <input asp-for="ReservationName" name="reservationName" />
-    <input asp-for="ReservationStart" value="@DateTime.Now"/>
-    <input asp-for="ReservationEnd"  value="@DateTime.Now" />
-    <input onclick="ConfirmReservation()" type="submit" value="Submit Reservation"  />
+    <input asp-for="ReservationStart" value="@DateTime.Now" />
+    <input asp-for="ReservationEnd" value="@DateTime.Now" />
+    <input onclick="ConfirmReservation()" type="submit" value="Submit Reservation" />
 </form>
+<br />
+<br />
+<h4>Current Reservations: </h4>
+<table class="ReservationTable">
+    <tr>
+        <th class="tableheader">Reservation Name</th>
+        <th class="tableheader">Start date and time of Reservation</th>
+        <th class="tableheader">End date and time of Reservation</th>
+        <th class="tableheader">Reserved by</th>
+        <th class="tableheader">Delete reservation</th>
+    </tr>
+    @foreach (Reservation reservation in Model.Reservations)
+    {
+    <tr>
+        <td class="tableitem">@reservation.ReservationName</td>
+        <td class="tableitem">@reservation.ConvertDateTime(reservation.ReservationStart)</td>
+        <td class="tableitem">@reservation.ConvertDateTime(reservation.ReservationEnd)</td>
+        <td class="tableitem">@reservation.User.FullName</td>
+        <td class="tableitem"><a asp-controller="Reservation" asp-action="DeleteReservation" asp-route-reservationId="@reservation.Id">Delete reservation</a></td>
+    </tr>
+    }
+</table>
 
 
