@@ -58,7 +58,7 @@ namespace App.Controllers
             ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
             repo.AddReservation(ViewModel.RoomId, userId ,ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);
 
-            return RedirectToAction("LoadData", "Reservation");
+            return View("ReserveRoom");
         }
     }
 }

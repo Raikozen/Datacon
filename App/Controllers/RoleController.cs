@@ -54,6 +54,10 @@ namespace App.Controllers
             return View("Change", roleviewmodel);
         }
 
+		/// <summary>
+		/// Show the ChangeRights view
+		/// </summary>
+		/// <returns></returns>
         [HttpPost]
         public IActionResult Watch()
         {
