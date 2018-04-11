@@ -12,6 +12,7 @@ namespace App.Controllers
     {
 		public IActionResult Index()
 		{
+            CheckForLogin();
 			return View("Index");
 		}
 
