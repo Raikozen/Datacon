@@ -38,13 +38,13 @@ namespace App.Controllers
             return View("ReserveRoom");
         }
         
-        [HttpPost]
+        [HttpGet]
         public IActionResult DeleteReservation(int reservationId)
         {
             ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
             repo.DeleteReservation(reservationId);
 
-            return View("Reserve");
+            return View("ReserveRoom");
         }
     }
 }
