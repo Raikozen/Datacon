@@ -1,10 +1,4 @@
-﻿.dropdown {
-    height: 45px;
-    width: 250px;
-    color: black;
-}
-
-    .dropdown select {
+﻿    .dropdown select {
         border: 1px solid #ccc;
         background-color: midnightblue;
         color: green
