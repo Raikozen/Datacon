@@ -17,42 +17,53 @@ namespace App.Controllers
         [HttpGet]
         public IActionResult Change()
         {
-            RoleViewModel roleviewmodel = new RoleViewModel();
-            roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
-            roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
+            RoleViewModel viewModel = new RoleViewModel();
+            viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
+            viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
 
-            return View("Change", roleviewmodel);
+            viewModel.SelectedUser = viewModel.Users[0];
+
+            var result = from User in viewModel.Users
+                         where viewModel.SelectedUserId == User.Id
+                         select User;
+
+            foreach (var User in result)
+            {
+                viewModel.SelectedRoleId = User.Role.Id;
+                viewModel.SelectedUser = User;
+            }
+
+            return View("Change", viewModel);
         }
 
                
         [HttpPost]
-        public IActionResult Change(int selectedUserId, int selectedRoleId)
+        public IActionResult Change(RoleViewModel viewModel)
         {
-            RoleViewModel roleviewmodel = new RoleViewModel();
-            roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
-            roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
+            viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
+            viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
             
-            roleviewmodel.selectedUserId = selectedUserId;
-            roleviewmodel.selectedRoleId = selectedRoleId;
+            var result = from User in viewModel.Users
+                         where viewModel.SelectedUserId == User.Id
+                         select User;
 
-            Role selectedRole = null;
-            
-            var result = from user in roleviewmodel.Users
-                         where selectedUserId == user.Id
-                         select user;
-
-            foreach(var user in result)
+            foreach(var User in result)
             {
-                selectedRole = user.Role;
+                viewModel.SelectedRoleId = User.Role.Id;
+                viewModel.SelectedUser = User;
             }
 
-            roleviewmodel.SelectedRole = selectedRole;
 
             UserRepository userRepository = new UserRepository(new UserSQLContext());
-            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f => f.Id == selectedUserId), roleviewmodel.Roles.Find(werknemer => werknemer.Id == selectedRoleId));
+            userRepository.UpdateUserRole(viewModel.Users.Find(f => f.Id == viewModel.SelectedUserId), viewModel.Roles.Find(f => f.Id == viewModel.SelectedRoleId));
 
-            return View("Change", roleviewmodel);
+            return View("Change", viewModel);
         }
+
+
+
+
+
 
 		/// <summary>
 		/// Show the ChangeRights view

@@ -328,21 +328,27 @@ namespace App.Datalayer
         /// <param name="user"></param>
         /// <param name="newRoleId"></param>
         /// FUNCTION IS NOT TESTED YET!
-        public void UpdateUserRole(User user, Models.Role role)
+        public void UpdateUserRole(User user, Role role)
         {
             string query =
                 "UPDATE proftaak.[User] " +
-                "SET roleId = @roleId " +
-                "WHERE proftaak.[User].email = @email;";
+                "SET proftaak.[User].roleId = @roleId " +
+                "WHERE proftaak.[User].id = @userid;";
 
-            SqlCommand command = new SqlCommand(query, connection);
+            SqlCommand command = new SqlCommand();
 
-            command.Parameters.AddWithValue("@roleId", role.Id);
-            command.Parameters.AddWithValue("@email", user.Emailaddress.ToString());
+            command.Connection = connection;
+            command.CommandText = query;
 
-            command.Connection.Open();
+            command.Parameters.Add("@roleId", SqlDbType.Int);
+            command.Parameters.Add("@userId", SqlDbType.Int);
+
+            command.Parameters["@roleId"].Value = role.Id;
+            command.Parameters["@userId"].Value = user.Id;
+
+            connection.Open();
             command.ExecuteNonQuery();
-            command.Connection.Close();
+            connection.Close();
         }
 
         /// <summary>

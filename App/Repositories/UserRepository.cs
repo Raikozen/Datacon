@@ -51,7 +51,7 @@ namespace App.Repositorys
             return _Context.GetUserList();
         }
 
-        public void UpdateUserRole(User user, Models.Role role)
+        public void UpdateUserRole(User user, Role role)
         {
             _Context.UpdateUserRole(user, role);
         }
