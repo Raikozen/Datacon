@@ -9,7 +9,7 @@ using App.ViewModels;
 
 namespace App.Controllers
 {
-    public class ReservationController : Controller
+    public class ReservationController : HomeController
     {
         public IActionResult Index()
         {
@@ -19,14 +19,18 @@ namespace App.Controllers
         [HttpGet]
         public IActionResult LoadData()
         {
-            List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
+			base.CheckForLogin();
+
+			List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
             return View("Reserve", rooms);
         }
 
         [HttpGet]
         public IActionResult LoadReservations(int roomId)
         {
-            Room room = new Room(roomId,"test");
+			base.CheckForLogin();
+
+			Room room = new Room(roomId,"test");
             ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
             List<Reservation> reservations = repo.GetReservations(room);
            
@@ -39,14 +43,17 @@ namespace App.Controllers
         [HttpGet]
         public IActionResult Transfer()
         {
-            
-            return View("ReserveRoom");
+			base.CheckForLogin();
+
+			return View("ReserveRoom");
         }
         
         [HttpGet]
         public IActionResult DeleteReservation(int reservationId)
         {
-            ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
+			base.CheckForLogin();
+
+			ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
             repo.DeleteReservation(reservationId);
             List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
             return View("Reserve", rooms);
@@ -55,7 +62,9 @@ namespace App.Controllers
         [HttpPost]
         public IActionResult AddReservation(ReservationViewModel ViewModel, int userId)
         {
-            ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
+			base.CheckForLogin();
+
+			ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
             repo.AddReservation(ViewModel.RoomId, userId ,ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);
 
             return View("ReserveRoom");
