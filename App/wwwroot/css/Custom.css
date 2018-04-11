@@ -4,6 +4,10 @@
     font-size: 15px;
     color: #6e7a88;
     line-height: 1.8;
+    background: rgb(0,43,92);
+    background: linear-gradient(0deg, rgba(0,43,92,0.75) 10%, rgba(9,9,121,0.1) 75%) bottom no-repeat;
+    height: 100vh;
+    color: black;
 }
 
 /* Navigation Bar */
@@ -37,8 +41,9 @@
 
 /*RoomReservation*/
 
-.ReserveHeader{
+.Headers{
     text-align: center;
+    margin-left: 15px;
     margin-bottom: 20px; 
     margin-top: 20px;
 }
@@ -65,16 +70,17 @@
 }
 
 /*List of Rooms*/
-.flex-container {
+.flex-containerReserve {
     display: -webkit-flex;
     display: flex;
     width: 905px;
-    background-color: lightgrey;
+    background-color: transparent;
     margin: 0 auto;
     padding: 10px;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
     align-content: flex-start;
+    border-radius: 3%
   }
 
 .RoomItems {
@@ -84,6 +90,7 @@
     width: 260px;
     height: 200px;
     margin: 10px;
+    margin-left: 22.5px;
     position: relative;
     float: left;
 }
@@ -94,9 +101,9 @@
         height: 200px;
 }
 
-.content.flex-container {
+.content.flex-containerReserve {
     /* substract 100px (navbar) + 20px (padding top and bottom nav bar) + 20px (padding content container) */
-    min-height: calc(100vh - 140px);
+    min-height: calc(50vh - 140px);
 }
 
 
@@ -111,8 +118,6 @@ li .overlay {
     text-align: center;
 }
 
-
-
 /*login form*/
 .loginForm {
 	margin-top: 22vh;
@@ -121,4 +126,38 @@ li .overlay {
 .loginForm input{
 	padding: 2px;
 	width: 90%;
+}
+
+/*Create User page*/
+.Flex-ContainerCreate{
+    display: -webkit-flex;
+    display: flex;
+    width: auto;
+    background-color: #ccc;
+    padding: 20px 10px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow: hidden;
+    border: 2px solid #002b5c;
+    border-radius: 3%;
+    color: black;
+}
+
+.center {
+	text-align:center;
+	margin-bottom: 0px;
+	margin-top: 5px;
+}
+
+.inputcreate {
+    margin-top: 1vw;
+    margin-left: 1.5vw;
+    float: center;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    color: black;
 }
