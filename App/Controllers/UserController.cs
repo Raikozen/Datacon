@@ -10,16 +10,13 @@ using App.Models;
 
 namespace App.Controllers
 {
-    public class UserController : Controller
+    public class UserController : HomeController
     {
-        public IActionResult Index()
-        {
-            return View("Create");
-        }
-
 		[HttpGet]
 		public IActionResult Create()
 		{
+			base.CheckForLogin();
+
 			return View("Create");
 		}
 
@@ -55,7 +52,9 @@ namespace App.Controllers
         [HttpPost]
         public IActionResult Create(UserViewModel viewModel)
         {
-            if (ModelState.IsValid)
+			base.CheckForLogin();
+
+			if (ModelState.IsValid)
             {
                 UserSQLContext context = new UserSQLContext();
                 UserRepository repository = new UserRepository(context);
@@ -73,7 +72,9 @@ namespace App.Controllers
         [HttpGet]
         public IActionResult ContactList()
         {
-            UserViewModel userViewModel = new UserViewModel();
+			base.CheckForLogin();
+
+			UserViewModel userViewModel = new UserViewModel();
             userViewModel.users = new UserRepository(new UserSQLContext()).GetUserList().OrderBy(o => o.FullName).ToList();
             userViewModel.sortBy = "Name";
             return View("ContactList", userViewModel);
@@ -82,7 +83,9 @@ namespace App.Controllers
         [HttpPost]
         public IActionResult ContactList(string sort)
         {
-            UserViewModel userViewModel = new UserViewModel();
+			base.CheckForLogin();
+
+			UserViewModel userViewModel = new UserViewModel();
             List<User> users = new UserRepository(new UserSQLContext()).GetUserList();
             if (sort == "Name")
             {
@@ -103,7 +106,9 @@ namespace App.Controllers
 		[HttpGet]
 		public IActionResult CallInSick()
 		{
-            UserRepository userRep = new UserRepository(new UserSQLContext());
+			base.CheckForLogin();
+
+			UserRepository userRep = new UserRepository(new UserSQLContext());
             bool IsSick = userRep.IsSick(Convert.ToInt32(Request.Cookies["userId"]));//Temp hard coded userID
 			return View("CallInSick", IsSick);
 		}
@@ -111,18 +116,21 @@ namespace App.Controllers
 		[HttpPost]
 		public IActionResult CallInSickPost()
 		{
+			base.CheckForLogin();
+
 			int id = Convert.ToInt32(Request.Cookies["userId"]);
 
 			UserRepository userRep = new UserRepository(new UserSQLContext());
-            if (userRep.IsSick(id) == false) //temp hard coded userID
+            if (userRep.IsSick(id) == false)
             {
-                userRep.ReportSick(id);//Temp hard coded userID
+                userRep.ReportSick(id);
             }
             else
             {
-                userRep.SicknessRestored(id); //Temp hard coded userID
+                userRep.SicknessRestored(id);
             }
-            return View("CallInSick", userRep.IsSick(id)); //Temp hard coded userID
+
+            return View("CallInSick", userRep.IsSick(id));
 		}
 	}
 }

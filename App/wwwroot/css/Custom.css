@@ -4,6 +4,15 @@
     font-size: 15px;
     color: #6e7a88;
     line-height: 1.8;
+    background: rgb(0,43,92);
+    background: linear-gradient(0deg, rgba(0,43,92,0.75) 10%, rgba(9,9,121,0.1) 75%) bottom no-repeat;
+    height: 100vh;
+    color: black;
+}
+
+/* Navigation Bar */
+.logoleft {
+    float: left;
 }
 
 .RightSideOfScreen {
@@ -32,8 +41,9 @@
 
 /*RoomReservation*/
 
-.ReserveHeader{
-    text-align: left;
+.Headers{
+    text-align: center;
+    margin-left: 15px;
     margin-bottom: 20px; 
     margin-top: 20px;
 }
@@ -42,20 +52,70 @@
     text-decoration: none;
     list-style-type: none;
     text-align: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 .Link {
     text-decoration: none;
     color: #000000;
-    transition: all 0.4s ease-in;
     font-size: 17px;
     margin: 6px 10px 7.5px 6px
 }
 .Link:hover{
     text-decoration: none;
-    color:midnightblue;
-    transition: all 0.4s ease;
-    transform: scale(1.1);
+    color: #002b5c;
+}
+
+/*List of Rooms*/
+.flex-containerReserve {
+    display: -webkit-flex;
+    display: flex;
+    width: 905px;
+    background-color: transparent;
+    margin: 0 auto;
+    padding: 10px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    border-radius: 3%
+  }
+
+.RoomItems {
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 260px;
+    height: 200px;
+    margin: 10px;
+    margin-left: 22.5px;
+    position: relative;
+    float: left;
+}
+
+.RoomItems > a {
+        display: block;
+        width: 250px;
+        height: 200px;
+}
+
+.content.flex-containerReserve {
+    /* substract 100px (navbar) + 20px (padding top and bottom nav bar) + 20px (padding content container) */
+    min-height: calc(50vh - 140px);
+}
+
+
+li .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #002b5c;
+    color: white;
+    width: 260px;
+    padding: 20px;
+    text-align: center;
 }
 
 /*login form*/
@@ -66,4 +126,38 @@
 .loginForm input{
 	padding: 2px;
 	width: 90%;
+}
+
+/*Create User page*/
+.Flex-ContainerCreate{
+    display: -webkit-flex;
+    display: flex;
+    width: auto;
+    background-color: #ccc;
+    padding: 20px 10px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow: hidden;
+    border: 2px solid #002b5c;
+    border-radius: 3%;
+    color: black;
+}
+
+.center {
+	text-align:center;
+	margin-bottom: 0px;
+	margin-top: 5px;
+}
+
+.inputcreate {
+    margin-top: 1vw;
+    margin-left: 1.5vw;
+    float: center;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    color: black;
 }

@@ -11,15 +11,17 @@ using App.ViewModels;
 
 namespace App.Controllers
 {
-    public class RoleController : Controller
+    public class RoleController : HomeController
     {
         
         [HttpGet]
         public IActionResult Change()
         {
-            RoleViewModel viewModel = new RoleViewModel();
-            viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
-            viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
+			base.CheckForLogin();
+
+            RoleViewModel roleviewmodel = new RoleViewModel();
+            roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
+            roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
 
             viewModel.SelectedUser = viewModel.Users[0];
 
@@ -78,6 +80,8 @@ namespace App.Controllers
 		[HttpGet]
 		public IActionResult ChangeRights()
 		{
+			base.CheckForLogin();
+
 			RoleSQLContext contextRole = new RoleSQLContext();
 			RoleRepository repoRole = new RoleRepository(contextRole);
 
@@ -103,6 +107,8 @@ namespace App.Controllers
 		[HttpPost]
 		public IActionResult ChangeSelectedRole(int selectedRoleId)
 		{
+			base.CheckForLogin();
+
 			RoleSQLContext contextRole = new RoleSQLContext();
 			RoleRepository repoRole = new RoleRepository(contextRole);
 
@@ -136,8 +142,10 @@ namespace App.Controllers
 		/// <param name="selectedRights"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public IActionResult changeRights(int selectedRoleId, List<int> selectedRights)
+		public IActionResult ChangeRights(int selectedRoleId, List<int> selectedRights)
 		{
+			base.CheckForLogin();
+
 			RoleSQLContext contextRole = new RoleSQLContext();
 			RoleRepository repoRole = new RoleRepository(contextRole);
 
