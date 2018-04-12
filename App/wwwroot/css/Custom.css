@@ -2,12 +2,10 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
     font-size: 15px;
-    color: #6e7a88;
     line-height: 1.8;
     background: rgb(0,43,92);
     background: linear-gradient(0deg, rgba(0,43,92,0.75) 10%, rgba(9,9,121,0.1) 75%) bottom no-repeat;
 	min-height: 100vh;
-    color: black;
 }
 
 .RightSideOfScreen {
@@ -47,7 +45,6 @@
     text-decoration: none;
     list-style-type: none;
     text-align: left;
-    list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -141,7 +138,7 @@ li .overlay {
 
 .center {
 	text-align:center;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 	margin-top: 5px;
 }
 
