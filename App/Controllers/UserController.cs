@@ -109,7 +109,7 @@ namespace App.Controllers
 			base.CheckForLogin();
 
 			UserRepository userRep = new UserRepository(new UserSQLContext());
-            bool IsSick = userRep.IsSick(Convert.ToInt32(Request.Cookies["userId"]));//Temp hard coded userID
+            bool IsSick = userRep.IsSick(Convert.ToInt32(Request.Cookies["userId"]));
 			return View("CallInSick", IsSick);
 		}
 
