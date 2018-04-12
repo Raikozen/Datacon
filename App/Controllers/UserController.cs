@@ -115,6 +115,7 @@ namespace App.Controllers
             viewModel.isSick = userRep.IsSick(id);
             viewModel.hasOverviewRight = userRep.GetUser(id).Role.Rights.Any(r => r.Id == 10) ? true : false;
             viewModel.SickReportsUser = userRep.GetSickReportsUser(id);
+            viewModel.SickReportsAll = userRep.GetSickReportsAll() == null ? null : userRep.GetSickReportsAll().OrderBy(o=>o.UserName).ToList();
 			return View("CallInSick", viewModel);
 		}
 
@@ -139,6 +140,7 @@ namespace App.Controllers
             viewModel.isSick = userRep.IsSick(id);
             viewModel.hasOverviewRight = userRep.GetUser(id).Role.Rights.Any(r => r.Id == 10) ? true : false;
             viewModel.SickReportsUser = userRep.GetSickReportsUser(id);
+            viewModel.SickReportsAll = userRep.GetSickReportsAll().OrderBy(o => o.UserName).ToList();
             return View("CallInSick", viewModel);
 		}
 	}

@@ -1,19 +1,19 @@
 ﻿@model UserViewModel
+
 <div class="row">
-    <h2 class="Headers col-xs-12 ">Create new user</h2>
-        <div class="Flex-ContainerCreate col-xs-2 col-xs-offset-5">
-            <form asp-action="Create" asp-controller="User">
-                <p class="center">Emailadress: </p><input asp-for="Email" name="email" />
-                <p class="center">Password: </p><input asp-for="Password" type="password" name="password" />
-                <p class="center">First Name:</p><input asp-for="Firstname" name="firstname" />
-                <p class="center">Infix:</p><input asp-for="Infix" name="infix" />
-                <p class="center">Last Name:</p><input asp-for="Lastname" name="lastname" />
-                <p class="center">Telephone Number:</p><input asp-for="Telnr" name="telnr" />
-                <!--<input asp-for="RoleID" name="roleID" />-->
-                <br />
-                <input class="inputcreate" type="submit" value="Create Account" />
-                <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
-                <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
-            </form>
-        </div>
+
+        <h2 class="Headers col-xs-12">Create new user</h2>
+        <form asp-action="Create" asp-controller="User" class="col-xs-4 col-xs-offset-4">
+            <span class="create-form-label col-xs-8 col-xs-offset-2">Emailadress: </span><input asp-for="Email" name="email" class="col-xs-12" />
+            <span class="create-form-label col-xs-8 col-xs-offset-2">Password: </span><input asp-for="Password" type="password" name="password" class="col-xs-12" />
+            <span class="create-form-label col-xs-8 col-xs-offset-2">First Name:</span><input asp-for="Firstname" name="firstname" class="col-xs-12" />
+            <span class="create-form-label col-xs-8 col-xs-offset-2">Infix:</span><input asp-for="Infix" name="infix" class="col-xs-12" />
+            <span class="create-form-label col-xs-8 col-xs-offset-2">Last Name:</span><input asp-for="Lastname" name="lastname" class="col-xs-12" />
+            <span class="create-form-label col-xs-8 col-xs-offset-2">Telephone Number:</span><input asp-for="Telnr" name="telnr" class="col-xs-12" />
+
+            <input class="buttonCreate col-xs-12" type="submit" value="Create Account" />
+            <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
+            <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
+        </form>
+
 </div>
