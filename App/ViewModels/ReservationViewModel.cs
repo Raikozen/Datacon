@@ -36,10 +36,10 @@ namespace App.ViewModels
         [Display(Name ="ReservationEnd")]
         public DateTime ReservationEnd { get; set; }
 
-        internal void AddReservationList(List<Reservation> reservations)
-        {
-            this.Reservations = reservations;
-        }
+        //internal void AddReservationList(List<Reservation> reservations)
+        //{
+        //    this.Reservations = reservations;
+        //}
 
         public ReservationViewModel()
         {

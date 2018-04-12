@@ -10,11 +10,6 @@
     color: black;
 }
 
-/* Navigation Bar */
-.logoleft {
-    float: left;
-}
-
 .RightSideOfScreen {
 	position: absolute;
 	right: 10px;
@@ -124,8 +119,8 @@ li .overlay {
 	text-align: center;
 }
 .loginForm input{
-	padding: 2px;
 	width: 90%;
+    height: 50%;
 }
 
 /*Create User page*/
