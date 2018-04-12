@@ -87,6 +87,8 @@ namespace App.Controllers
 			model.Roles = roles;
 			model.Rights = repoRight.GetRights();
 
+			model.SelectedRole = model.Roles[0];
+
 			return View("ChangeRights", model);
 		}
 
