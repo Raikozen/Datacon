@@ -1,5 +1,7 @@
 ﻿.ContactTable {
-	width : 100%;
+    width: 100%;
+    border: solid 2px;
+    border-color: #002B5C;
 }
 
 .tableitem {

@@ -1,19 +1,19 @@
 ﻿@model LoginViewModel
 
 <div class="row loginForm">
-	<div class="col-xs-6 col-xs-offset-3">
-		<h2 class="Headers">Login</h2>
+	<div class="LoginBox col-xs-6 col-xs-offset-3">
+		<h2 class="Headers" id="LoginTitle">Login</h2>
 		@using (Html.BeginForm("Login", "User"))
 		{	
-			<div class="col-xs-12">
+			<div class="LoginInput col-xs-12">
 				<input asp-for="Email" name="email" />
 				<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
 			</div>
-			<div class="col-xs-12">
+			<div class="LoginInput col-xs-12">
 				<input asp-for="Password" name="password" type="password" />
 				<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
 			</div>
-			<div class="col-xs-12">
+			<div class="LoginButton col-xs-12">
 				<input type="submit" />
 			</div>
 		}
