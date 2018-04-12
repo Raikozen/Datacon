@@ -4,7 +4,7 @@
     ViewData["Title"] = "ReserveRoom";
 }
 
-<h2 class="Headers">Reserve this Room.</h2>
+<h2 class="Headers">Reserve this Room</h2>
 <form asp-controller="Reservation" asp-action="AddReservation" asp-route-roomId="@Model.RoomId" asp-route-userId="21">
     <input asp-for="ReservationName" name="reservationName" />
     <input asp-for="ReservationStart" value="@DateTime.Now" />

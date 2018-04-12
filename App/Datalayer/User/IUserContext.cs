@@ -21,5 +21,7 @@ namespace App.Datalayer
         void ReportSick(int userID);
         bool IsSick(int userID);
         void SicknessRestored(int userID);
-	}
+        List<SickReport> GetSickReportsUser(int userID);
+        List<SickReport> GetSickReportsAll();
+    }
 }

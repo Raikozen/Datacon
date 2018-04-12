@@ -29,8 +29,11 @@
             alert("The account has been created.")
 
         }
-		function 
-		var answer = confirm("Are you sure you want to delete this reservation?")
+		function DeleteReservation() {
+			var answer = confirm("Are you sure you want to delete this reservation?")
+
+		}
+
     </script>
 </head>
 <body>
@@ -87,3 +90,10 @@
 	@RenderSection("Scripts", required: false)
 </body>
 </html>
+
+<!-- Reservation -> Let op met alles in de URL te zetten. 
+					Let op met delete reservation + URL aanpassen. 
+					Zet er een validatie op icm de rechten / geen validatie is gevaarlijk!
+	ChangeRights -> SelectedRole wordt niet gevuld.... asap fixen
+	ReservationViewModel -> Reservering met een lijst van reserveringen? 
+							FF aanpassen zodat we niet de model direct aanroepen in de viewmodel.

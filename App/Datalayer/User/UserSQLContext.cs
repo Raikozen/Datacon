@@ -161,7 +161,7 @@ namespace App.Datalayer
 
             command.Parameters["@userId"].Value = userId;
 
-            connection.Open();
+            command.Connection.Open();
             SqlDataReader reader = command.ExecuteReader();
 
             //rights
@@ -200,7 +200,7 @@ namespace App.Datalayer
             //Create the user object
             if (userId != 0 && firstName != "" && lastName != "" && email != "" && roleId != 0 && roleName != "")
             {
-                connection.Close();
+                command.Connection.Close();
 
                 //return the user
                 return new User(
@@ -214,7 +214,7 @@ namespace App.Datalayer
                 );
             }
 
-            connection.Close();
+            command.Connection.Close();
             return null;
         }
 
@@ -504,6 +504,80 @@ namespace App.Datalayer
             command.Connection.Open();
             command.ExecuteNonQuery();
             command.Connection.Close();
+        }
+
+        public List<SickReport> GetSickReportsUser(int userID)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT UserId, DateTimeStart, DateTimeEnd, proftaak.[User].firstName, " +
+                "proftaak.[User].infix, proftaak.[User].lastName FROM proftaak.[SickReport] " +
+                "INNER JOIN proftaak.[User] ON UserId = proftaak.[User].id " +
+                "WHERE UserId = @userID";
+            command.Parameters.AddWithValue("userID", userID);
+
+            using (command)
+            {
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    List<SickReport> sickReports = new List<SickReport>();
+                    while (reader.Read())
+                    {
+                        string fullname = (string)reader["firstName"] + " " + (reader.IsDBNull(4) ? "" : (string)reader["infix"]) + " " + (string)reader["lastName"];
+                        sickReports.Add(new SickReport(
+                            (int)reader["UserId"],
+                            fullname,
+                            reader.IsDBNull(1) ? null : (DateTime?)reader["DateTimeStart"],
+                            reader.IsDBNull(2) ? null : (DateTime?)reader["DateTimeEnd"]
+                        ));
+                    }
+                    command.Connection.Close();
+                    return sickReports;
+                }
+                else
+                {
+                    command.Connection.Close();
+                    return null;
+                }
+            }
+        }
+
+        public List<SickReport> GetSickReportsAll()
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT UserId, DateTimeStart, DateTimeEnd, proftaak.[User].firstName, " +
+                "proftaak.[User].infix, proftaak.[User].lastName FROM proftaak.[SickReport] " +
+                "INNER JOIN proftaak.[User] ON UserId = proftaak.[User].id ";
+
+            using (command)
+            {
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    List<SickReport> sickReports = new List<SickReport>();
+                    while (reader.Read())
+                    {
+                        string fullname = (string)reader["firstName"] + " " + (reader.IsDBNull(4) ? "" : (string)reader["infix"]) + " " + (string)reader["lastName"];
+                        sickReports.Add(new SickReport(
+                            (int)reader["UserId"],
+                            fullname,
+                            reader.IsDBNull(1) ? null : (DateTime?)reader["DateTimeStart"],
+                            reader.IsDBNull(2) ? null : (DateTime?)reader["DateTimeEnd"]
+                        ));
+                    }
+                    command.Connection.Close();
+                    return sickReports;
+                }
+                else
+                {
+                    command.Connection.Close();
+                    return null;
+                }
+            }
         }
     }
 }
