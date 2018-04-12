@@ -23,43 +23,43 @@ namespace App.Controllers
             roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
             roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
 
-            viewModel.SelectedUser = viewModel.Users[0];
+            roleviewmodel.SelectedUser = roleviewmodel.Users[0];
 
-            var result = from User in viewModel.Users
-                         where viewModel.SelectedUserId == User.Id
+            var result = from User in roleviewmodel.Users
+                         where roleviewmodel.SelectedUserId == User.Id
                          select User;
 
             foreach (var User in result)
             {
-                viewModel.SelectedRoleId = User.Role.Id;
-                viewModel.SelectedUser = User;
+                roleviewmodel.SelectedRoleId = User.Role.Id;
+                roleviewmodel.SelectedUser = User;
             }
 
-            return View("Change", viewModel);
+            return View("Change", roleviewmodel);
         }
 
                
         [HttpPost]
-        public IActionResult Change(RoleViewModel viewModel)
+        public IActionResult Change(RoleViewModel roleviewmodel)
         {
-            viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
-            viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
+            roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
+            roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
             
-            var result = from User in viewModel.Users
-                         where viewModel.SelectedUserId == User.Id
+            var result = from User in roleviewmodel.Users
+                         where roleviewmodel.SelectedUserId == User.Id
                          select User;
 
             foreach(var User in result)
             {
-                viewModel.SelectedRoleId = User.Role.Id;
-                viewModel.SelectedUser = User;
+                roleviewmodel.SelectedRoleId = User.Role.Id;
+                roleviewmodel.SelectedUser = User;
             }
 
 
             UserRepository userRepository = new UserRepository(new UserSQLContext());
-            userRepository.UpdateUserRole(viewModel.Users.Find(f => f.Id == viewModel.SelectedUserId), viewModel.Roles.Find(f => f.Id == viewModel.SelectedRoleId));
+            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f => f.Id == roleviewmodel.SelectedUserId), roleviewmodel.Roles.Find(f => f.Id == roleviewmodel.SelectedRoleId));
 
-            return View("Change", viewModel);
+            return View("Change", roleviewmodel);
         }
 
 
