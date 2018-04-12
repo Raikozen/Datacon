@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="~/css/StyleSheet.css" />
         <link rel="stylesheet" href="~/css/Custom.css" />
         <link rel="stylesheet" href="~/css/ChangeRole.css" />
+		<link rel="stylesheet" href="~/css/login.css" />
 
         <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
     </environment>
@@ -28,6 +29,8 @@
             alert("The account has been created.")
 
         }
+		function 
+		var answer = confirm("Are you sure you want to delete this reservation?")
     </script>
 </head>
 <body>
@@ -43,8 +46,8 @@
 				</button>
 			</div>
 			<div class="navbar-collapse collapse">
-				<a asp-area="" asp-controller="Home" asp-action="Index" class="logoleft"><img class="logo" src="~/images/DataconLogoBig.png"></a>
 				<ul class="nav navbar-nav">
+					<li><a class="logoleft" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/DataconLogoBig.png"></a></li>
 					<li><a asp-area="" asp-controller="User" asp-action="Create">Create User</a></li>
 					<li><a asp-area="" asp-controller="Reservation" asp-action="LoadData">Reserve a Room</a></li>
 					<li><a asp-area="" asp-controller="Role" asp-action="Change">Change Role</a></li>

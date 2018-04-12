@@ -11,11 +11,6 @@ namespace App.Controllers
 {
     public class ReservationController : HomeController
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult LoadData()
         {
@@ -35,7 +30,7 @@ namespace App.Controllers
             List<Reservation> reservations = repo.GetReservations(room);
            
             ReservationViewModel viewmodel = new ReservationViewModel();
-            viewmodel.AddReservationList(reservations);
+            viewmodel.Reservations = (reservations);
             viewmodel.AddRoomId(roomId);
             return View("ReserveRoom", viewmodel);
         }
@@ -67,7 +62,8 @@ namespace App.Controllers
 			ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
             repo.AddReservation(ViewModel.RoomId, userId ,ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);
 
-            return View("ReserveRoom");
+            List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
+            return View("Reserve", rooms);
         }
     }
 }

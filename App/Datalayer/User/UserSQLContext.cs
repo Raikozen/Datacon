@@ -505,5 +505,39 @@ namespace App.Datalayer
             command.ExecuteNonQuery();
             command.Connection.Close();
         }
+
+        public List<SickReport> GetSickReportsUser(int userID)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT UserId, DateTimeStart, DateTimeEnd FROM proftaak.[SickReport]" +
+                "WHERE UserId = @userID";
+            command.Parameters.AddWithValue("userID", userID);
+
+            using (command)
+            {
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    List<SickReport> sickReports = new List<SickReport>();
+                    while (reader.Read())
+                    {
+                        sickReports.Add(new SickReport(
+                            (int)reader["UserId"], 
+                            reader.IsDBNull(1) ? null : (DateTime?)reader["DateTimeStart"], 
+                            reader.IsDBNull(2) ? null : (DateTime?)reader["DateTimeEnd"]
+                        ));
+                    }
+                    command.Connection.Close();
+                    return sickReports;
+                }
+                else
+                {
+                    command.Connection.Close();
+                    return null;
+                }
+            }
+        }
     }
 }

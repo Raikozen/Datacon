@@ -1,0 +1,20 @@
+.LoginBox {
+    background-color: #002b5c;
+    height: 300px;
+    width: 600px;
+}
+
+.LoginInput {
+    margin:10px;
+}
+
+.LoginButton {
+    margin-top: 50px;
+    margin-left: 10px;
+    height: 50%;
+}
+
+#LoginTitle{
+    margin-bottom: 10px;
+    color:white;
+}
