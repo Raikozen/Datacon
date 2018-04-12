@@ -327,18 +327,13 @@ namespace App.Datalayer
         /// </summary>
         /// <param name="user"></param>
         /// <param name="newRoleId"></param>
-        /// FUNCTION IS NOT TESTED YET!
         public void UpdateUserRole(User user, Role role)
         {
-            string query =
-                "UPDATE proftaak.[User] " +
-                "SET proftaak.[User].roleId = @roleId " +
-                "WHERE proftaak.[User].id = @userid;";
-
             SqlCommand command = new SqlCommand();
-
             command.Connection = connection;
-            command.CommandText = query;
+            command.CommandText = "UPDATE proftaak.[User] " +
+				"SET proftaak.[User].roleId = @roleId " +
+				"WHERE proftaak.[User].id = @userid;"; ;
 
             command.Parameters.Add("@roleId", SqlDbType.Int);
             command.Parameters.Add("@userId", SqlDbType.Int);
@@ -346,9 +341,9 @@ namespace App.Datalayer
             command.Parameters["@roleId"].Value = role.Id;
             command.Parameters["@userId"].Value = user.Id;
 
-            connection.Open();
+            command.Connection.Open();
             command.ExecuteNonQuery();
-            connection.Close();
+			command.Connection.Close();
         }
 
         /// <summary>
