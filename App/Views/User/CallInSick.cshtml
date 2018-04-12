@@ -2,29 +2,31 @@
 
 <h1 class="Headers">Sick Report</h1>
 
-@if (Model.isSick == true)
-{
-	<form asp-action="CallInSickPost" asp-controller="User" method="post">
-		<input type="submit" value="I am restored of sickness" />
-	</form>
-}
-else
-{
-	<form asp-action="CallInSickPost" asp-controller="User" method="post">
-		<input type="submit" value="Report Sick" />
-	</form>
-}
+<div>
+	<h3 class="alignHorizontally">My sick days</h3>
 
+	@if (Model.isSick == true)
+	{
+		<form class="alignHorizontally" asp-action="CallInSickPost" asp-controller="User" method="post">
+			<input type="submit" value="I am restored of sickness" />
+		</form>
+	}
+	else
+	{
+		<form class="alignHorizontally" asp-action="CallInSickPost" asp-controller="User" method="post">
+			<input type="submit" value="Report Sick" />
+		</form>
+	}
+</div>
 
-@if (Model.SickReportsUser != null)
-{
-	<h3> My sick days</h3>
+<table class="ContactTable">
+	<tr>
+		<th class="tableheader">Date Sick</th>
+		<th class="tableheader">Date Restored</th>
+	</tr>
+	@if (Model.SickReportsUser != null)
+	{
 
-	<table class="ContactTable">
-		<tr>
-			<th class="tableheader">Date Sick</th>
-			<th class="tableheader">Date Restored</th>
-		</tr>
 		@foreach (SickReport report in Model.SickReportsUser)
 		{
 			<tr>
@@ -32,26 +34,30 @@ else
 				<td class="tableitem">@report.DatetimeEndstring</td>
 			</tr>
 		}
-	</table>
-}
+	}
+</table>
 
 @if (Model.hasOverviewRight == true)
 {
-	<h3>Overview sick reports</h3>
+	if (Model.SickReportsUser != null)
+	{
+		<h3>Overview sick reports</h3>
 
-	<table class="ContactTable">
-		<tr>
-			<th class="tableheader">Name User</th>
-			<th class="tableheader">Date Sick</th>
-			<th class="tableheader">Date Restored</th>
-		</tr>
-		@foreach (SickReport report in Model.SickReportsAll)
-		{
+		<table class="ContactTable">
 			<tr>
-				<td class="tableitem">@report.UserName</td>
-				<td class="tableitem">@report.DatetimeStartstring</td>
-				<td class="tableitem">@report.DatetimeEndstring</td>
+				<th class="tableheader">Name User</th>
+				<th class="tableheader">Date Sick</th>
+				<th class="tableheader">Date Restored</th>
 			</tr>
-		}
-	</table>
+			@foreach (SickReport report in Model.SickReportsAll)
+			{
+				<tr>
+					<td class="tableitem">@report.UserName</td>
+					<td class="tableitem">@report.DatetimeStartstring</td>
+					<td class="tableitem">@report.DatetimeEndstring</td>
+				</tr>
+			}
+		</table>
+	}
+
 }
