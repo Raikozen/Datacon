@@ -15,26 +15,43 @@ else
 	</form>
 }
 
+
 @if (Model.SickReportsUser != null)
 {
-	if (Model.hasOverviewRight == true)
-	{
-		//do dome shizzle
-	}
-	else
-	{
-		<table class="ContactTable">
+	<h3> My sick days</h3>
+
+	<table class="ContactTable">
+		<tr>
+			<th class="tableheader">Date Sick</th>
+			<th class="tableheader">Date Restored</th>
+		</tr>
+		@foreach (SickReport report in Model.SickReportsUser)
+		{
 			<tr>
-				<th class="tableheader">Date Sick</th>
-				<th class="tableheader">Date Restored</th>
+				<td class="tableitem">@report.DatetimeStartstring</td>
+				<td class="tableitem">@report.DatetimeEndstring</td>
 			</tr>
-			@foreach (SickReport report in Model.SickReportsUser)
-			{
-				<tr>
-					<td class="tableitem">@report.DatetimeStart.Value.ToShortDateString()</td>
-					<td class="tableitem">@report.DatetimeEnd.Value.ToShortDateString()</td>
-				</tr>
-			}
-		</table>
-	}
+		}
+	</table>
+}
+
+@if (Model.hasOverviewRight == true)
+{
+	<h3>Overview sick reports</h3>
+
+	<table class="ContactTable">
+		<tr>
+			<th class="tableheader">Name User</th>
+			<th class="tableheader">Date Sick</th>
+			<th class="tableheader">Date Restored</th>
+		</tr>
+		@foreach (SickReport report in Model.SickReportsAll)
+		{
+			<tr>
+				<td class="tableitem">@report.UserName</td>
+				<td class="tableitem">@report.DatetimeStartstring</td>
+				<td class="tableitem">@report.DatetimeEndstring</td>
+			</tr>
+		}
+	</table>
 }

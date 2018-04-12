@@ -8,14 +8,26 @@ namespace App.Models
     public class SickReport
     {
         public int UserID { get; }
-        public DateTime? DatetimeStart { get; }
-        public DateTime? DatetimeEnd { get; }
+        public string UserName { get; }
+        private DateTime? datetimeStart { get; }
+        private DateTime? datetimeEnd { get; }
 
-        public SickReport(int UserID, DateTime? DatetimeStart, DateTime? DatetimeEnd)
+        public SickReport(int UserID, string UserName, DateTime? DatetimeStart, DateTime? DatetimeEnd)
         {
             this.UserID = UserID;
-            this.DatetimeStart = DatetimeStart;
-            this.DatetimeEnd = DatetimeEnd;
+            this.UserName = UserName;
+            this.datetimeStart = DatetimeStart;
+            this.datetimeEnd = DatetimeEnd;
+        }
+
+        public string DatetimeStartstring
+        {
+            get { return datetimeStart == null ? null : datetimeStart.Value.ToShortDateString(); }
+        }
+
+        public string DatetimeEndstring
+        {
+            get { return datetimeEnd == null ? null : datetimeEnd.Value.ToShortDateString(); }
         }
     }
 }

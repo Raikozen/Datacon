@@ -109,5 +109,10 @@ namespace App.Repositorys
         {
             return _Context.GetSickReportsUser(userID);
         }
-	}
+
+        public List<SickReport> GetSickReportsAll()
+        {
+            return _Context.GetSickReportsAll();
+        }
+    }
 }

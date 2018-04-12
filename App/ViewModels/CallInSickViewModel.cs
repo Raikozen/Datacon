@@ -13,5 +13,10 @@ namespace App.ViewModels
         public bool isSick;
         public bool hasOverviewRight;
         public List<SickReport> SickReportsUser;
+        public List<SickReport> SickReportsAll
+        {
+            get { return hasOverviewRight == true ? SickReportsAll : null; }
+            set { }
+        }
     }
 }
