@@ -107,10 +107,15 @@ namespace App.Controllers
 		public IActionResult CallInSick()
 		{
 			base.CheckForLogin();
+            int id = Convert.ToInt32(Request.Cookies["userId"]);
 
+            ViewModels.CallInSickViewModel viewModel = new CallInSickViewModel();
 			UserRepository userRep = new UserRepository(new UserSQLContext());
-            bool IsSick = userRep.IsSick(Convert.ToInt32(Request.Cookies["userId"]));
-			return View("CallInSick", IsSick);
+
+            viewModel.isSick = userRep.IsSick(id);
+            viewModel.hasOverviewRight = userRep.GetUser(id).Role.Rights.Any(r => r.Id == 10) ? true : false;
+            viewModel.SickReportsUser = userRep.GetSickReportsUser(id);
+			return View("CallInSick", viewModel);
 		}
 
 		[HttpPost]
@@ -130,7 +135,11 @@ namespace App.Controllers
                 userRep.SicknessRestored(id);
             }
 
-            return View("CallInSick", userRep.IsSick(id));
+            ViewModels.CallInSickViewModel viewModel = new CallInSickViewModel();
+            viewModel.isSick = userRep.IsSick(id);
+            viewModel.hasOverviewRight = userRep.GetUser(id).Role.Rights.Any(r => r.Id == 10) ? true : false;
+            viewModel.SickReportsUser = userRep.GetSickReportsUser(id);
+            return View("CallInSick", viewModel);
 		}
 	}
 }
