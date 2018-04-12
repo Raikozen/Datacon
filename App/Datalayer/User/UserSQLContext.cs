@@ -512,7 +512,8 @@ namespace App.Datalayer
             command.Connection = connection;
             command.CommandText = "SELECT UserId, DateTimeStart, DateTimeEnd, proftaak.[User].firstName, " +
                 "proftaak.[User].infix, proftaak.[User].lastName FROM proftaak.[SickReport] " +
-                "INNER JOIN proftaak.[User] ON UserId = proftaak.[User].id ";
+                "INNER JOIN proftaak.[User] ON UserId = proftaak.[User].id " +
+                "WHERE UserId = @userID";
             command.Parameters.AddWithValue("userID", userID);
 
             using (command)
