@@ -10,11 +10,6 @@
     color: black;
 }
 
-/* Navigation Bar */
-.logoleft {
-    float: left;
-}
-
 .RightSideOfScreen {
 	position: absolute;
 	right: 10px;
