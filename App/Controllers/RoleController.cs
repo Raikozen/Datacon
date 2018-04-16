@@ -27,7 +27,9 @@ namespace App.Controllers
 			viewModel.SelectedUser = viewModel.Users[0];
 			viewModel.SelectedRole = viewModel.SelectedUser.Role;
 
-			var result = from User in viewModel.Users
+            viewModel.SelectedRole = viewModel.Roles[0];
+
+            var result = from User in viewModel.Users
                          where viewModel.SelectedUserId == User.Id
                          select User;
 
@@ -56,7 +58,7 @@ namespace App.Controllers
 			UserRepository userRepository = new UserRepository(new UserSQLContext());
             userRepository.UpdateUserRole(viewModel.SelectedUser, viewModel.SelectedRole);
 
-			return RedirectToAction("Change", "Role");
+            return RedirectToAction("Change", "Role", viewModel);
         }
 
 
@@ -86,6 +88,8 @@ namespace App.Controllers
 			ChangeRightsViewModel model = new ChangeRightsViewModel();
 			model.Roles = roles;
 			model.Rights = repoRight.GetRights();
+
+            
 
 			return View("ChangeRights", model);
 		}
