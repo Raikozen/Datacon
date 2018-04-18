@@ -49,6 +49,13 @@ namespace App.Controllers
 			return View("Login");
 		}
 
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("userId");
+            return RedirectToAction("Index", "Home", "");
+        }
+
         [HttpPost]
         public IActionResult Create(UserViewModel viewModel)
         {
