@@ -178,7 +178,9 @@ li .overlay {
 }
 
 footer {
-    position: relative;
+    position: fixed;
+    bottom: 10px;
+    left: 50px;
     color: black;
 }
 
@@ -226,3 +228,22 @@ footer {
 }
 
 /*Change Role*/
+
+/*Report Sick*/
+#sickborder:last-child{
+    margin-bottom : 45px;
+}
+
+.CallSickButton{
+    display:inline-block;
+    margin-left: 10px;
+}
+#Test{
+    display:inline-block;
+}
+
+.imglogo{
+    width:500px;
+    height:auto;
+    margin-bottom:30px;
+}

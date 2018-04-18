@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - App</title>
     <environment include="Development">
-		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/ContactList.css" />
         <link rel="stylesheet" href="~/css/StyleSheet.css" />
         <link rel="stylesheet" href="~/css/Custom.css" />
         <link rel="stylesheet" href="~/css/ChangeRole.css" />
-		<link rel="stylesheet" href="~/css/login.css" />
+        <link rel="stylesheet" href="~/css/login.css" />
 
         <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
     </environment>
@@ -37,30 +37,6 @@
     </script>
 </head>
 <body>
-  <!--Navbar-->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a class="logoleft" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/DataconLogoBig.png"></a></li>
-					<li><a asp-area="" asp-controller="User" asp-action="Create">Create User</a></li>
-					<li><a asp-area="" asp-controller="Reservation" asp-action="LoadData">Reserve a Room</a></li>
-					<li><a asp-area="" asp-controller="Role" asp-action="Change">Change Role</a></li>
-					<li><a asp-area="" asp-controller="User" asp-action="ContactList">Contact List</a></li>
-					<li><a asp-area="" asp-controller="Role" asp-action="ChangeRights">Change rights</a></li>
-					<li><a asp-area="" asp-controller="User" asp-action="CallInSick">Sick Report</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
     <div class="container body-content">
         @RenderBody()
         <footer class="footer">&#169; Datacon Portal Team A</footer>
@@ -91,9 +67,9 @@
 </body>
 </html>
 
-<!-- Reservation -> Let op met alles in de URL te zetten. 
-					Let op met delete reservation + URL aanpassen. 
-					Zet er een validatie op icm de rechten / geen validatie is gevaarlijk!
-	ChangeRights -> SelectedRole wordt niet gevuld.... asap fixen
-	ReservationViewModel -> Reservering met een lijst van reserveringen? 
-							FF aanpassen zodat we niet de model direct aanroepen in de viewmodel.
+<!-- Reservation -> Let op met alles in de URL te zetten.
+                    Let op met delete reservation + URL aanpassen.
+                    Zet er een validatie op icm de rechten / geen validatie is gevaarlijk!
+    ChangeRights -> SelectedRole wordt niet gevuld.... asap fixen
+    ReservationViewModel -> Reservering met een lijst van reserveringen?
+                            FF aanpassen zodat we niet de model direct aanroepen in de viewmodel.

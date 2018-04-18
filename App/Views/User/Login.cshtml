@@ -1,8 +1,12 @@
 ﻿@model LoginViewModel
 
+@{ 
+    Layout = "LoginLayout";
+}
+
 <div class="row loginForm">
 	<div class="LoginBox col-xs-6 col-xs-offset-3">
-		<h2 class="Headers" id="LoginTitle">Login</h2>
+		<img src="~/images/Datacon-logo-met-payoff.png" class="imglogo"/>
 		@using (Html.BeginForm("Login", "User"))
 		{	
 			<div class="col-xs-12">
@@ -14,7 +18,7 @@
 				<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
 			</div>
 			<div class=" col-xs-12">
-				<input class="LoginButton" type="submit" />
+				<input class="LoginButton" type="submit" value="Login"/>
 			</div>
 		}
 	</div>
