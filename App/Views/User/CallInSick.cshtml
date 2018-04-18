@@ -2,8 +2,27 @@
 
 <h1 class="Headers">Sick Report</h1>
 
+<<<<<<< HEAD
+@if (Model.isSick == true)
+{
+	<form asp-action="CallInSickPost" asp-controller="User" method="post">
+<<<<<<< HEAD
+		<input type="submit" value="I am no longer sick"/>
+=======
+		<input type="submit" value="I am restored of sickness" />
+>>>>>>> 43b0f14b24f2fc8d7c3bb709c0f8e45df63cb7c3
+	</form>
+}
+else
+{
+	<form asp-action="CallInSickPost" asp-controller="User" method="post">
+		<input type="submit" value="Report Sick" />
+	</form>
+}
+=======
 <div>
 	<h3 class="alignHorizontally">My sick days</h3>
+>>>>>>> 6b5fb602d9890bf3c100f92712f5beca4cb731ee
 
 	@if (Model.isSick == true)
 	{
