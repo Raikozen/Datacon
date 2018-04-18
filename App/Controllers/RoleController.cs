@@ -24,20 +24,8 @@ namespace App.Controllers
 			viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
 			viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
 
-			viewModel.SelectedUser = viewModel.Users[0];
+			viewModel.SelectedUser = viewModel.Users.Find(u=>u.Id == Convert.ToInt32(Request.Cookies["userId"]));
 			viewModel.SelectedRole = viewModel.SelectedUser.Role;
-
-            viewModel.SelectedRole = viewModel.Roles[0];
-
-            var result = from User in viewModel.Users
-                         where viewModel.SelectedUserId == User.Id
-                         select User;
-
-            foreach (var User in result)
-            {
-                viewModel.SelectedRoleId = User.Role.Id;
-                viewModel.SelectedUser = User;
-            }
 
             return View("Change", viewModel);
         }
