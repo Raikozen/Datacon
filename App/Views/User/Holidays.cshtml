@@ -1,0 +1,13 @@
+﻿@model HolidaysViewModel;
+@{
+    ViewData["Title"] = "Holidays";
+}
+
+<h2>Request holidays</h2>
+
+<form asp-controller="User" asp-action="SubmitRequest" method="post">
+	<input type="date" name="dateStart" />
+	<input type="date" name="dateEnd" />
+	<input type="text" name="description" />
+	<input type="submit" value="Submit holiday request" />
+</form>

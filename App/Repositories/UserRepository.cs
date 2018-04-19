@@ -114,5 +114,25 @@ namespace App.Repositorys
         {
             return _Context.GetSickReportsAll();
         }
+
+        public List<HolidayRequest> GetUnapprovedHolidayRequests()
+        {
+            return _Context.GetUnapprovedHolidayRequests();
+        }
+
+        public List<HolidayRequest> GetAllHolidayRequests()
+        {
+            return _Context.GetAllHolidayRequests();
+        }
+
+        public void AddHolidayRequest(HolidayRequest holidayRequest)
+        {
+            _Context.AddHolidayRequest(holidayRequest);
+        }
+
+        public void ApproveHolidayRequest(int Id)
+        {
+            _Context.ApproveHolidayRequest(Id);
+        }
     }
 }

@@ -150,5 +150,29 @@ namespace App.Controllers
             viewModel.SickReportsAll = userRep.GetSickReportsAll().OrderBy(o => o.UserName).ToList();
             return View("CallInSick", viewModel);
 		}
+
+        [HttpGet]
+        public IActionResult Holidays()
+        {
+            base.CheckForLogin();
+
+            HolidaysViewModel holidaysViewModel = new HolidaysViewModel();
+            holidaysViewModel.allholidayRequests = new UserRepository(new UserSQLContext()).GetAllHolidayRequests();
+            return View(holidaysViewModel);
+        }
+        
+        [HttpPost]
+        public IActionResult SubmitRequest(DateTime dateStart, DateTime dateEnd, string description)
+        {
+            base.CheckForLogin();
+            bool approved = false;
+            if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11))
+            {
+                approved = true;
+            }
+            HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(Request.Cookies["userId"]), dateStart, dateEnd, description, approved);
+            new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
+            return RedirectToAction("Holidays");
+        }
 	}
 }

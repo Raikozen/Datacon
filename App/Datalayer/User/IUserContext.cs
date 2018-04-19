@@ -23,5 +23,10 @@ namespace App.Datalayer
         void SicknessRestored(int userID);
         List<SickReport> GetSickReportsUser(int userID);
         List<SickReport> GetSickReportsAll();
+
+        List<HolidayRequest> GetUnapprovedHolidayRequests();
+        List<HolidayRequest> GetAllHolidayRequests();
+        void AddHolidayRequest(HolidayRequest holidayRequest);
+        void ApproveHolidayRequest(int Id);
     }
 }

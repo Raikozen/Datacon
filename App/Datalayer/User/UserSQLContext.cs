@@ -579,5 +579,102 @@ namespace App.Datalayer
                 }
             }
         }
+
+        public List<HolidayRequest> GetUnapprovedHolidayRequests()
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT id, userId, dateStart, dateEnd, description, approved " +
+                "FROM proftaak.[Holiday] WHERE approved = 0";
+            using (command)
+            {
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<HolidayRequest> holidayRequests;
+                if (reader.HasRows)
+                {
+                    holidayRequests = new List<HolidayRequest>();
+                    while (reader.Read())
+                    {
+                        holidayRequests.Add(new HolidayRequest(
+                            (int)reader["id"], (int)reader["userId"], (DateTime)reader["dateStart"], (DateTime)reader["dateEnd"], 
+                            reader.IsDBNull(4) ? "" : (string)reader["description"], (bool)reader["approved"]));
+                    }
+                }
+                else
+                {
+                    holidayRequests = default;
+                }
+                command.Connection.Close();
+                return holidayRequests;
+            }
+        }
+
+        public List<HolidayRequest> GetAllHolidayRequests()
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT id, userId, dateStart, dateEnd, description, approved " +
+                "FROM proftaak.[Holiday]";
+            using (command)
+            {
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<HolidayRequest> holidayRequests;
+                if (reader.HasRows)
+                {
+                    holidayRequests = new List<HolidayRequest>();
+                    while (reader.Read())
+                    {
+                        holidayRequests.Add(new HolidayRequest(
+                            (int)reader["id"], (int)reader["userId"], (DateTime)reader["dateStart"], (DateTime)reader["dateEnd"],
+                            reader.IsDBNull(4) ? "" : (string)reader["description"], (bool)reader["approved"]));
+                    }
+                }
+                else
+                {
+                    holidayRequests = default;
+                }
+                command.Connection.Close();
+                return holidayRequests;
+            }
+        }
+
+        public void AddHolidayRequest(HolidayRequest holidayRequest)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "INSERT INTO proftaak.[Holiday] " +
+                "(userId, dateStart, dateEnd, description, approved) " +
+                "VALUES (@userid, @datestart, @dateend, @description, @approved)";
+            command.Parameters.AddWithValue("@userid", holidayRequest.UserId);
+            command.Parameters.AddWithValue("@datestart", holidayRequest.DateStart);
+            command.Parameters.AddWithValue("@dateend", holidayRequest.DateEnd);
+            command.Parameters.AddWithValue("@description", holidayRequest.Description);
+            command.Parameters.AddWithValue("@approved", holidayRequest.Approved);
+
+            using (command)
+            {
+                command.Connection.Open();
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+            }
+        }
+
+        public void ApproveHolidayRequest(int Id)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "UPDATE proftaak.[Holiday] " +
+                "SET approved = 1 WHERE id = @id";
+            command.Parameters.AddWithValue("@id", Id);
+
+            using (command)
+            {
+                command.Connection.Open();
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+            }
+        }
     }
 }
