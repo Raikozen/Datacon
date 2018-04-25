@@ -195,16 +195,32 @@ namespace App.Controllers
         public IActionResult DeleteRequest(int id)
         {
             base.CheckForLogin();
-            new UserRepository(new UserSQLContext()).DeleteHolidayRequest(id);
-            return RedirectToAction("Holidays");
+            UserRepository userRep = new UserRepository(new UserSQLContext());
+            if (base.CheckForRight(11) || userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"])).Any(a=>a.Id == id))
+            {
+                userRep.DeleteHolidayRequest(id);
+                return RedirectToAction("Holidays");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
         public IActionResult ApproveRequest(int id)
         {
             base.CheckForLogin();
-            new UserRepository(new UserSQLContext()).ApproveHolidayRequest(id);
-            return RedirectToAction("Holidays");
+
+            if (base.CheckForRight(11))
+            {
+                new UserRepository(new UserSQLContext()).ApproveHolidayRequest(id);
+                return RedirectToAction("Holidays");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 	}
 }
