@@ -39,5 +39,10 @@ namespace App
                 this.FullName = lastName + " " + firstName;
             }
         }
+
+		public User()
+		{
+
+		}
     }
 }

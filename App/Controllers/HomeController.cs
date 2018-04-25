@@ -5,28 +5,39 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using App.Models;
+using App.Datalayer;
+using App.Repositorys;
 
 namespace App.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+		public IActionResult Index()
+		{
+            CheckForLogin();
+			return View("Index");
+		}
+
+        public void CheckForLogin()
+		{
+			if(Request.Cookies["userId"] != "" && Convert.ToInt32(Convert.ToInt32(Request.Cookies["userId"])) != 0)
+			{
+				return;
+			}
+
+			Response.Redirect("/User/Login");
+		}
+
+        public bool CheckForRight(int rightid)
         {
-            return View();
-        }
+            UserSQLContext context = new UserSQLContext();
+            UserRepository userrepository = new UserRepository(context);
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
+            int id = Convert.ToInt32(Request.Cookies["userId"]);
 
-            return View();
-        }
+            User user = userrepository.GetUser(id);
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            return user.Role.Rights.Any(f => f.Id == rightid);
         }
 
         public IActionResult Error()

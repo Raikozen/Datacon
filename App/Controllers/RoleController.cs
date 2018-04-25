@@ -11,49 +11,56 @@ using App.ViewModels;
 
 namespace App.Controllers
 {
-    public class RoleController : Controller
+    public class RoleController : HomeController
     {
         
         [HttpGet]
         public IActionResult Change()
         {
-            RoleViewModel roleviewmodel = new RoleViewModel();
-            roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
-            roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
+			base.CheckForLogin();
 
-            return View("Change", roleviewmodel);
-        }
-
-               
-        [HttpPost]
-        public IActionResult Change(int selectedUserId, int selectedRoleId)
-        {
-            RoleViewModel roleviewmodel = new RoleViewModel();
-            roleviewmodel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
-            roleviewmodel.Users = new UserRepository(new UserSQLContext()).GetUserList();
-            
-            roleviewmodel.selectedUserId = selectedUserId;
-            roleviewmodel.selectedRoleId = selectedRoleId;
-
-            Role selectedRole = null;
-            
-            var result = from user in roleviewmodel.Users
-                         where selectedUserId == user.Id
-                         select user;
-
-            foreach(var user in result)
+            if (base.CheckForRight(8))
             {
-                selectedRole = user.Role;
+                RoleViewModel viewModel = new RoleViewModel();
+
+                viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
+                viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
+
+                viewModel.SelectedUser = viewModel.Users.Find(u => u.Id == Convert.ToInt32(Request.Cookies["userId"]));
+                viewModel.SelectedRole = viewModel.SelectedUser.Role;
+
+                return View("Change", viewModel);
             }
-
-            roleviewmodel.SelectedRole = selectedRole;
-
-            UserRepository userRepository = new UserRepository(new UserSQLContext());
-            userRepository.UpdateUserRole(roleviewmodel.Users.Find(f => f.Id == selectedUserId), roleviewmodel.Roles.Find(werknemer => werknemer.Id == selectedRoleId));
-
-            return View("Change", roleviewmodel);
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
+
+		[HttpPost]
+        public IActionResult Change(RoleViewModel viewModel)
+        {
+            viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
+            viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
+
+			int selectedUserId = viewModel.SelectedUserId;
+			int selectedRoleId = viewModel.SelectedRoleId;
+
+			viewModel.SelectedUser = viewModel.Users.Find(x => x.Id == selectedUserId);
+			viewModel.SelectedRole = viewModel.Roles.Find(x => x.Id == selectedRoleId);
+
+			UserRepository userRepository = new UserRepository(new UserSQLContext());
+            userRepository.UpdateUserRole(viewModel.SelectedUser, viewModel.SelectedRole);
+
+            return RedirectToAction("Change", "Role", viewModel);
+        }
+
+
+		/// <summary>
+		/// Show the ChangeRights view
+		/// </summary>
+		/// <returns></returns>
         [HttpPost]
         public IActionResult Watch()
         {
@@ -63,21 +70,32 @@ namespace App.Controllers
 		[HttpGet]
 		public IActionResult ChangeRights()
 		{
-			RoleSQLContext contextRole = new RoleSQLContext();
-			RoleRepository repoRole = new RoleRepository(contextRole);
+			base.CheckForLogin();
 
-			RightSQLContext contextRight = new RightSQLContext();
-			RightRepository repoRight = new RightRepository(contextRight);
+            if (base.CheckForRight(9))
+            {
+                RoleSQLContext contextRole = new RoleSQLContext();
+                RoleRepository repoRole = new RoleRepository(contextRole);
 
-			List<Role> roles = repoRole.GetRoles();
+                RightSQLContext contextRight = new RightSQLContext();
+                RightRepository repoRight = new RightRepository(contextRight);
 
-			ChangeRightsViewModel model = new ChangeRightsViewModel();
-			model.Roles = roles;
-			model.Rights = repoRight.GetRights();
+                List<Role> roles = repoRole.GetRoles();
 
-			model.SelectedRole = roles.First();
+                ChangeRightsViewModel model = new ChangeRightsViewModel();
+                model.Roles = roles;
+                model.Rights = repoRight.GetRights();
 
-			return View("ChangeRights", model);
+                model.SelectedRole = model.Roles[0];
+
+                return View("ChangeRights", model);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
 		}
 
 		/// <summary>
@@ -88,6 +106,8 @@ namespace App.Controllers
 		[HttpPost]
 		public IActionResult ChangeSelectedRole(int selectedRoleId)
 		{
+			base.CheckForLogin();
+
 			RoleSQLContext contextRole = new RoleSQLContext();
 			RoleRepository repoRole = new RoleRepository(contextRole);
 
@@ -121,8 +141,10 @@ namespace App.Controllers
 		/// <param name="selectedRights"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public IActionResult changeRights(int selectedRoleId, List<int> selectedRights)
+		public IActionResult ChangeRights(int selectedRoleId, List<int> selectedRights)
 		{
+			base.CheckForLogin();
+
 			RoleSQLContext contextRole = new RoleSQLContext();
 			RoleRepository repoRole = new RoleRepository(contextRole);
 

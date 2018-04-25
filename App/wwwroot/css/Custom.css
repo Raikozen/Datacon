@@ -2,8 +2,9 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
     font-size: 15px;
-    color: #6e7a88;
     line-height: 1.8;
+
+    height: 100vh;
 }
 
 .RightSideOfScreen {
@@ -32,8 +33,9 @@
 
 /*RoomReservation*/
 
-.ReserveHeader{
-    text-align: left;
+.Headers{
+    text-align: center;
+    margin-left: 15px;
     margin-bottom: 20px; 
     margin-top: 20px;
 }
@@ -42,18 +44,206 @@
     text-decoration: none;
     list-style-type: none;
     text-align: left;
+    overflow: hidden;
 }
 
 .Link {
     text-decoration: none;
     color: #000000;
-    transition: all 0.4s ease-in;
     font-size: 17px;
     margin: 6px 10px 7.5px 6px
 }
 .Link:hover{
     text-decoration: none;
-    color:midnightblue;
-    transition: all 0.4s ease;
-    transform: scale(1.1);
+    color: #002b5c;
+}
+
+/*List of Rooms*/
+.flex-containerReserve {
+    display: -webkit-flex;
+    display: flex;
+    width: 905px;
+    background-color: transparent;
+    margin: 0 auto;
+    padding: 10px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    border-radius: 3%
+  }
+
+.RoomItems {
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 260px;
+    height: 200px;
+    margin: 10px;
+    margin-left: 22.5px;
+    position: relative;
+    float: left;
+}
+
+.RoomItems > a {
+        display: block;
+        width: 250px;
+        height: 200px;
+}
+
+.content.flex-containerReserve {
+    /* substract 100px (navbar) + 20px (padding top and bottom nav bar) + 20px (padding content container) */
+    min-height: calc(50vh - 140px);
+}
+
+
+li .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #002b5c;
+    color: white;
+    width: 260px;
+    padding: 20px;
+    text-align: center;
+}
+
+/*login form*/
+.loginForm {
+	margin-top: 22vh;
+	text-align: center;
+}
+
+.LoginButton {
+    background-color: #002b5c;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.LoginInput {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+
+.LoginBox {
+    background-color: transparent;
+    height: 320px;
+    width: 600px;
+}
+
+#LoginTitle {
+    margin-bottom: 10px;
+    color: #002b5c;
+    font-size: 3em;
+}
+
+
+
+/*Create User page*/
+.Flex-ContainerCreate {
+    width: auto;
+    padding: 20px 10px;
+    display: inline-block;
+}
+
+.inputcreate {
+    background-color: #002b5c;
+    color: white;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.create-form-label {
+    text-align: left;
+    padding-left: 0px;
+    margin-left: 0px;
+    margin-top: 10px;
+}
+
+.buttonCreate {
+    margin-top: 30px;
+    border: none;
+    cursor: pointer;
+    background-color: #002b5c;
+    color: white;
+    height:30px;
+}
+
+footer {
+    position: fixed;
+    bottom: 10px;
+    left: 50px;
+    color: black;
+}
+
+.Flex-ContainerRights {
+    display: -webkit-flex;
+    display: flex;
+   width: 200px;
+    background-color: ghostwhite;
+    padding: 20px 10px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow: hidden;
+    border: 2px solid #002b5c;
+    border-radius: 3%;
+    color: black;
+}
+
+.dropdown {
+    margin-bottom: 5px;
+}
+
+.dropdownform{
+    height: 20px;
+}
+
+.midtext {
+    margin-top: 20px;
+    text-decoration: underline;
+}
+
+.HeaderRight {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.buttonRight{
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.alignHorizontally {
+	display:inline-block;
+}
+
+/*Change Role*/
+
+/*Report Sick*/
+#sickborder:last-child{
+    margin-bottom : 45px;
+}
+
+.CallSickButton{
+    display:inline-block;
+    margin-left: 10px;
+}
+#Test{
+    display:inline-block;
+}
+
+.imglogo{
+    width:500px;
+    height:auto;
+    margin-bottom:30px;
 }

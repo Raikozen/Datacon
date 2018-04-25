@@ -51,7 +51,7 @@ namespace App.Repositorys
             return _Context.GetUserList();
         }
 
-        public void UpdateUserRole(User user, Models.Role role)
+        public void UpdateUserRole(User user, Role role)
         {
             _Context.UpdateUserRole(user, role);
         }
@@ -99,5 +99,50 @@ namespace App.Repositorys
         {
             _Context.SicknessRestored(userID);
         }
-	}
+
+        public User GetUser(int userID)
+        {
+            return _Context.GetUser(userID);
+        }
+
+        public List<SickReport> GetSickReportsUser(int userID)
+        {
+            return _Context.GetSickReportsUser(userID);
+        }
+
+        public List<SickReport> GetSickReportsAll()
+        {
+            return _Context.GetSickReportsAll();
+        }
+
+        public List<HolidayRequest> GetUnapprovedHolidayRequests()
+        {
+            return _Context.GetUnapprovedHolidayRequests();
+        }
+
+        public List<HolidayRequest> GetAllHolidayRequests()
+        {
+            return _Context.GetAllHolidayRequests();
+        }
+
+        public void AddHolidayRequest(HolidayRequest holidayRequest)
+        {
+            _Context.AddHolidayRequest(holidayRequest);
+        }
+
+        public void ApproveHolidayRequest(int Id)
+        {
+            _Context.ApproveHolidayRequest(Id);
+        }
+
+        public List<HolidayRequest> GetUserHolidayRequests(int userId)
+        {
+            return _Context.GetUserHolidayRequests(userId);
+        }
+
+        public void DeleteHolidayRequest(int Id)
+        {
+            _Context.DeleteHolidayRequest(Id);
+        }
+    }
 }

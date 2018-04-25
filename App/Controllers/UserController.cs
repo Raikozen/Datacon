@@ -10,18 +10,22 @@ using App.Models;
 
 namespace App.Controllers
 {
-    public class UserController : Controller
+    public class UserController : HomeController
     {
-        public IActionResult Index()
-        {
-            return View("Create");
-        }
-
 		[HttpGet]
 		public IActionResult Create()
 		{
-			return View("Create");
-		}
+			base.CheckForLogin();
+
+            if (base.CheckForRight(1))
+            {
+                return View("Create");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
 
 		[HttpGet]
 		public IActionResult Login()
@@ -30,7 +34,7 @@ namespace App.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Login(UserViewModel viewModel)
+		public IActionResult Login(LoginViewModel viewModel)
 		{
 			UserSQLContext context = new UserSQLContext();
 			UserRepository repoUser = new UserRepository(context);
@@ -41,7 +45,7 @@ namespace App.Controllers
 
 				if(user != null)
 				{
-					Response.Cookies.Append("accountId", Convert.ToString(user.Id));
+					Response.Cookies.Append("userId", Convert.ToString(user.Id));
 
 					return RedirectToAction("Index", "Home");
 				}
@@ -52,10 +56,19 @@ namespace App.Controllers
 			return View("Login");
 		}
 
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("userId");
+            return RedirectToAction("Index", "Home", "");
+        }
+
         [HttpPost]
         public IActionResult Create(UserViewModel viewModel)
         {
-            if (ModelState.IsValid)
+			base.CheckForLogin();
+
+			if (ModelState.IsValid)
             {
                 UserSQLContext context = new UserSQLContext();
                 UserRepository repository = new UserRepository(context);
@@ -73,16 +86,27 @@ namespace App.Controllers
         [HttpGet]
         public IActionResult ContactList()
         {
-            UserViewModel userViewModel = new UserViewModel();
-            userViewModel.users = new UserRepository(new UserSQLContext()).GetUserList().OrderBy(o => o.FullName).ToList();
-            userViewModel.sortBy = "Name";
-            return View("ContactList", userViewModel);
+			base.CheckForLogin();
+
+            if (base.CheckForRight(7))
+            {
+                UserViewModel userViewModel = new UserViewModel();
+                userViewModel.users = new UserRepository(new UserSQLContext()).GetUserList().OrderBy(o => o.FullName).ToList();
+                userViewModel.sortBy = "Name";
+                return View("ContactList", userViewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
         public IActionResult ContactList(string sort)
         {
-            UserViewModel userViewModel = new UserViewModel();
+			base.CheckForLogin();
+
+			UserViewModel userViewModel = new UserViewModel();
             List<User> users = new UserRepository(new UserSQLContext()).GetUserList();
             if (sort == "Name")
             {
@@ -103,25 +127,100 @@ namespace App.Controllers
 		[HttpGet]
 		public IActionResult CallInSick()
 		{
-            //int id = Convert.ToInt32(Request.Cookies["userId"]);
-            UserRepository userRep = new UserRepository(new UserSQLContext());
-            bool IsSick = userRep.IsSick(21);//Temp hard coded userID
-			return View("CallInSick", IsSick);
+			base.CheckForLogin();
+
+            int id = Convert.ToInt32(Request.Cookies["userId"]);
+
+            ViewModels.CallInSickViewModel viewModel = new CallInSickViewModel();
+			UserRepository userRep = new UserRepository(new UserSQLContext());
+
+            viewModel.isSick = userRep.IsSick(id);
+            viewModel.hasOverviewRight = userRep.GetUser(id).Role.Rights.Any(r => r.Id == 10) ? true : false;
+            viewModel.SickReportsUser = userRep.GetSickReportsUser(id);
+            viewModel.SickReportsAll = userRep.GetSickReportsAll() == null ? null : userRep.GetSickReportsAll().OrderBy(o=>o.UserName).ToList();
+			return View("CallInSick", viewModel);
 		}
 
 		[HttpPost]
 		public IActionResult CallInSickPost()
 		{
-            UserRepository userRep = new UserRepository(new UserSQLContext());
-            if (userRep.IsSick(21) == false) //temp hard coded userID
+			base.CheckForLogin();
+
+			int id = Convert.ToInt32(Request.Cookies["userId"]);
+
+			UserRepository userRep = new UserRepository(new UserSQLContext());
+            if (userRep.IsSick(id) == false)
             {
-                userRep.ReportSick(21);//Temp hard coded userID
+                userRep.ReportSick(id);
             }
             else
             {
-                userRep.SicknessRestored(21); //Temp hard coded userID
+                userRep.SicknessRestored(id);
             }
-            return View("CallInSick", userRep.IsSick(21)); //Temp hard coded userID
+
+            ViewModels.CallInSickViewModel viewModel = new CallInSickViewModel();
+            viewModel.isSick = userRep.IsSick(id);
+            viewModel.hasOverviewRight = userRep.GetUser(id).Role.Rights.Any(r => r.Id == 10) ? true : false;
+            viewModel.SickReportsUser = userRep.GetSickReportsUser(id);
+            viewModel.SickReportsAll = userRep.GetSickReportsAll().OrderBy(o => o.UserName).ToList();
+            return View("CallInSick", viewModel);
 		}
+
+        [HttpGet]
+        public IActionResult Holidays()
+        {
+            base.CheckForLogin();
+
+            UserRepository userRep = new UserRepository(new UserSQLContext());
+            HolidaysViewModel holidaysViewModel = new HolidaysViewModel((userRep.GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11) ? true : false),
+                userRep.GetAllHolidayRequests(), userRep.GetUnapprovedHolidayRequests(), userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"])));
+            return View(holidaysViewModel);
+        }
+        
+        [HttpPost]
+        public IActionResult SubmitRequest(DateTime dateStart, DateTime dateEnd, string description)
+        {
+            base.CheckForLogin();
+            bool approved = false;
+            if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11))
+            {
+                approved = true;
+            }
+            HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(Request.Cookies["userId"]), dateStart, dateEnd, description, approved);
+            new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
+            return RedirectToAction("Holidays");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteRequest(int id)
+        {
+            base.CheckForLogin();
+            UserRepository userRep = new UserRepository(new UserSQLContext());
+            if (base.CheckForRight(11) || userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"])).Any(a=>a.Id == id))
+            {
+                userRep.DeleteHolidayRequest(id);
+                return RedirectToAction("Holidays");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ApproveRequest(int id)
+        {
+            base.CheckForLogin();
+
+            if (base.CheckForRight(11))
+            {
+                new UserRepository(new UserSQLContext()).ApproveHolidayRequest(id);
+                return RedirectToAction("Holidays");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
 	}
 }

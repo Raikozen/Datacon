@@ -10,7 +10,7 @@ namespace App.Datalayer
     public interface IUserContext
     {
         User Login(string email, string password);
-        void UpdateUserRole(User user, Models.Role role);
+        void UpdateUserRole(User user, Role role);
         List<User> GetUserList();
         User GetUser(int userId);
 
@@ -21,5 +21,14 @@ namespace App.Datalayer
         void ReportSick(int userID);
         bool IsSick(int userID);
         void SicknessRestored(int userID);
-	}
+        List<SickReport> GetSickReportsUser(int userID);
+        List<SickReport> GetSickReportsAll();
+
+        List<HolidayRequest> GetUnapprovedHolidayRequests();
+        List<HolidayRequest> GetAllHolidayRequests();
+        void AddHolidayRequest(HolidayRequest holidayRequest);
+        void ApproveHolidayRequest(int Id);
+        List<HolidayRequest> GetUserHolidayRequests(int userId);
+        void DeleteHolidayRequest(int Id);
+    }
 }

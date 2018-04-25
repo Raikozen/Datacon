@@ -1,0 +1,165 @@
+﻿@model HolidaysViewModel;
+@{
+	ViewData["Title"] = "Holidays";
+}
+
+<h2>Request holidays</h2>
+
+<form asp-controller="User" asp-action="SubmitRequest" method="post">
+	<input type="date" name="dateStart" />
+	<input type="date" name="dateEnd" />
+	<input type="text" name="description" />
+	<input type="submit" value="Submit holiday request" onclick="ConfirmHoliday()"/>
+</form>
+
+<hr />
+
+<div class="panel-group">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" href="#myholidays">My holidays</a>
+			</h4>
+		</div>
+		<div id="myholidays" class="panel-collapse collapse in">
+			<div class="panel-body">
+				@if (Model.UserholidayRequests != null)
+				{
+					<table class="ContactTable">
+						<tr>
+							<th class="tableheader">Holiday</th>
+							<th class="tableheader">Date Start</th>
+							<th class="tableheader">Date End</th>
+						</tr>
+						@foreach (HolidayRequest holiday in Model.UserholidayRequests)
+						{
+							@if (holiday.Approved == true)
+							{
+								<tr>
+									<td class="tableitem">@holiday.Description</td>
+									<td class="tableitem">@holiday.DateStart.ToShortDateString()</td>
+									<td class="tableitem">@holiday.DateEnd.ToShortDateString()</td>
+								</tr>
+							}
+						}
+					</table>
+				}
+			</div>
+		</div>
+
+		@if (Model.UserholidayRequests != null)
+		{
+			@if (Model.UserholidayRequests.Any(a => a.Approved == false))
+			{
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#awaitapproval">My holiday requests awaiting approval</a>
+					</h4>
+				</div>
+				<div id="awaitapproval" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<table class="ContactTable">
+							<tr>
+								<th class="tableheader">Holiday</th>
+								<th class="tableheader">Date Start</th>
+								<th class="tableheader">Date End</th>
+								<th class="tableheader">Delete request</th>
+							</tr>
+							@foreach (HolidayRequest holiday in Model.UserholidayRequests)
+							{
+								@if (holiday.Approved == false)
+								{
+									<tr>
+										<td class="tableitem">@holiday.Description</td>
+										<td class="tableitem">@holiday.DateStart.ToShortDateString()</td>
+										<td class="tableitem">@holiday.DateEnd.ToShortDateString()</td>
+										<td class="tableitem"><form asp-controller="User" asp-action="DeleteRequest" asp-route-id="@holiday.Id"><input type="submit" value="Delete" class="form-control btn btn-danger" /></form></td>
+									</tr>
+								}
+							}
+						</table>
+					</div>
+				</div>
+			}
+		}
+	</div>
+</div>
+
+@if (Model.HasApproveHolidayRight)
+{
+	<div class="panel-group">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#holidayrequests">All holiday requests awaiting approval</a>
+				</h4>
+			</div>
+			<div id="holidayrequests" class="panel-collapse collapse in">
+				<div class="panel-body">
+					@if (Model.UnapprovedholidayRequests != null)
+					{
+						<table class="ContactTable">
+							<tr>
+								<th class="tableheader">Name</th>
+								<th class="tableheader">Holiday</th>
+								<th class="tableheader">Date Start</th>
+								<th class="tableheader">Date End</th>
+								<th class="tableheader">Approve/Delete request</th>
+							</tr>
+							@foreach (HolidayRequest holiday in Model.UnapprovedholidayRequests)
+							{
+								@if (holiday.Approved == false)
+								{
+									<tr>
+										<td class="tableitem">@holiday.User.FullName</td>
+										<td class="tableitem">@holiday.Description</td>
+										<td class="tableitem">@holiday.DateStart.ToShortDateString()</td>
+										<td class="tableitem">@holiday.DateEnd.ToShortDateString()</td>
+										<td class="tableitem"><form asp-controller="User" asp-action="ApproveRequest" asp-route-id="@holiday.Id" method="post"><input type="submit" value="Approve" class="form-control btn btn-success" /></form><form asp-controller="User" asp-action="DeleteRequest" asp-route-id="@holiday.Id" method="post"><input type="submit" value="Delete" class="form-control btn btn-danger" /></form></td>
+									</tr>
+								}
+							}
+						</table>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel-group">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#overview">Overview all approved holidays</a>
+				</h4>
+			</div>
+			<div id="overview" class="panel-collapse collapse">
+				<div class="panel-body">
+					@if (Model.AllholidayRequests != null)
+					{
+						<table class="ContactTable">
+							<tr>
+								<th class="tableheader">Name</th>
+								<th class="tableheader">Holiday</th>
+								<th class="tableheader">Date Start</th>
+								<th class="tableheader">Date End</th>
+							</tr>
+							@foreach (HolidayRequest holiday in Model.AllholidayRequests)
+							{
+								@if (holiday.Approved == true)
+								{
+									<tr>
+										<td class="tableitem">@holiday.User.FullName</td>
+										<td class="tableitem">@holiday.Description</td>
+										<td class="tableitem">@holiday.DateStart.ToShortDateString()</td>
+										<td class="tableitem">@holiday.DateEnd.ToShortDateString()</td>
+									</tr>
+								}
+							}
+						</table>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+}
