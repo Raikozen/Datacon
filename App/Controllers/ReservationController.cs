@@ -15,7 +15,7 @@ namespace App.Controllers
         public IActionResult LoadData()
         {
 			base.CheckForLogin();
-
+            
 			List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
             return View("Reserve", rooms);
         }
@@ -48,10 +48,17 @@ namespace App.Controllers
         {
 			base.CheckForLogin();
 
-			ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
-            repo.DeleteReservation(reservationId);
-            List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
-            return View("Reserve", rooms);
+            if (base.CheckForRight(6))
+            {
+                ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
+                repo.DeleteReservation(reservationId);
+                List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
+                return View("Reserve", rooms);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]

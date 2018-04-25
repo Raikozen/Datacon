@@ -17,8 +17,15 @@ namespace App.Controllers
 		{
 			base.CheckForLogin();
 
-			return View("Create");
-		}
+            if (base.CheckForRight(1))
+            {
+                return View("Create");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
 
 		[HttpGet]
 		public IActionResult Login()
@@ -81,10 +88,17 @@ namespace App.Controllers
         {
 			base.CheckForLogin();
 
-			UserViewModel userViewModel = new UserViewModel();
-            userViewModel.users = new UserRepository(new UserSQLContext()).GetUserList().OrderBy(o => o.FullName).ToList();
-            userViewModel.sortBy = "Name";
-            return View("ContactList", userViewModel);
+            if (base.CheckForRight(7))
+            {
+                UserViewModel userViewModel = new UserViewModel();
+                userViewModel.users = new UserRepository(new UserSQLContext()).GetUserList().OrderBy(o => o.FullName).ToList();
+                userViewModel.sortBy = "Name";
+                return View("ContactList", userViewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
@@ -114,6 +128,7 @@ namespace App.Controllers
 		public IActionResult CallInSick()
 		{
 			base.CheckForLogin();
+
             int id = Convert.ToInt32(Request.Cookies["userId"]);
 
             ViewModels.CallInSickViewModel viewModel = new CallInSickViewModel();
