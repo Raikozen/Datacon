@@ -13,7 +13,7 @@ namespace App.ViewModels
 		[EmailAddress(ErrorMessage = "Email needs to be a valid Email Adress")]
 		[Display(Name = "Email", Prompt = "Email address")]
 		public string Email { get; set; }
-		//Password
+		//Passwordx
 		[Required(ErrorMessage = "Password is required.")]
 		[Display(Name = "Password", Prompt = "password")]
 		public string Password { get; set; }

@@ -1,52 +1,53 @@
 ﻿@model RoleViewModel
 
 <div class="row accountForm col-sm-4 col-sm-offset-4">
-	<form asp-controller="Role" asp-action="Change" method="post">
+    <form asp-controller="Role" asp-action="Change" method="post">
 
-		<h2 class="Headers">Change</h2>
-
-
-		<select class="dropdown" name="SelectedUserId" id="SelectedUserId">
-			@foreach (User user in Model.Users)
-			{
-				if (Model.SelectedUser.Id == user.Id)
-				{
-					<option selected value="@user.Id">
-						@user.Firstname
-					</option>
-				}
-
-				else
-				{
-					<option value="@user.Id">
-						@user.Firstname
-					</option>
-				}
-			}
-		</select>
-
-		<select class="dropdown" name="SelectedRoleId">
-			@foreach (Role role in Model.Roles)
-			{
-				if (Model.SelectedUser.Role.Id == role.Id)
-				{
-					<option selected value="@role.Id">
-						@role.Name
-					</option>
-				}
+        <h2 class="Headers">Change</h2>
 
 
-				else
-				{
-					<option value="@role.Id">
-						@role.Name
-					</option>
-				}
-			}
-		</select>
+        <select class="dropdown" name="SelectedUserId" id="SelectedUserId">
+            @foreach (User user in Model.Users)
+        {
+            if (Model.SelectedUser.Id == user.Id)
+            {
+                <option selected value="@user.Id">
+                    @user.Firstname
+                </option>
+        }
 
-		<input type="submit" value="Submit" />
+        else
+        {
+            <option value="@user.Id">
+                @user.Firstname
+            </option>
+    }
+}
+        </select>
 
-	</form>
+        <select class="dropdown" name="SelectedRoleId">
+            @foreach (Role role in Model.Roles)
+        {
+            if (Model.SelectedUser.Role.Id == role.Id)
+            {
+                <option selected value="@role.Id">
+                    @role.Name
+                </option>
+        }
+
+
+        else
+        {
+            <option value="@role.Id">
+                @role.Name
+            </option>
+    }
+}
+        </select>
+
+        <input type="submit" value="Submit" onclick="ConfirmChangeRole()" />
+
+
+    </form>
 
 </div>
