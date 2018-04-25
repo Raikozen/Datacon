@@ -28,5 +28,7 @@ namespace App.Datalayer
         List<HolidayRequest> GetAllHolidayRequests();
         void AddHolidayRequest(HolidayRequest holidayRequest);
         void ApproveHolidayRequest(int Id);
+        List<HolidayRequest> GetUserHolidayRequests(int userId);
+        void DeleteHolidayRequest(int Id);
     }
 }

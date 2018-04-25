@@ -134,5 +134,15 @@ namespace App.Repositorys
         {
             _Context.ApproveHolidayRequest(Id);
         }
+
+        public List<HolidayRequest> GetUserHolidayRequests(int userId)
+        {
+            return _Context.GetUserHolidayRequests(userId);
+        }
+
+        public void DeleteHolidayRequest(int Id)
+        {
+            _Context.DeleteHolidayRequest(Id);
+        }
     }
 }

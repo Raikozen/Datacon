@@ -676,5 +676,51 @@ namespace App.Datalayer
                 command.Connection.Close();
             }
         }
+
+        public List<HolidayRequest> GetUserHolidayRequests(int userId)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT id, userId, dateStart, dateEnd, description, approved " +
+                "FROM proftaak.[Holiday] WHERE userId = @userID";
+            command.Parameters.AddWithValue("@userID", userId);
+            using (command)
+            {
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<HolidayRequest> holidayRequests;
+                if (reader.HasRows)
+                {
+                    holidayRequests = new List<HolidayRequest>();
+                    while (reader.Read())
+                    {
+                        holidayRequests.Add(new HolidayRequest(
+                            (int)reader["id"], (int)reader["userId"], (DateTime)reader["dateStart"], (DateTime)reader["dateEnd"],
+                            reader.IsDBNull(4) ? "" : (string)reader["description"], (bool)reader["approved"]));
+                    }
+                }
+                else
+                {
+                    holidayRequests = default;
+                }
+                command.Connection.Close();
+                return holidayRequests;
+            }
+        }
+
+        public void DeleteHolidayRequest(int Id)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "DELETE FROM proftaak.[Holiday] WHERE id = @id";
+            command.Parameters.AddWithValue("@id", Id);
+
+            using (command)
+            {
+                command.Connection.Open();
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+            }
+        }
     }
 }
