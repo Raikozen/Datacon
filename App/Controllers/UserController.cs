@@ -174,5 +174,12 @@ namespace App.Controllers
             new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
             return RedirectToAction("Holidays");
         }
+
+        public IActionResult ConfirmChange()
+        {
+            ViewData["Message"] = "The role has been successfully updated.";
+
+            return View();
+        }
 	}
 }

@@ -1,4 +1,4 @@
-﻿@model CallInSickViewModel;
+﻿    @model CallInSickViewModel;
 
 
 <h1 class="Headers">Sick Report</h1>
@@ -14,13 +14,13 @@
         @if (Model.isSick == true)
             {
                 <form asp-action="CallInSickPost" asp-controller="User" method="post">
-                    <input type="submit" value="I am no longer sick" />
+                    <input type="submit" value="I am no longer sick" onclick="ConfirmSick()"/>
                 </form>
             }
             else
             {
                 <form asp-action="CallInSickPost" asp-controller="User" method="post">
-                    <input type="submit" value="Report Sick" />
+                    <input type="submit" value="Report Sick" onclick="ConfirmNotSick()"/>
                 </form>
             }
         </div>
