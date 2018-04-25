@@ -53,8 +53,8 @@ namespace App.Controllers
 			UserRepository userRepository = new UserRepository(new UserSQLContext());
             userRepository.UpdateUserRole(viewModel.SelectedUser, viewModel.SelectedRole);
 
+            //Confirmation message apply / create other methods in other controllers (Tim)
             ConfirmChange();
-
 
             return View("Change", viewModel);
         }
@@ -159,7 +159,8 @@ namespace App.Controllers
 			return RedirectToAction("ChangeRights", "Role");
 		}
 
-       private void ConfirmChange()
+        //Confirmation message apply / create other methods in other controllers (Tim)
+        private void ConfirmChange()
         {
             ViewData["message"] = "The user role has been updated successfully";
             
