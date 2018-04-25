@@ -73,52 +73,6 @@ namespace App.Repositories
 			return listSickReports;
 		}
 
-		/*
-		/// ||==========================================
-		/// || THIS FUNCTION IS CURRENTLY BROKEN!!
-		/// || SERIOUSLY, DO NOT USE IT!
-		/// || 
-		/// || (╯°□°）╯︵ ┻━┻
-		/// ||==========================================
-		/// <summary>
-		/// Get holidays by email adress async
-		/// </summary>
-		/// <param name="email"></param>
-		/// <returns></returns>
-		public static async Task<List<Holiday>> GetHolidaysByEmailAsync(string email)
-		{
-			var input = new FormUrlEncodedContent(new[]
-			{
-				new KeyValuePair<string, string>("email", email)
-			});
-
-			//Make a http request to the API
-			HttpResponseMessage response = await Client.PostAsync("VakantieDagenPerPersoon/", input);
-
-			string jsonString = response.Content.ReadAsStringAsync().Result;
-			JObject jObj = (JObject)JsonConvert.DeserializeObject(jsonString);
-
-			List<Holiday> holidays = new List<Holiday>();
-
-			foreach(var item in jObj["gebruikers"])
-			{
-				foreach(var holiday in item["geplanned"])
-				{
-					holidays.Add(new Holiday(
-						holiday["id"].Value<int>(),
-						holiday["datum_van"].Value<string>(),
-						holiday["datum_tot"].Value<string>(),
-						holiday["omschrijving"].Value<string>(),
-						holiday["totaal_aantal_uren"].Value<int>(),
-						holiday["status"].Value<string>()
-					));
-				}
-			}
-
-			return holidays;
-		}
-		*/
-
 
 		/// <summary>
 		/// Get all agenda appointments async
