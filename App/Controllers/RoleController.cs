@@ -19,15 +19,22 @@ namespace App.Controllers
         {
 			base.CheckForLogin();
 
-			RoleViewModel viewModel = new RoleViewModel();
-			
-			viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
-			viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
+            if (base.CheckForRight(8))
+            {
+                RoleViewModel viewModel = new RoleViewModel();
 
-			viewModel.SelectedUser = viewModel.Users.Find(u=>u.Id == Convert.ToInt32(Request.Cookies["userId"]));
-			viewModel.SelectedRole = viewModel.SelectedUser.Role;
+                viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
+                viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
 
-            return View("Change", viewModel);
+                viewModel.SelectedUser = viewModel.Users.Find(u => u.Id == Convert.ToInt32(Request.Cookies["userId"]));
+                viewModel.SelectedRole = viewModel.SelectedUser.Role;
+
+                return View("Change", viewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 
@@ -68,21 +75,30 @@ namespace App.Controllers
 		{
 			base.CheckForLogin();
 
-			RoleSQLContext contextRole = new RoleSQLContext();
-			RoleRepository repoRole = new RoleRepository(contextRole);
+            if (base.CheckForRight(9))
+            {
+                RoleSQLContext contextRole = new RoleSQLContext();
+                RoleRepository repoRole = new RoleRepository(contextRole);
 
-			RightSQLContext contextRight = new RightSQLContext();
-			RightRepository repoRight = new RightRepository(contextRight);
+                RightSQLContext contextRight = new RightSQLContext();
+                RightRepository repoRight = new RightRepository(contextRight);
 
-			List<Role> roles = repoRole.GetRoles();
+                List<Role> roles = repoRole.GetRoles();
 
-			ChangeRightsViewModel model = new ChangeRightsViewModel();
-			model.Roles = roles;
-			model.Rights = repoRight.GetRights();
+                ChangeRightsViewModel model = new ChangeRightsViewModel();
+                model.Roles = roles;
+                model.Rights = repoRight.GetRights();
 
-			model.SelectedRole = model.Roles[0];
+                model.SelectedRole = model.Roles[0];
 
-			return View("ChangeRights", model);
+                return View("ChangeRights", model);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
 		}
 
 		/// <summary>

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using App.Models;
+using App.Datalayer;
+using App.Repositorys;
 
 namespace App.Controllers
 {
@@ -25,6 +27,18 @@ namespace App.Controllers
 
 			Response.Redirect("/User/Login");
 		}
+
+        public bool CheckForRight(int rightid)
+        {
+            UserSQLContext context = new UserSQLContext();
+            UserRepository userrepository = new UserRepository(context);
+
+            int id = Convert.ToInt32(Request.Cookies["userId"]);
+
+            User user = userrepository.GetUser(id);
+
+            return user.Role.Rights.Any(f => f.Id == rightid);
+        }
 
         public IActionResult Error()
         {

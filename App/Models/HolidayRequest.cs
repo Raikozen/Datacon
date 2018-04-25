@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Repositorys;
+using App.Datalayer;
 
 namespace App.Models
 {
@@ -9,6 +11,7 @@ namespace App.Models
     {
         public int Id { get; }
         public int UserId { get; }
+        public User User { get; }
         public DateTime DateStart { get; }
         public DateTime DateEnd { get; }
         public string Description { get; }
@@ -21,6 +24,7 @@ namespace App.Models
             this.DateEnd = DateEnd;
             this.Description = Description;
             this.Approved = Approved;
+            this.User = new UserRepository(new UserSQLContext()).GetUser(UserId);
         }
 
         public HolidayRequest(int Id, int UserId, DateTime DateStart, DateTime DateEnd, string Description, bool Approved)
@@ -31,6 +35,7 @@ namespace App.Models
             this.DateEnd = DateEnd;
             this.Description = Description;
             this.Approved = Approved;
+            this.User = new UserRepository(new UserSQLContext()).GetUser(UserId);
         }
     }
 }
