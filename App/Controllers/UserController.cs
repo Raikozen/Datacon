@@ -17,14 +17,13 @@ namespace App.Controllers
 		{
 			base.CheckForLogin();
 
-            if (base.CheckForRight(1))
-            {
-                return View("Create");
-            }
-            else
+
+            if(!base.CheckForRight(1))
             {
                 return RedirectToAction("Index", "Home");
             }
+
+            return View("Create");
         }
 
 		[HttpGet]
