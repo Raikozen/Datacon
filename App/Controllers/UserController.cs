@@ -180,20 +180,28 @@ namespace App.Controllers
         }
         
         [HttpPost]
-        public IActionResult SubmitRequest(DateTime dateStart, DateTime dateEnd, string description)
+        public IActionResult SubmitRequest(HolidaysViewModel holidaysViewModel)
         {
-            base.CheckForLogin();
-            bool approved = false;
-            if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11))
+            if (ModelState.IsValid)
             {
-                approved = true;
+                base.CheckForLogin();
+                bool approved = false;
+                if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11))
+                {
+                    approved = true;
+                }
+                if (holidaysViewModel.DateStart != DateTime.MinValue && holidaysViewModel.DateEnd != DateTime.MinValue && holidaysViewModel.DateStart < holidaysViewModel.DateEnd && !string.IsNullOrEmpty(holidaysViewModel.Description))
+                {
+                    HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(Request.Cookies["userId"]), (DateTime)holidaysViewModel.DateStart, (DateTime)holidaysViewModel.DateEnd, holidaysViewModel.Description, approved);
+                    new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
+                }
             }
-            HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(Request.Cookies["userId"]), dateStart, dateEnd, description, approved);
-            new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
-
-            ConfirmHoliday();
-
-            return RedirectToAction("Holidays");
+            UserRepository userRep = new UserRepository(new UserSQLContext());
+            holidaysViewModel.HasApproveHolidayRight = (userRep.GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f => f.Id == 11) ? true : false);
+            holidaysViewModel.AllholidayRequests = userRep.GetAllHolidayRequests();
+            holidaysViewModel.UnapprovedholidayRequests = userRep.GetUnapprovedHolidayRequests();
+            holidaysViewModel.UserholidayRequests = userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"]));
+            return View("Holidays", holidaysViewModel);
         }
 
         [HttpPost]
