@@ -53,7 +53,7 @@ namespace App.Controllers
             userRepository.UpdateUserRole(viewModel.SelectedUser, viewModel.SelectedRole);
 
             //Confirmation message apply / create other methods in other controllers (Tim)
-            ConfirmChange();
+            ConfirmChange(viewModel);
 
             return View("Change", viewModel);
         }
@@ -128,6 +128,8 @@ namespace App.Controllers
 				model.SelectedRole = role;
 			}
 
+            ConfirmUpdateRights(model);
+
 			return View("ChangeRights", model);
 		}
 
@@ -154,10 +156,16 @@ namespace App.Controllers
 		}
 
         //Confirmation message apply / create other methods in other controllers (Tim)
-        private void ConfirmChange()
+        private void ConfirmChange(RoleViewModel viewModel)
         {
-            ViewData["message"] = "The user role has been updated successfully";
+            ViewData["ConfirmChange"] = "The user role " + viewModel.SelectedUser.Firstname + " has been updated successfully.";
             
+        }
+
+        private void ConfirmUpdateRights(ChangeRightsViewModel viewModel)
+        {
+            ViewData["ConfirmUpdateRights"] = "The rights for the role " + viewModel.SelectedRole.Name + " have been successfully updated.";
+
         }
     }
 }

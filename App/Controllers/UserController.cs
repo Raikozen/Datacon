@@ -77,7 +77,7 @@ namespace App.Controllers
                 return RedirectToAction("Create", "User");
             }
 
-            TempData["Notification"] = "The account with email " + viewModel.Email + "has been created.";
+            ConfirmAccount(viewModel);
 
             return View();
         }
@@ -151,10 +151,12 @@ namespace App.Controllers
             if (userRep.IsSick(id) == false)
             {
                 userRep.ReportSick(id);
+                ConfirmSick();
             }
             else
             {
                 userRep.SicknessRestored(id);
+                ConfirmNotSick();
             }
 
             ViewModels.CallInSickViewModel viewModel = new CallInSickViewModel();
@@ -177,17 +179,31 @@ namespace App.Controllers
         }
         
         [HttpPost]
-        public IActionResult SubmitRequest(DateTime dateStart, DateTime dateEnd, string description)
+        public IActionResult SubmitRequest(HolidaysViewModel holidaysViewModel)
         {
-            base.CheckForLogin();
-            bool approved = false;
-            if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11))
+            if (ModelState.IsValid)
             {
-                approved = true;
+                base.CheckForLogin();
+                bool approved = false;
+                if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11))
+                {
+                    approved = true;
+                }
+                if (holidaysViewModel.DateStart != DateTime.MinValue && holidaysViewModel.DateEnd != DateTime.MinValue && holidaysViewModel.DateStart < holidaysViewModel.DateEnd && !string.IsNullOrEmpty(holidaysViewModel.Description))
+                {
+                    HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(Request.Cookies["userId"]), (DateTime)holidaysViewModel.DateStart, (DateTime)holidaysViewModel.DateEnd, holidaysViewModel.Description, approved);
+                    new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
+                }
             }
-            HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(Request.Cookies["userId"]), dateStart, dateEnd, description, approved);
-            new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
-            return RedirectToAction("Holidays");
+            UserRepository userRep = new UserRepository(new UserSQLContext());
+            holidaysViewModel.HasApproveHolidayRight = (userRep.GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f => f.Id == 11) ? true : false);
+            holidaysViewModel.AllholidayRequests = userRep.GetAllHolidayRequests();
+            holidaysViewModel.UnapprovedholidayRequests = userRep.GetUnapprovedHolidayRequests();
+            holidaysViewModel.UserholidayRequests = userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"]));
+
+            ConfirmHoliday();
+
+            return View("Holidays", holidaysViewModel);
         }
 
         [HttpPost]
@@ -220,6 +236,29 @@ namespace App.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        private void ConfirmAccount(UserViewModel viewModel)
+        {
+            if(viewModel.Email != null)
+            {
+                ViewData["ConfirmAccount"] = "The account with email " + viewModel.Email + " has been created.";
+            }
+        }
+
+        private void ConfirmSick()
+        {
+            ViewData["ConfirmSick"] = "Your status is set to 'Sick'.";
+        }
+
+        private void ConfirmNotSick()
+        {
+            ViewData["ConfirmNotSick"] = "Your status is set to 'No longer sick'.";
+        }
+
+        private void ConfirmHoliday()
+        {
+            ViewData["ConfirmHoliday"] = "Your holiday has been requested.";
         }
 	}
 }
