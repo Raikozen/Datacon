@@ -188,7 +188,7 @@
     background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
-    width: 249px;
+    width: 235px;
     height: 200px;
     margin: 10px;
     margin-left: 22.5px;
@@ -196,10 +196,17 @@
     float: left;
 }
 
+
+
 .RoomItems > a {
         display: block;
         width: 249px;
         height: 200px;
+}
+
+.RoomItemsImg {
+    width: 100%;
+    padding: 0px;
 }
 
 .content.flex-containerReserve {

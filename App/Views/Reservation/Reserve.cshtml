@@ -4,7 +4,7 @@
     <ul class="RoomList">
         @foreach (Room room in Model)
         {
-            <li class="RoomItems"><a class="Link" asp-controller="Reservation" asp-action="LoadReservations" asp-route-roomId="@room.Id"><div class="overlay">@room.RoomName</div></a></li>
+            <li class="RoomItems"><img src="http://www.willemvandinther.nl/wp-content/uploads/2012/02/digitalespeeltuin-300x193.jpg" class="RoomItemsImg col-xs-12" /><a class="Link" asp-controller="Reservation" asp-action="LoadReservations" asp-route-roomId="@room.Id"><div class="overlay">@room.RoomName</div></a></li>
         }
     </ul>
 </div>
