@@ -45,7 +45,6 @@ namespace App.Controllers
 				if(user != null)
 				{
 					Response.Cookies.Append("userId", Convert.ToString(user.Id));
-
 					return RedirectToAction("Index", "Home");
 				}
 

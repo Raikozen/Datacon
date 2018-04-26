@@ -20,8 +20,9 @@ namespace App.Controllers
 
         public void CheckForLogin()
 		{
-			if(Request.Cookies["userId"] != "" && Convert.ToInt32(Convert.ToInt32(Request.Cookies["userId"])) != 0)
+			if(Request.Cookies["userId"] != "" && Convert.ToInt32(Request.Cookies["userId"]) != 0)
 			{
+                ViewData["Rights"] = new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights;
 				return;
 			}
 
