@@ -14,21 +14,21 @@ namespace App.Controllers
         [HttpGet]
         public IActionResult LoadData()
         {
-			base.CheckForLogin();
-            
-			List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
+            base.CheckForLogin();
+
+            List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
             return View("Reserve", rooms);
         }
 
         [HttpGet]
         public IActionResult LoadReservations(int roomId)
         {
-			base.CheckForLogin();
+            base.CheckForLogin();
 
-			Room room = new Room(roomId,"test");
+            Room room = new Room(roomId, "test");
             ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
             List<Reservation> reservations = repo.GetReservations(room);
-           
+
             ReservationViewModel viewmodel = new ReservationViewModel();
             viewmodel.Reservations = (reservations);
             viewmodel.AddRoomId(roomId);
@@ -38,29 +38,26 @@ namespace App.Controllers
         [HttpGet]
         public IActionResult Transfer()
         {
-			base.CheckForLogin();
+            base.CheckForLogin();
 
-			return View("ReserveRoom");
+            return View("ReserveRoom");
         }
-        
+
         [HttpGet]
         public IActionResult DeleteReservation(int reservationId)
         {
-			base.CheckForLogin();
-
-            if (base.CheckForRight(6))
-            {
-                ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
-                repo.DeleteReservation(reservationId);
-                List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
-                return View("Reserve", rooms);
-            }
-            else
+            base.CheckForLogin();
+            if (!base.CheckForRight(6))
             {
                 return RedirectToAction("Index", "Home");
             }
-        }
 
+            ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
+            repo.DeleteReservation(reservationId);
+            List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
+            return View("Reserve", rooms);
+        }
+    
         [HttpPost]
         public IActionResult AddReservation(ReservationViewModel ViewModel, int userId)
         {
