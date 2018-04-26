@@ -14,13 +14,15 @@
         @if (Model.isSick == true)
             {
                 <form asp-action="CallInSickPost" asp-controller="User" method="post">
-                    <input type="submit" value="I am no longer sick" onclick="ConfirmSick()"/>
+                    <input type="submit" value="I am no longer sick" />
+                    @ViewData["ConfirmSick"]
                 </form>
             }
             else
             {
                 <form asp-action="CallInSickPost" asp-controller="User" method="post">
-                    <input type="submit" value="Report Sick" onclick="ConfirmNotSick()"/>
+                    <input type="submit" value="Report Sick" />
+                    @ViewData["ConfirmNotSick"]
                 </form>
             }
         </div>

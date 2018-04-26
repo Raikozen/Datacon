@@ -78,7 +78,7 @@ namespace App.Controllers
                 return RedirectToAction("Create", "User");
             }
 
-            TempData["Notification"] = "The account with email " + viewModel.Email + "has been created.";
+            ConfirmAccount(viewModel);
 
             return View();
         }
@@ -152,10 +152,12 @@ namespace App.Controllers
             if (userRep.IsSick(id) == false)
             {
                 userRep.ReportSick(id);
+                ConfirmSick();
             }
             else
             {
                 userRep.SicknessRestored(id);
+                ConfirmNotSick();
             }
 
             ViewModels.CallInSickViewModel viewModel = new CallInSickViewModel();
@@ -188,6 +190,9 @@ namespace App.Controllers
             }
             HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(Request.Cookies["userId"]), dateStart, dateEnd, description, approved);
             new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
+
+            ConfirmHoliday();
+
             return RedirectToAction("Holidays");
         }
 
@@ -221,6 +226,29 @@ namespace App.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        private void ConfirmAccount(UserViewModel viewModel)
+        {
+            if(viewModel.Email != null)
+            {
+                ViewData["ConfirmAccount"] = "The account with email " + viewModel.Email + " has been created.";
+            }
+        }
+
+        private void ConfirmSick()
+        {
+            ViewData["ConfirmSick"] = "Your status is set to 'Sick'.";
+        }
+
+        private void ConfirmNotSick()
+        {
+            ViewData["ConfirmNotSick"] = "Your status is set to 'No longer sick'.";
+        }
+
+        private void ConfirmHoliday()
+        {
+            ViewData["ConfirmHoliday"] = "Your Holiday has been requested.";
         }
 	}
 }
