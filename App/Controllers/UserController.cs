@@ -201,6 +201,9 @@ namespace App.Controllers
             holidaysViewModel.AllholidayRequests = userRep.GetAllHolidayRequests();
             holidaysViewModel.UnapprovedholidayRequests = userRep.GetUnapprovedHolidayRequests();
             holidaysViewModel.UserholidayRequests = userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"]));
+
+            ConfirmHoliday();
+
             return View("Holidays", holidaysViewModel);
         }
 
@@ -256,7 +259,7 @@ namespace App.Controllers
 
         private void ConfirmHoliday()
         {
-            ViewData["ConfirmHoliday"] = "Your Holiday has been requested.";
+            ViewData["ConfirmHoliday"] = "Your holiday has been requested.";
         }
 	}
 }

@@ -1,6 +1,6 @@
 ﻿@model HolidaysViewModel;
 @{
-	ViewData["Title"] = "Holidays";
+    ViewData["Title"] = "Holidays";
 }
 
 <div class="row">
@@ -14,7 +14,8 @@
 		<span class="create-form-label col-xs-8 col-xs-offset-2">Desription holiday:</span><input asp-for="Description" type="text" name="description" class="col-xs-12" />
 		<span class="col-sm-8 col-xs-offset-2">@Html.ValidationMessageFor(m => m.Description)</span>
 		<input class="buttonCreate col-xs-12" type="submit" value="Submit holiday request" />
-	</form>
+        <span class="col-sm-12 col-xs-offset-1">@ViewData["ConfirmHoliday"]</span>
+</form>
 
 </div>
 
