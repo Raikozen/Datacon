@@ -3,14 +3,20 @@
 	ViewData["Title"] = "Holidays";
 }
 
-<h2>Request holidays</h2>
+<div class="row">
 
-<form asp-controller="User" asp-action="SubmitRequest" method="post">
-	<input type="date" name="dateStart" />
-	<input type="date" name="dateEnd" />
-	<input type="text" name="description" />
-	<input type="submit" value="Submit holiday request" onclick="ConfirmHoliday()"/>
-</form>
+	<h2 class="Headers col-xs-11">Request holidays</h2>
+	<form asp-action="SubmitRequest" asp-controller="User" method="post" class="col-xs-4 col-xs-offset-4">
+		<span class="create-form-label col-xs-8 col-xs-offset-2">Date start holiday: </span><input asp-for="DateStart" type="date" name="dateStart" class="col-xs-12" />
+		<span class="col-sm-8 col-xs-offset-2">@Html.ValidationMessageFor(m => m.DateStart)</span>
+		<span class="create-form-label col-xs-8 col-xs-offset-2">Date end holiday: </span><input asp-for="DateEnd" type="date" name="dateEnd" class="col-xs-12" />
+		<span class="col-sm-8 col-xs-offset-2">@Html.ValidationMessageFor(m => m.DateEnd)</span>
+		<span class="create-form-label col-xs-8 col-xs-offset-2">Desription holiday:</span><input asp-for="Description" type="text" name="description" class="col-xs-12" />
+		<span class="col-sm-8 col-xs-offset-2">@Html.ValidationMessageFor(m => m.Description)</span>
+		<input class="buttonCreate col-xs-12" type="submit" value="Submit holiday request" />
+	</form>
+
+</div>
 
 <hr />
 
