@@ -120,20 +120,32 @@
 }
 
 .RightSideOfScreen {
-	position: absolute;
-	right: 10px;
-	top: 61px;
-	margin-bottom: 10px;
-	height: 100%;
-	width: 350px;
-	text-align: center;
-	font-weight: bold;
+	min-height: 88vh;
+	top: 20px;
 	border: solid;
 	border-color: black;
 	border-width: 1px;
 	background-color: ghostwhite;
 }
 
+.RightSideOfScreen h3 {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.RightSideOfScreen .newsPost {
+	text-align: left;
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.RightSideOfScreen .newsPost .newsFeedDate {
+	font-weight: bold;
+}
+
+.RightSideOfScreen .newsPost .newsFeedMessage {
+
+}
 .hrBlack {
 	border: 0.5px solid black;
 }
