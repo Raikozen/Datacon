@@ -69,7 +69,15 @@ namespace App.Controllers
                 repo.AddReservation(ViewModel.RoomId, userId, ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);
             }
             List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
-            return View("Reserve", rooms);
+
+            ConfirmReservation();
+
+            return View("Reserve", rooms);   
+        }
+
+        private void ConfirmReservation()
+        {
+            ViewData["ConfirmReservation"] = "Your reservation has been added";
         }
     }
 }

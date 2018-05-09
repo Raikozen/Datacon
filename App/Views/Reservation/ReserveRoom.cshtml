@@ -9,7 +9,8 @@
     <input required asp-for="ReservationName" name="reservationName" />
     <input required asp-for="ReservationStart" value="@DateTime.Now" />
     <input required asp-for="ReservationEnd" value="@DateTime.Now" />
-    <input onclick="ConfirmReservation()" type="submit" value="Submit Reservation" />
+    <input type="submit" value="Submit Reservation" />
+    @ViewData["ConfirmReservation"]
 </form>
 <br />
 <br />
