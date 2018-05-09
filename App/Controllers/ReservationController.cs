@@ -44,7 +44,7 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteReservation(int reservationId)
+        public IActionResult DeleteReservation(int RoomId, int reservationId)
         {
             base.CheckForLogin();
             if (!base.CheckForRight(6))
@@ -55,9 +55,9 @@ namespace App.Controllers
             ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
             repo.DeleteReservation(reservationId);
             List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
-            return View("Reserve", rooms);
+            return RedirectToAction("LoadReservations", new { roomId = RoomId });
         }
-    
+
         [HttpPost]
         public IActionResult AddReservation(ReservationViewModel ViewModel, int userId)
         {
@@ -69,7 +69,7 @@ namespace App.Controllers
                 repo.AddReservation(ViewModel.RoomId, userId, ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);
             }
             List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
-            return View("Reserve", rooms);
+            return RedirectToAction("LoadReservations", new { roomId = ViewModel.RoomId });
         }
     }
 }

@@ -29,7 +29,7 @@
         <td class="tableitem">@reservation.ConvertDateTime(reservation.ReservationStart)</td>
         <td class="tableitem">@reservation.ConvertDateTime(reservation.ReservationEnd)</td>
         <td class="tableitem">@reservation.User.FullName</td>
-        <td class="tableitem"><a asp-controller="Reservation" asp-action="DeleteReservation" asp-route-reservationId="@reservation.Id" onclick="return confirm('Are you sure you want to delete this reservation?')">Delete reservation</a></td>
+        <td class="tableitem"><a asp-controller="Reservation" asp-action="DeleteReservation" asp-route-RoomId="@Model.RoomId" asp-route-reservationId="@reservation.Id" onclick="return confirm('Are you sure you want to delete this reservation?')">Delete reservation</a></td>
     </tr>
     }
 </table>
