@@ -180,9 +180,10 @@ namespace App.Controllers
         [HttpPost]
         public IActionResult SubmitRequest(HolidaysViewModel holidaysViewModel)
         {
+            base.CheckForLogin();
+
             if (ModelState.IsValid)
             {
-                base.CheckForLogin();
                 bool approved = false;
                 if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11))
                 {
