@@ -13,7 +13,6 @@ namespace App.Controllers
 {
     public class RoleController : HomeController
     {
-        
         [HttpGet]
         public IActionResult Change()
         {

@@ -1,11 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-<h1>Dashboard</h1>
+﻿@model IndexViewModel
 
-<div class="RightSideOfScreen">
-	<h3>
-		Newsfeed
-	</h3>
-	<hr class="hrBlack"/>
+<div class="row">
+	<div class="col-xs-9">
+		<h1>Dashboard</h1>
+	</div>
+	<div class="col-xs-3 RightSideOfScreen">
+		<h3>News</h3>
+		@foreach (NewsfeedPost post in Model.NewsFeedPosts)
+		{
+			<div class="newsPost row">
+				<span class="newsFeedDate col-xs-8 col-xs-offset-2">@post.Date</span>
+				<span class="newsFeedMessage col-xs-8 col-xs-offset-2">@post.Message</span>
+			</div>
+		}
+	</div>
 </div>
+
+
+
+	

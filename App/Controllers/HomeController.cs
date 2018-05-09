@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using App.Models;
 using App.Datalayer;
 using App.Repositorys;
+using App.ViewModels;
+using App.Controllers;
 
 namespace App.Controllers
 {
@@ -15,7 +17,11 @@ namespace App.Controllers
 		public IActionResult Index()
 		{
             CheckForLogin();
-			return View("Index");
+
+			NewsFeedController newsFeedController = new NewsFeedController();
+			IndexViewModel viewModel = new IndexViewModel(newsFeedController.GetAllNews());
+
+			return View("Index", viewModel);
 		}
 
         public void CheckForLogin()
