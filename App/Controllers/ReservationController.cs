@@ -67,14 +67,14 @@ namespace App.Controllers
             if (ViewModel.ReservationStart < ViewModel.ReservationEnd && reservations.Any(r => (ViewModel.ReservationStart > r.ReservationStart && ViewModel.ReservationStart < r.ReservationEnd) || (ViewModel.ReservationEnd < r.ReservationEnd && ViewModel.ReservationEnd > r.ReservationStart) || (ViewModel.ReservationStart < r.ReservationStart && ViewModel.ReservationEnd > r.ReservationEnd)) == false)
             {
                 repo.AddReservation(ViewModel.RoomId, userId, ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);
-                ConfirmReservation(ViewModel);
+                ConfirmReservation();
             }
             List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
         
             return RedirectToAction("LoadReservations", new { roomId = ViewModel.RoomId });
         }
 
-        private void ConfirmReservation(ReservationViewModel viewModel)
+        private void ConfirmReservation()
         {
                 TempData["ConfirmReservation"] = "Your reservation has been added";          
         }
