@@ -30,5 +30,6 @@ namespace App.Datalayer
         void ApproveHolidayRequest(int Id);
         List<HolidayRequest> GetUserHolidayRequests(int userId);
         void DeleteHolidayRequest(int Id);
+        void DeleteUser(int userId);
     }
 }

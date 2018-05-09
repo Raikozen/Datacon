@@ -38,7 +38,7 @@ namespace App.ViewModels
         [Display(Name ="RoleID", Prompt ="RoleID")]
         public int RoleID { get; set; }
 
-        //ContactList
+        //ContactList/DeleteUser
         public List<User> users { get; set; }
         public string sortBy { get; set; }
     }

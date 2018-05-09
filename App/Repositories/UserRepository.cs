@@ -144,5 +144,11 @@ namespace App.Repositorys
         {
             _Context.DeleteHolidayRequest(Id);
         }
+
+        public void DeleteUser(int userId)
+        {
+            _Context.DeleteUser(userId);
+        }
+
     }
 }
