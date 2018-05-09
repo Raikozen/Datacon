@@ -1,0 +1,53 @@
+﻿@model NewsFeedOverviewViewModel
+
+<div class="row">
+	<!--Create new newsfeed-->
+	<form class="col-xs-4" asp-controller="NewsFeed" asp-action="New">
+		<h3>New message</h3>
+		<label class="col-xs-3">Message</label>
+		<textarea class="col-xs-9" type="text" name="Message"></textarea>
+		@Html.ValidationMessageFor(m => m.Message)
+		<label class="col-xs-3">Date</label>
+		<input class="col-xs-9" type="datetime" name="Date" placeholder="Date" value="@DateTime.Now.ToString()" />
+		@Html.ValidationMessageFor(m => m.Date)
+		<input class="col-xs-12" type="submit" name="submit" />
+	</form>
+
+	<!--All newsfeeds-->
+	<form class="col-xs-12" asp-controller="NewsFeed" asp-action="Delete">
+		<h3>All messages</h3>
+		<table class="col-xs-12 NewsFeedTable">
+			<thead class="TableHeader">
+				<tr>
+					<th>Id</th>
+					<th>Date</th>
+					<th>Message</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			@foreach (NewsfeedPost post in Model.NewsFeedPosts)
+			{
+				<tr class="TableItem">
+					<td>
+						@post.Id
+					</td>
+					<td
+						>@post.Date.ToString()
+					</td>
+					<td>
+						@if(post.Message.Count() > 80)
+						{
+							@post.Message.Substring(0, 80)
+						} else
+						{
+							@post.Message
+						}
+					</td>
+					<td>
+						<button type="submit" name="id" value="@post.Id">Remove</button>
+					</td>
+				</tr>
+			}
+		</table>
+	</form>
+</div>

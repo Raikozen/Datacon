@@ -382,3 +382,41 @@ footer {
     width: 100px;
     height: auto;
 }
+
+/*Newsfeed*/
+.NewsFeedTable {
+	border: solid 2px;
+	border-color: #002B5C;
+}
+
+.NewsFeedTable .TableItem {
+	border: 1px solid #ccc;
+	text-align: left;
+}
+
+.NewsFeedTable .TableHeader th{
+	font-weight: bold;
+	color: whitesmoke;
+	text-align: left;
+	background-color: #002B5C;
+}
+
+.NewsFeedTable th {
+	padding: 4px;
+}
+
+.NewsFeedTable td {
+	padding: 4px;
+}
+
+.NewsFeedTable tr:nth-child(odd) {
+	background-color: #f5f5f5;
+}
+
+.NewsFeedTable tr:nth-child(even) {
+	background-color: lightsteelblue;
+}
+
+.NewsFeedTable td:last-of-type {
+	text-align: right;
+}

@@ -147,7 +147,7 @@ namespace App.Datalayer
 				myConnection.Open();
 
 				SqlCommand myCommand = new SqlCommand(
-					"DELETE FROM OutSource.NewsfeedPost WHERE ID = @ID", myConnection
+					"DELETE FROM proftaak.[NewsfeedPost] WHERE ID = @ID", myConnection
 				);
 
 				myCommand.Parameters.AddWithValue("@ID", id);
