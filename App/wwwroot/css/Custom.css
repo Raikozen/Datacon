@@ -157,10 +157,13 @@
 
 /*RoomReservation*/
 
-.Headers{
+.RoomCreateInpute {
+    margin-bottom: 10px;
+}
+
+.Headers {
     text-align: center;
-    margin-left: 15px;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
     margin-top: 20px;
 }
 

@@ -5,17 +5,20 @@
 }
 
 <h2 class="Headers">Reserve this Room</h2>
-<form asp-controller="Reservation" asp-action="AddReservation" asp-route-roomId="@Model.RoomId" asp-route-userId="21">
-    <input required asp-for="ReservationName" name="reservationName" />
-    <input required asp-for="ReservationStart" value="@DateTime.Now" />
-    <input required asp-for="ReservationEnd" value="@DateTime.Now" />
-    <input type="submit" value="Submit Reservation" />
+<form class="row" asp-controller="Reservation" asp-action="AddReservation" asp-route-roomId="@Model.RoomId" asp-route-userId="21">
+    <span class="col-sm-4 col-xs-offset-4">Name:</span>
+    <input class="col-sm-4 col-xs-offset-4 RoomCreateInpute" required asp-for="ReservationName" name="reservationName" />
+    <span class="col-sm-4 col-xs-offset-4">Start Time:</span>
+    <input class="col-sm-4 col-xs-offset-4 RoomCreateInpute" required asp-for="ReservationStart" value="@DateTime.Now" />
+    <span class="col-sm-4 col-xs-offset-4">End Time:</span>
+    <input class="col-sm-4 col-xs-offset-4 RoomCreateInpute" required asp-for="ReservationEnd" value="@DateTime.Now" />
+    <input class="col-sm-4 col-xs-offset-4 buttonCreate" type="submit" value="Submit Reservation" />
     @TempData["ConfirmReservation"]
 </form>
 <br />
 <br />
 <h4 class="Headers">Current Reservations: </h4>
-<table class="ReservationTable">
+<table class="ReservationTable col-sm-12">
     <tr>
         <th class="tableheader">Reservation Name</th>
         <th class="tableheader">Start date and time of Reservation</th>
