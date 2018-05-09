@@ -69,6 +69,7 @@ namespace App.Controllers
                 repo.AddReservation(ViewModel.RoomId, userId, ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);
             }
             List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
+            ConfirmReservation();
             return RedirectToAction("LoadReservations", new { roomId = ViewModel.RoomId });
         }
 
