@@ -71,5 +71,10 @@ namespace App.Controllers
             List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
             return RedirectToAction("LoadReservations", new { roomId = ViewModel.RoomId });
         }
+
+        private void ConfirmReservation()
+        {
+            ViewData["ConfirmReservation"] = "Your reservation has been added";
+        }
     }
 }
