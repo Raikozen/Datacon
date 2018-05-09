@@ -14,6 +14,7 @@
     <input class="col-sm-4 col-xs-offset-4 RoomCreateInpute" required asp-for="ReservationEnd" value="@DateTime.Now" />
     <input class="col-sm-4 col-xs-offset-4 buttonCreate" type="submit" value="Submit Reservation" />
     @TempData["ConfirmReservation"]
+    @TempData["WrongReservation"]
 </form>
 <br />
 <br />

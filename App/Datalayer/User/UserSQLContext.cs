@@ -722,5 +722,19 @@ namespace App.Datalayer
                 command.Connection.Close();
             }
         }
+
+        public void DeleteUser(int userId)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "DELETE FROM proftaak.[User] WHERE id = @userID";
+            command.Parameters.AddWithValue("@userID", userId);
+            using (command)
+            {
+                command.Connection.Open();
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+            }
+        }
     }
 }
