@@ -72,12 +72,8 @@ namespace App.Controllers
                 UserRepository repository = new UserRepository(context);
 
 				repository.Register(viewModel.Email, viewModel.Password, viewModel.Firstname, viewModel.Lastname, viewModel.Telnr, viewModel.Infix);
-
-                return RedirectToAction("Create", "User");
+                ConfirmAccount(viewModel);
             }
-
-            ConfirmAccount(viewModel);
-
             return View();
         }
 
@@ -243,7 +239,7 @@ namespace App.Controllers
 
         private void ConfirmAccount(UserViewModel viewModel)
         {
-            if(viewModel.Email != null)
+            if(ModelState.IsValid && viewModel.Email != null)
             {
                 ViewData["ConfirmAccount"] = "The account with email " + viewModel.Email + " has been created.";
             }
