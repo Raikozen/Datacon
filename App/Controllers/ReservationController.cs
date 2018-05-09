@@ -62,10 +62,12 @@ namespace App.Controllers
         public IActionResult AddReservation(ReservationViewModel ViewModel, int userId)
         {
 			base.CheckForLogin();
-
 			ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
-            repo.AddReservation(ViewModel.RoomId, userId ,ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);
-
+            List<Reservation> reservations = repo.GetReservations(new Room(ViewModel.RoomId, ""));
+            if (ViewModel.ReservationStart < ViewModel.ReservationEnd && reservations.Any(r => (ViewModel.ReservationStart > r.ReservationStart && ViewModel.ReservationStart < r.ReservationEnd) || (ViewModel.ReservationEnd < r.ReservationEnd && ViewModel.ReservationEnd > r.ReservationStart) || (ViewModel.ReservationStart < r.ReservationStart && ViewModel.ReservationEnd > r.ReservationEnd)) == false)
+            {
+                repo.AddReservation(ViewModel.RoomId, userId, ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);
+            }
             List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
             return View("Reserve", rooms);
         }
