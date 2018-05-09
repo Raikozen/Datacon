@@ -10,7 +10,7 @@
     <input required asp-for="ReservationStart" value="@DateTime.Now" />
     <input required asp-for="ReservationEnd" value="@DateTime.Now" />
     <input type="submit" value="Submit Reservation" />
-    @ViewData["ConfirmReservation"]
+    @TempData["ConfirmReservation"]
 </form>
 <br />
 <br />
