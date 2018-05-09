@@ -6,10 +6,12 @@
 
 <h2 class="Headers">Reserve this Room</h2>
 <form asp-controller="Reservation" asp-action="AddReservation" asp-route-roomId="@Model.RoomId" asp-route-userId="21">
-    <input asp-for="ReservationName" name="reservationName" />
-    <input asp-for="ReservationStart" value="@DateTime.Now" />
-    <input asp-for="ReservationEnd" value="@DateTime.Now" />
-    <input onclick="ConfirmReservation()" type="submit" value="Submit Reservation" />
+    <input required asp-for="ReservationName" name="reservationName" />
+    <input required asp-for="ReservationStart" value="@DateTime.Now" />
+    <input required asp-for="ReservationEnd" value="@DateTime.Now" />
+    <input type="submit" value="Submit Reservation" />
+    @TempData["ConfirmReservation"]
+    @TempData["WrongReservation"]
 </form>
 <br />
 <br />
@@ -29,7 +31,7 @@
         <td class="tableitem">@reservation.ConvertDateTime(reservation.ReservationStart)</td>
         <td class="tableitem">@reservation.ConvertDateTime(reservation.ReservationEnd)</td>
         <td class="tableitem">@reservation.User.FullName</td>
-        <td class="tableitem"><a asp-controller="Reservation" asp-action="DeleteReservation" asp-route-reservationId="@reservation.Id" onclick="return confirm('Are you sure you want to delete this reservation?')">Delete reservation</a></td>
+        <td class="tableitem"><a asp-controller="Reservation" asp-action="DeleteReservation" asp-route-RoomId="@Model.RoomId" asp-route-reservationId="@reservation.Id" onclick="return confirm('Are you sure you want to delete this reservation?')">Delete reservation</a></td>
     </tr>
     }
 </table>

@@ -3,20 +3,23 @@
 <div class="row">
 
         <h2 class="Headers col-xs-12">Create new user</h2>
-        <form asp-action="Create" asp-controller="User" class="col-xs-4 col-xs-offset-4">
-            <span class="create-form-label col-xs-8 col-xs-offset-2">Emailadress: </span><input asp-for="Email" name="email" class="col-xs-12" />
-            <span class="create-form-label col-xs-8 col-xs-offset-2">Password: </span><input asp-for="Password" type="password" name="password" class="col-xs-12" />
-            <span class="create-form-label col-xs-8 col-xs-offset-2">First Name:</span><input asp-for="Firstname" name="firstname" class="col-xs-12" />
-            <span class="create-form-label col-xs-8 col-xs-offset-2">Infix:</span><input asp-for="Infix" name="infix" class="col-xs-12" />
-            <span class="create-form-label col-xs-8 col-xs-offset-2">Last Name:</span><input asp-for="Lastname" name="lastname" class="col-xs-12" />
-            <span class="create-form-label col-xs-8 col-xs-offset-2">Telephone Number:</span><input asp-for="Telnr" name="telnr" class="col-xs-12" />
+		<form asp-action="Create" asp-controller="User" class="col-xs-4 col-xs-offset-4">
+			<span class="create-form-label col-xs-8 col-xs-offset-2">Emailadress: </span><input asp-for="Email" name="email" class="col-xs-12" />
+			<span class="create-form-label col-xs-8 col-xs-offset-2">Password: </span><input asp-for="Password" type="password" name="password" class="col-xs-12" />
+			<span class="create-form-label col-xs-8 col-xs-offset-2">First Name:</span><input asp-for="Firstname" name="firstname" class="col-xs-12" />
+			<span class="create-form-label col-xs-8 col-xs-offset-2">Infix:</span><input asp-for="Infix" name="infix" class="col-xs-12" />
+			<span class="create-form-label col-xs-8 col-xs-offset-2">Last Name:</span><input asp-for="Lastname" name="lastname" class="col-xs-12" />
+			<span class="create-form-label col-xs-8 col-xs-offset-2">Telephone Number:</span><input asp-for="Telnr" name="telnr" class="col-xs-12" />
 
-            <input class="buttonCreate col-xs-12" type="submit" value="Create Account" />
+			<input class="buttonCreate col-xs-12" type="submit" value="Create Account" />
 
-            <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
-            <span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
+			<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Email)</span>
+			<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Password)</span>
+			<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Firstname)</span>
+			<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Lastname)</span>
+			<span class="col-sm-12">@Html.ValidationMessageFor(m => m.Telnr)</span>
 
-            <span class="col-sm-12">@ViewData["ConfirmAccount"]</span>
-</form>
+			<span class="col-sm-12">@ViewData["ConfirmAccount"]</span>
+		</form>
 
 </div>

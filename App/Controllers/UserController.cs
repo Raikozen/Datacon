@@ -72,12 +72,8 @@ namespace App.Controllers
                 UserRepository repository = new UserRepository(context);
 
 				repository.Register(viewModel.Email, viewModel.Password, viewModel.Firstname, viewModel.Lastname, viewModel.Telnr, viewModel.Infix);
-
-                return RedirectToAction("Create", "User");
+                ConfirmAccount(viewModel);
             }
-
-            ConfirmAccount(viewModel);
-
             return View();
         }
 
@@ -180,9 +176,10 @@ namespace App.Controllers
         [HttpPost]
         public IActionResult SubmitRequest(HolidaysViewModel holidaysViewModel)
         {
+            base.CheckForLogin();
+
             if (ModelState.IsValid)
             {
-                base.CheckForLogin();
                 bool approved = false;
                 if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11))
                 {
@@ -192,6 +189,11 @@ namespace App.Controllers
                 {
                     HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(Request.Cookies["userId"]), (DateTime)holidaysViewModel.DateStart, (DateTime)holidaysViewModel.DateEnd, holidaysViewModel.Description, approved);
                     new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
+                    ConfirmHoliday();
+                }
+                else
+                {
+                    WrongHoliday();
                 }
             }
             UserRepository userRep = new UserRepository(new UserSQLContext());
@@ -199,8 +201,6 @@ namespace App.Controllers
             holidaysViewModel.AllholidayRequests = userRep.GetAllHolidayRequests();
             holidaysViewModel.UnapprovedholidayRequests = userRep.GetUnapprovedHolidayRequests();
             holidaysViewModel.UserholidayRequests = userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"]));
-
-            ConfirmHoliday();
 
             return View("Holidays", holidaysViewModel);
         }
@@ -237,9 +237,66 @@ namespace App.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult DeleteUser()
+        {
+            base.CheckForLogin();
+            if (base.CheckForRight(1))
+            {
+                UserViewModel userViewModel = new UserViewModel();
+                userViewModel.users = new UserRepository(new UserSQLContext()).GetUserList().OrderBy(o => o.FullName).ToList();
+                userViewModel.sortBy = "Name";
+                return View("DeleteUser", userViewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DeleteUser(string sort)
+        {
+            base.CheckForLogin();
+
+            UserViewModel userViewModel = new UserViewModel();
+            List<User> users = new UserRepository(new UserSQLContext()).GetUserList();
+            if (sort == "Name")
+            {
+                userViewModel.users = users.OrderBy(o => o.FullName).ToList();
+            }
+            else if (sort == "Email Address")
+            {
+                userViewModel.users = users.OrderBy(o => o.Emailaddress).ToList();
+            }
+            else if (sort == "Role")
+            {
+                userViewModel.users = users.OrderBy(o => o.Role.Name).ToList();
+            }
+            userViewModel.sortBy = sort;
+            if (base.CheckForRight(1))
+            {
+                return View("DeleteUser", userViewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult DeleteSelectedUser(int userId)
+        {
+            base.CheckForLogin();
+            if (base.CheckForRight(1))
+            {
+                new UserRepository(new UserSQLContext()).DeleteUser(userId);
+            }
+            return RedirectToAction("DeleteUser");
+        }
+
         private void ConfirmAccount(UserViewModel viewModel)
         {
-            if(viewModel.Email != null)
+            if(ModelState.IsValid && viewModel.Email != null)
             {
                 ViewData["ConfirmAccount"] = "The account with email " + viewModel.Email + " has been created.";
             }
@@ -258,6 +315,11 @@ namespace App.Controllers
         private void ConfirmHoliday()
         {
             ViewData["ConfirmHoliday"] = "Your holiday has been requested.";
+        }
+
+        private void WrongHoliday()
+        {
+            ViewData["WrongHoliday"] = "Please pick a valid time for your holiday.";
         }
 	}
 }

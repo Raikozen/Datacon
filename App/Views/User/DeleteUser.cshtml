@@ -1,0 +1,52 @@
+﻿@model UserViewModel;
+@{
+	ViewData["Title"] = "DeleteUser";
+}
+
+<h1 class="Headers">Delete User</h1>
+
+@using (Html.BeginForm("DeleteUser", "User"))
+{
+	<p class="aParent"> Sort by: </p>
+
+	<select name="Sort" onchange="this.form.submit()">
+		@if (Model.sortBy == "Name")
+		{
+			<option selected>Name</option>
+			<option>Email Address</option>
+			<option>Role</option>
+		}
+		else if (Model.sortBy == "Email Address")
+		{
+			<option>Name</option>
+			<option selected>Email Address</option>
+			<option>Role</option>
+		}
+		else if (Model.sortBy == "Role")
+		{
+			<option>Name</option>
+			<option>Email Address</option>
+			<option selected>Role</option>
+		}
+	</select>
+}
+
+<table class="ContactTable">
+	<tr>
+		<th class="tableheader">Name</th>
+		<th class="tableheader">Role</th>
+		<th class="tableheader">Email Address</th>
+		<th class="tableheader">Phone number</th>
+		<th class="tableheader">Delete User</th>
+	</tr>
+	@foreach (User user in Model.users)
+	{
+		<tr>
+			<td class="tableitem">@user.FullName</td>
+			<td class="tableitem">@user.Role.Name</td>
+			<td class="tableitem">@user.Emailaddress</td>
+			<td class="tableitem">@user.Telnr</td>
+			<td class="tableitem"><form asp-action="DeleteSelectedUser" asp-controller="User" asp-route-userId="@user.Id"><input type="submit" value="Delete" class="btn btn-danger"/></form></td>
+		</tr>
+	}
+</table>

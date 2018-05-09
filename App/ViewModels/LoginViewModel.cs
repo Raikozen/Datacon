@@ -15,7 +15,7 @@ namespace App.ViewModels
 		public string Email { get; set; }
 		//Passwordx
 		[Required(ErrorMessage = "Password is required.")]
-		[Display(Name = "Password", Prompt = "password")]
+		[Display(Name = "Password", Prompt = "Password")]
 		public string Password { get; set; }
 	}
 }

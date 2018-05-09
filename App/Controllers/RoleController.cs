@@ -39,6 +39,8 @@ namespace App.Controllers
 		[HttpPost]
         public IActionResult Change(RoleViewModel viewModel)
         {
+            base.CheckForLogin();
+
             viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
             viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
 

@@ -16,7 +16,7 @@ namespace App.ViewModels
         public string Email { get; set; }
         //Password
         [Required(ErrorMessage ="Password is required.")]
-		[Display(Name = "Password", Prompt = "password")]
+		[Display(Name = "Password", Prompt = "Password")]
 		public string Password { get; set; }
         //First Name
         [Required(ErrorMessage ="First name is required.")]
@@ -38,7 +38,7 @@ namespace App.ViewModels
         [Display(Name ="RoleID", Prompt ="RoleID")]
         public int RoleID { get; set; }
 
-        //ContactList
+        //ContactList/DeleteUser
         public List<User> users { get; set; }
         public string sortBy { get; set; }
     }
