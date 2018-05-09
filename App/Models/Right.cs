@@ -13,9 +13,6 @@ namespace App.Models
         public int Id { get; }
         public string Name { get; }
 
-		[NotMapped]
-		public bool CheckBoxAnswer { get; set; }
-
         public Right(int id, string name)
         {
             this.Id = id;
