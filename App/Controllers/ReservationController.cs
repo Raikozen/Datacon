@@ -69,6 +69,10 @@ namespace App.Controllers
                 repo.AddReservation(ViewModel.RoomId, userId, ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);
                 ConfirmReservation();
             }
+            else
+            {
+                WrongReservation();
+            }
             List<Room> rooms = new ReservationRepository(new ReservationSQLContext()).GetRooms();
         
             return RedirectToAction("LoadReservations", new { roomId = ViewModel.RoomId });
@@ -76,7 +80,12 @@ namespace App.Controllers
 
         private void ConfirmReservation()
         {
-                TempData["ConfirmReservation"] = "Your reservation has been added";          
+            TempData["ConfirmReservation"] = "Your reservation has been added";          
+        }
+
+        private void WrongReservation()
+        {
+            TempData["WrongReservation"] = "Please pick a valid time for your reservation.";
         }
     }
 }

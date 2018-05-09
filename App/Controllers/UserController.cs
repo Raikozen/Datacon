@@ -189,6 +189,11 @@ namespace App.Controllers
                 {
                     HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(Request.Cookies["userId"]), (DateTime)holidaysViewModel.DateStart, (DateTime)holidaysViewModel.DateEnd, holidaysViewModel.Description, approved);
                     new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
+                    ConfirmHoliday();
+                }
+                else
+                {
+                    WrongHoliday();
                 }
             }
             UserRepository userRep = new UserRepository(new UserSQLContext());
@@ -196,8 +201,6 @@ namespace App.Controllers
             holidaysViewModel.AllholidayRequests = userRep.GetAllHolidayRequests();
             holidaysViewModel.UnapprovedholidayRequests = userRep.GetUnapprovedHolidayRequests();
             holidaysViewModel.UserholidayRequests = userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"]));
-
-            ConfirmHoliday(holidaysViewModel);
 
             return View("Holidays", holidaysViewModel);
         }
@@ -309,12 +312,14 @@ namespace App.Controllers
             ViewData["ConfirmNotSick"] = "Your status is set to 'No longer sick'.";
         }
 
-        private void ConfirmHoliday(HolidaysViewModel viewModel)
+        private void ConfirmHoliday()
         {
-            if(viewModel.Description != null && viewModel.DateStart.HasValue && viewModel.DateEnd.HasValue)
-            {
-                ViewData["ConfirmHoliday"] = "Your holiday has been requested.";
-            }
+            ViewData["ConfirmHoliday"] = "Your holiday has been requested.";
+        }
+
+        private void WrongHoliday()
+        {
+            ViewData["WrongHoliday"] = "Please pick a valid time for your holiday.";
         }
 	}
 }

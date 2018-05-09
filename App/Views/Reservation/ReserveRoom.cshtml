@@ -11,6 +11,7 @@
     <input required asp-for="ReservationEnd" value="@DateTime.Now" />
     <input type="submit" value="Submit Reservation" />
     @TempData["ConfirmReservation"]
+    @TempData["WrongReservation"]
 </form>
 <br />
 <br />
