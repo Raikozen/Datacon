@@ -25,15 +25,9 @@
 			alert("Your reservation is added.")
 		}
 
-
-
-
-				}
 		function ConfirmHoliday() {
 			alert("Your Holiday has been requested.")
 		}
-
-
 	</script>
 </head>
 <body>
@@ -43,32 +37,32 @@
     <div id="wrapper" class="toggled">
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
-                @if (rights != null)
-            {
-                <li class="sidebar-brand">
-                    <a class="logoleft" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Transparant_White_No_Payoff.png"></a>
-                </li>
-                @if (rights.Any(a => a.Id == 1))
-            {
-                <li><a asp-area="" asp-controller="User" asp-action="Create">Create User</a></li>
-        }
-                <li><a asp-area="" asp-controller="Reservation" asp-action="LoadData">Reserve a Room</a></li>
-                @if (rights.Any(a => a.Id == 8))
-            {
-                <li><a asp-area="" asp-controller="Role" asp-action="Change">Change Role</a></li>
-        }
-                @if (rights.Any(a => a.Id == 7))
-            {
-                <li><a asp-area="" asp-controller="User" asp-action="ContactList">Contact List</a></li>
-        }
-                @if (rights.Any(a => a.Id == 9))
-            {
-                <li><a asp-area="" asp-controller="Role" asp-action="ChangeRights">Change rights</a></li>
-        }
-                <li><a asp-area="" asp-controller="User" asp-action="CallInSick">Sick Report</a></li>
-                <li><a asp-area="" asp-controller="User" asp-action="Holidays">Holiday requests</a></li>
-                <li><a asp-area="" asp-controller="User" asp-action="Logout">Logout</a></li>
-        }
+				@if (rights != null)
+				{
+					<li class="sidebar-brand">
+					<a class="logoleft" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Transparant_White_No_Payoff.png"></a>
+					</li>
+				@if (rights.Any(a => a.Id == 1))
+				{
+					<li><a asp-area="" asp-controller="User" asp-action="Create">Create User</a></li>
+				}
+					<li><a asp-area="" asp-controller="Reservation" asp-action="LoadData">Reserve a Room</a></li>
+				@if (rights.Any(a => a.Id == 8))
+				{
+					<li><a asp-area="" asp-controller="Role" asp-action="Change">Change Role</a></li>
+				}
+				@if (rights.Any(a => a.Id == 7))
+				{
+					<li><a asp-area="" asp-controller="User" asp-action="ContactList">Contact List</a></li>
+				}
+				@if (rights.Any(a => a.Id == 9))
+				{
+					<li><a asp-area="" asp-controller="Role" asp-action="ChangeRights">Change rights</a></li>
+				}
+					<li><a asp-area="" asp-controller="User" asp-action="CallInSick">Sick Report</a></li>
+					<li><a asp-area="" asp-controller="User" asp-action="Holidays">Holiday requests</a></li>
+					<li><a asp-area="" asp-controller="User" asp-action="Logout">Logout</a></li>
+				}
             </ul>
         </div>
         <div id="page-content-wrapper">
@@ -78,8 +72,6 @@
                 <footer class="footer">&#169; Datacon Portal Team A</footer>
             </div>
         </div>
-
-
 
         <environment include="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
