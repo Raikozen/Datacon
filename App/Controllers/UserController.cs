@@ -200,7 +200,7 @@ namespace App.Controllers
             holidaysViewModel.UnapprovedholidayRequests = userRep.GetUnapprovedHolidayRequests();
             holidaysViewModel.UserholidayRequests = userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"]));
 
-            ConfirmHoliday();
+            ConfirmHoliday(holidaysViewModel);
 
             return View("Holidays", holidaysViewModel);
         }
@@ -255,9 +255,12 @@ namespace App.Controllers
             ViewData["ConfirmNotSick"] = "Your status is set to 'No longer sick'.";
         }
 
-        private void ConfirmHoliday()
+        private void ConfirmHoliday(HolidaysViewModel viewModel)
         {
-            ViewData["ConfirmHoliday"] = "Your holiday has been requested.";
+            if(viewModel.Description != null && viewModel.DateStart.HasValue && viewModel.DateEnd.HasValue)
+            {
+                ViewData["ConfirmHoliday"] = "Your holiday has been requested.";
+            }
         }
 	}
 }
