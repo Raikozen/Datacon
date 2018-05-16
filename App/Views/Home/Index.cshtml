@@ -1,8 +1,66 @@
 ﻿@model IndexViewModel
 
+@{ 
+	User loggedInUser = (User)ViewData["user"];
+}
+
 <div class="row">
 	<div class="col-xs-9">
 		<h1>Dashboard</h1>
+
+		<!--Api data-->
+		<!--Agenda appointments-->
+		@if (Model.AgendaAppointments != null)
+		{
+			<h3>Agenda appointments</h3>
+			<table class="apiTable">
+				<tr>
+					<th>Datum</th>
+					<th>Kamernaam</th>
+					<th>Beschrijving</th>
+					<th>Reserveerder</th>
+				</tr>
+				@foreach (ApiAgendaAppointment appointment in Model.AgendaAppointments)
+				{
+					@if (appointment.Email == loggedInUser.Emailaddress)
+					{
+						<tr>
+							<td>@appointment.Date</td>
+							<td>@appointment.RoomName</td>
+							<td>@appointment.Description</td>
+							<td>@appointment.Email</td>
+						</tr>
+					}
+
+				}
+			</table>
+		}
+		<!--Ziekmeldingen-->
+		@if (Model.Sickreports != null)
+		{
+			<h3>Ziekmeldingen</h3>
+
+			<table class="apiTable">
+				<tr>
+					<th>Datum</th>
+					<th>Beschrijving</th>
+					<th>Email</th>
+				</tr>
+
+				@foreach (ApiSickReport sickReport in Model.Sickreports)
+				{
+					@if (sickReport.Email == loggedInUser.Emailaddress)
+					{
+						<tr>
+							<td>@sickReport.DatetimeStart</td>
+							<td>@sickReport.Description</td>
+							<td>@sickReport.Email</td>
+						</tr>
+					}
+				}
+				</table>
+		}
+
 	</div>
 	<div class="col-xs-3 RightSideOfScreen">
 		<h3>News</h3>

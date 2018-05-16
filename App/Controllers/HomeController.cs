@@ -20,7 +20,13 @@ namespace App.Controllers
             CheckForLogin();
 
 			NewsFeedController newsFeedController = new NewsFeedController();
-			IndexViewModel viewModel = new IndexViewModel(newsFeedController.GetAllNews());
+
+			//Get data from the api
+			List<ApiSickReport> sickReports = ApiRepository.GetAllSickReportsAsync().Result;
+			List<ApiAgendaAppointment> agendaAppointments = ApiRepository.GetAllAgendaAppointmentsAsync().Result;
+			List<ApiRoom> rooms = ApiRepository.GetAllAvailableRoomsAsync().Result;
+
+			IndexViewModel viewModel = new IndexViewModel(newsFeedController.GetAllNews(), sickReports, agendaAppointments, rooms);
 
 			return View("Index", viewModel);
 		}
@@ -29,7 +35,9 @@ namespace App.Controllers
 		{
 			if(Convert.ToInt32(HttpContext.Session.GetInt32("id")) != 0)
 			{
-                ViewData["Rights"] = new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights;
+				UserRepository repoUser = new UserRepository(new UserSQLContext());
+                ViewData["Rights"] = repoUser.GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights;
+				ViewData["User"] = repoUser.GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id")));
 				return;
 			}
 
