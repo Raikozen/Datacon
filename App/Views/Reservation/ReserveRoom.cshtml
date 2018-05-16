@@ -5,7 +5,7 @@
 }
 
 <h2 class="Headers">Reserve this Room</h2>
-<form class="row" asp-controller="Reservation" asp-action="AddReservation" asp-route-roomId="@Model.RoomId" asp-route-userId="21">
+<form class="row" asp-controller="Reservation" asp-action="AddReservation" asp-route-roomId="@Model.RoomId">
     <span class="col-sm-4 col-xs-offset-4">Name:</span>
     <input class="col-sm-4 col-xs-offset-4 RoomCreateInpute" required asp-for="ReservationName" name="reservationName" />
     <span class="col-sm-4 col-xs-offset-4">Starting Time:</span>

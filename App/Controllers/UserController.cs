@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using App.ViewModels;
 using App.Repositorys;
 using App.Datalayer;
@@ -44,7 +45,7 @@ namespace App.Controllers
 
 				if(user != null)
 				{
-					Response.Cookies.Append("userId", Convert.ToString(user.Id));
+					HttpContext.Session.SetInt32("id", user.Id);
 					return RedirectToAction("Index", "Home");
 				}
 
@@ -57,7 +58,7 @@ namespace App.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("userId");
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home", "");
         }
 
@@ -123,7 +124,7 @@ namespace App.Controllers
 		{
 			base.CheckForLogin();
 
-            int id = Convert.ToInt32(Request.Cookies["userId"]);
+            int id = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
 
             ViewModels.CallInSickViewModel viewModel = new CallInSickViewModel();
 			UserRepository userRep = new UserRepository(new UserSQLContext());
@@ -140,7 +141,7 @@ namespace App.Controllers
 		{
 			base.CheckForLogin();
 
-			int id = Convert.ToInt32(Request.Cookies["userId"]);
+			int id = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
 
 			UserRepository userRep = new UserRepository(new UserSQLContext());
             if (userRep.IsSick(id) == false)
@@ -168,8 +169,8 @@ namespace App.Controllers
             base.CheckForLogin();
 
             UserRepository userRep = new UserRepository(new UserSQLContext());
-            HolidaysViewModel holidaysViewModel = new HolidaysViewModel((userRep.GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11) ? true : false),
-                userRep.GetAllHolidayRequests(), userRep.GetUnapprovedHolidayRequests(), userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"])));
+            HolidaysViewModel holidaysViewModel = new HolidaysViewModel((userRep.GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights.Any(f=>f.Id == 11) ? true : false),
+                userRep.GetAllHolidayRequests(), userRep.GetUnapprovedHolidayRequests(), userRep.GetUserHolidayRequests(Convert.ToInt32(HttpContext.Session.GetInt32("id"))));
             return View(holidaysViewModel);
         }
         
@@ -181,13 +182,13 @@ namespace App.Controllers
             if (ModelState.IsValid)
             {
                 bool approved = false;
-                if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f=>f.Id == 11))
+                if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights.Any(f=>f.Id == 11))
                 {
                     approved = true;
                 }
                 if (holidaysViewModel.DateStart != DateTime.MinValue && holidaysViewModel.DateEnd != DateTime.MinValue && holidaysViewModel.DateStart < holidaysViewModel.DateEnd && !string.IsNullOrEmpty(holidaysViewModel.Description))
                 {
-                    HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(Request.Cookies["userId"]), (DateTime)holidaysViewModel.DateStart, (DateTime)holidaysViewModel.DateEnd, holidaysViewModel.Description, approved);
+                    HolidayRequest holidayRequest = new HolidayRequest(Convert.ToInt32(HttpContext.Session.GetInt32("id")), (DateTime)holidaysViewModel.DateStart, (DateTime)holidaysViewModel.DateEnd, holidaysViewModel.Description, approved);
                     new UserRepository(new UserSQLContext()).AddHolidayRequest(holidayRequest);
                     ConfirmHoliday();
                 }
@@ -197,10 +198,10 @@ namespace App.Controllers
                 }
             }
             UserRepository userRep = new UserRepository(new UserSQLContext());
-            holidaysViewModel.HasApproveHolidayRight = (userRep.GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights.Any(f => f.Id == 11) ? true : false);
+            holidaysViewModel.HasApproveHolidayRight = (userRep.GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights.Any(f => f.Id == 11) ? true : false);
             holidaysViewModel.AllholidayRequests = userRep.GetAllHolidayRequests();
             holidaysViewModel.UnapprovedholidayRequests = userRep.GetUnapprovedHolidayRequests();
-            holidaysViewModel.UserholidayRequests = userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"]));
+            holidaysViewModel.UserholidayRequests = userRep.GetUserHolidayRequests(Convert.ToInt32(HttpContext.Session.GetInt32("id")));
 
             return View("Holidays", holidaysViewModel);
         }
@@ -210,7 +211,7 @@ namespace App.Controllers
         {
             base.CheckForLogin();
             UserRepository userRep = new UserRepository(new UserSQLContext());
-            if (base.CheckForRight(11) || userRep.GetUserHolidayRequests(Convert.ToInt32(Request.Cookies["userId"])).Any(a=>a.Id == id))
+            if (base.CheckForRight(11) || userRep.GetUserHolidayRequests(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Any(a=>a.Id == id))
             {
                 userRep.DeleteHolidayRequest(id);
                 return RedirectToAction("Holidays");

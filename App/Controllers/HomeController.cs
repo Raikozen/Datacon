@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using App.Models;
 using App.Datalayer;
 using App.Repositorys;
@@ -26,9 +27,9 @@ namespace App.Controllers
 
         public void CheckForLogin()
 		{
-			if(Request.Cookies["userId"] != "" && Convert.ToInt32(Request.Cookies["userId"]) != 0)
+			if(Convert.ToInt32(HttpContext.Session.GetInt32("id")) != 0)
 			{
-                ViewData["Rights"] = new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(Request.Cookies["userId"])).Role.Rights;
+                ViewData["Rights"] = new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights;
 				return;
 			}
 
@@ -40,7 +41,7 @@ namespace App.Controllers
             UserSQLContext context = new UserSQLContext();
             UserRepository userrepository = new UserRepository(context);
 
-            int id = Convert.ToInt32(Request.Cookies["userId"]);
+            int id = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
 
             User user = userrepository.GetUser(id);
 

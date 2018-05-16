@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using App.Datalayer;
 using App.Repositorys;
 using App.ViewModels;
@@ -24,8 +25,8 @@ namespace App.Controllers
         public IActionResult LoadReservations(int roomId)
         {
             base.CheckForLogin();
-
-            Room room = new Room(roomId, "test");
+            HttpContext.Session.SetInt32("roomID", roomId);
+            Room room = new Room(Convert.ToInt32(HttpContext.Session.GetInt32("roomID")), "test");
             ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
             List<Reservation> reservations = repo.GetReservations(room);
 
@@ -59,11 +60,12 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddReservation(ReservationViewModel ViewModel, int userId)
+        public IActionResult AddReservation(ReservationViewModel ViewModel)
         {
 			base.CheckForLogin();
 			ReservationRepository repo = new ReservationRepository(new ReservationSQLContext());
             List<Reservation> reservations = repo.GetReservations(new Room(ViewModel.RoomId, ""));
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (ViewModel.ReservationStart < ViewModel.ReservationEnd && reservations.Any(r => (ViewModel.ReservationStart > r.ReservationStart && ViewModel.ReservationStart < r.ReservationEnd) || (ViewModel.ReservationEnd < r.ReservationEnd && ViewModel.ReservationEnd > r.ReservationStart) || (ViewModel.ReservationStart < r.ReservationStart && ViewModel.ReservationEnd > r.ReservationEnd)) == false)
             {
                 repo.AddReservation(ViewModel.RoomId, userId, ViewModel.ReservationName, ViewModel.ReservationStart, ViewModel.ReservationEnd);

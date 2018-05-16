@@ -19,7 +19,7 @@
     padding: 8px;
 }
 
-.ContactTable. aParent {
+.ContactTable .aParent{
 	float: left;
 	margin-right: 10px;
 	clear: none;
