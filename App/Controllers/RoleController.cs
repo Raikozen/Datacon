@@ -29,7 +29,7 @@ namespace App.Controllers
             viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
             viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
 
-            viewModel.SelectedUser = viewModel.Users.Find(u => u.Id == Convert.ToInt32(Request.Cookies["userId"]));
+            viewModel.SelectedUser = viewModel.Users.Find(u => u.Id == Convert.ToInt32(HttpContext.Session.GetInt32("id")));
             viewModel.SelectedRole = viewModel.SelectedUser.Role;
 
             return View("Change", viewModel);
