@@ -160,7 +160,7 @@ namespace App.Controllers
         //Confirmation message apply / create other methods in other controllers (Tim)
         private void ConfirmChange(RoleViewModel viewModel)
         {
-            ViewData["ConfirmChange"] = "The user role " + viewModel.SelectedUser.Firstname + " has been updated successfully.";
+            ViewData["ConfirmChange"] = "The role for the user '" + viewModel.SelectedUser.Firstname + "' has been updated successfully.";
             
         }
 
