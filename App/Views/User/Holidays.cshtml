@@ -4,7 +4,6 @@
 }
 
 <div class="row">
-
 	<h2 class="Headers col-xs-12">Request holidays</h2>
 	<form asp-action="SubmitRequest" asp-controller="User" method="post" class="col-xs-6 col-xs-offset-3">
 		<span class="create-form-label col-xs-8 col-xs-offset-2">Date start holiday: </span><input asp-for="DateStart" type="date" name="dateStart" class="col-xs-12" />
@@ -17,7 +16,6 @@
         <span class="col-sm-12 col-xs-offset-1">@ViewData["ConfirmHoliday"]</span>
         <span class="col-sm-12 col-xs-offset-1">@ViewData["WrongHoliday"]</span>
     </form>
-
 </div>
 
 <hr />

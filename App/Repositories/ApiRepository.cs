@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using App.Models;
 
-namespace App.Repositories
+namespace App.Repositorys
 {
-    public class ApiRepository
+    public static class ApiRepository
     {
 		private static HttpClient client = null;
 

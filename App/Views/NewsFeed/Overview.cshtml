@@ -7,8 +7,8 @@
 		<label class="col-xs-3">Message</label>
 		<textarea class="col-xs-9" type="text" name="Message"></textarea>
 		@Html.ValidationMessageFor(m => m.Message)
-		<label class="col-xs-3">Date</label>
-		<input class="col-xs-9" type="datetime" name="Date" placeholder="Date" value="@DateTime.Now.ToString()" />
+		<label class="col-xs-3">Publish date</label>
+		<input class="col-xs-9" type="date" name="Date" placeholder="Date" value="@DateTime.Now.ToString()" />
 		@Html.ValidationMessageFor(m => m.Date)
 		<input class="col-xs-12" type="submit" name="submit" />
 	</form>
