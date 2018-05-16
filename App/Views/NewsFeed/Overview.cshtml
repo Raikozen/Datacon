@@ -2,16 +2,18 @@
 
 <div class="row">
 	<!--Create new newsfeed-->
+	<div class="col-xs-3"></div>
 	<form class="col-xs-4" asp-controller="NewsFeed" asp-action="New">
 		<h3>New message</h3>
-		<label class="col-xs-3">Message</label>
-		<textarea class="col-xs-9" type="text" name="Message"></textarea>
+		<label class="col-xs-3 create-form-label">Message</label>
+		<textarea class="col-xs-9 form-control" type="text" name="Message"></textarea>
 		@Html.ValidationMessageFor(m => m.Message)
-		<label class="col-xs-3">Date</label>
-		<input class="col-xs-9" type="datetime" name="Date" placeholder="Date" value="@DateTime.Now.ToString()" />
+		<label class="col-xs-3 create-form-label">Date</label>
+		<input class="col-xs-9 form-control" type="datetime" name="Date" placeholder="Date" value="@DateTime.Now.ToString()" />
 		@Html.ValidationMessageFor(m => m.Date)
-		<input class="col-xs-12" type="submit" name="submit" />
+		<input class="col-xs-12 buttonCreate" type="submit" name="submit" />
 	</form>
+	<div class="col-xs-5"></div>
 
 	<!--All newsfeeds-->
 	<form class="col-xs-12" asp-controller="NewsFeed" asp-action="Delete">
