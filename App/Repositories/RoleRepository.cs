@@ -19,7 +19,10 @@ namespace App.Repositorys
 
         public void UpdateRightsOfRole(int roleID, List<int> rightIDs)
         {
-            _Context.UpdateRoleRights(roleID, rightIDs);
+			if(roleID != 1)
+			{
+				_Context.UpdateRoleRights(roleID, rightIDs);
+			}  
         }
 
         public List<Role> GetRoles()

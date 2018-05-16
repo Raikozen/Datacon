@@ -53,7 +53,11 @@ namespace App.Repositorys
 
         public void UpdateUserRole(User user, Role role)
         {
-            _Context.UpdateUserRole(user, role);
+			//don't update the default application admin
+			if(user.Id != 21)
+			{
+				_Context.UpdateUserRole(user, role);
+			}
         }
 
 		/// <summary>

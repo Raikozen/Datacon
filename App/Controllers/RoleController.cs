@@ -33,7 +33,6 @@ namespace App.Controllers
             viewModel.SelectedRole = viewModel.SelectedUser.Role;
 
             return View("Change", viewModel);
-
         }
 
 
@@ -51,11 +50,19 @@ namespace App.Controllers
 			viewModel.SelectedUser = viewModel.Users.Find(x => x.Id == selectedUserId);
 			viewModel.SelectedRole = viewModel.Roles.Find(x => x.Id == selectedRoleId);
 
-			UserRepository userRepository = new UserRepository(new UserSQLContext());
-            userRepository.UpdateUserRole(viewModel.SelectedUser, viewModel.SelectedRole);
+			//Don't change the application's default admin
+			if (viewModel.SelectedUser.Id != 21)
+			{
+				UserRepository userRepository = new UserRepository(new UserSQLContext());
+				userRepository.UpdateUserRole(viewModel.SelectedUser, viewModel.SelectedRole);
 
-            //Confirmation message apply / create other methods in other controllers (Tim)
-            ConfirmChange(viewModel);
+				//Confirmation message apply / create other methods in other controllers (Tim)
+				ConfirmChange(viewModel);
+			}
+			else
+			{
+				ShowErrorMessage("The application admin cannot be updated.");
+			}
 
             return View("Change", viewModel);
         }
@@ -149,9 +156,12 @@ namespace App.Controllers
 			RoleSQLContext contextRole = new RoleSQLContext();
 			RoleRepository repoRole = new RoleRepository(contextRole);
 
-			if (selectedRights.Count > 0)
+			if(selectedRoleId != 1)
 			{
 				repoRole.UpdateRightsOfRole(selectedRoleId, selectedRights);
+			} else
+			{
+				ShowErrorMessage("The default admin user role cannnot be updated");
 			}
 
 			return RedirectToAction("ChangeRights", "Role");
@@ -167,7 +177,11 @@ namespace App.Controllers
         private void ConfirmUpdateRights(ChangeRightsViewModel viewModel)
         {
             ViewData["ConfirmUpdateRights"] = "The rights for the role " + viewModel.SelectedRole.Name + " have been successfully updated.";
-
         }
+
+		private void ShowErrorMessage(string message)
+		{
+			ViewData["ErrorMessage"] = message;
+		}
     }
 }
