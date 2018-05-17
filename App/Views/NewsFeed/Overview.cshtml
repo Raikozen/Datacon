@@ -4,7 +4,7 @@
 	<!--Create new newsfeed-->
 	<div class="col-xs-3"></div>
 	<form class="col-xs-4" asp-controller="NewsFeed" asp-action="New">
-		<h3>New message</h3>
+        <h2 class="Headers col-xs-12">New Message</h2>
 		<label class="col-xs-3 create-form-label">Message</label>
 		<textarea class="col-xs-9 form-control" type="text" name="Message"></textarea>
 		@Html.ValidationMessageFor(m => m.Message)
