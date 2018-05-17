@@ -288,7 +288,7 @@ namespace App.Controllers
         public IActionResult DeleteSelectedUser(int userId)
         {
             base.CheckForLogin();
-            if (base.CheckForRight(1))
+            if (base.CheckForRight(1) && userId != 21)
             {
                 new UserRepository(new UserSQLContext()).DeleteUser(userId);
             }

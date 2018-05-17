@@ -497,7 +497,7 @@ namespace App.Datalayer
             command.Connection = connection;
             command.CommandText = "UPDATE proftaak.[SickReport] " +
                 "SET DateTimeEnd = @datetimeEnd " +
-                "WHERE UserId = @userID";
+                "WHERE UserId = @userID AND DateTimeEnd IS NULL";
             command.Parameters.AddWithValue("@datetimeEnd", DateTime.Today);
             command.Parameters.AddWithValue("userID", userID);
 
