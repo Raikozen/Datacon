@@ -14,22 +14,23 @@
 		{
 			<h3>Agenda appointments</h3>
 			<table class="ContactTable">
-				<tr>
-					<th class="tableheader">Datum</th>
-					<th class="tableheader">Kamernaam</th>
-					<th class="tableheader">Beschrijving</th>
-					<th class="tableheader">Reserveerder</th>
-				</tr>
+                <tr>
+                    <th class="tableheader  col-xs-3">Datum</th>
+                    <th class="tableheader col-xs-3">Beschrijving</th>
+                    <th class="tableheader col-xs-3">Kamernaam</th>
+                    <th class="tableheader col-xs-3">Reserveerder</th>
+                </tr>
 				@foreach (ApiAgendaAppointment appointment in Model.AgendaAppointments)
 				{
 					@if (appointment.Email == loggedInUser.Emailaddress)
 					{
-						<tr>
-							<td class="tableitem">@appointment.Date</td>
-							<td class="tableitem">@appointment.RoomName</td>
-							<td class="tableitem">@appointment.Description</td>
-							<td class="tableitem">@appointment.Email</td>
-						</tr>
+                <tr>
+
+                    <td class="tableitem col-xs-3">@appointment.Date.Replace("-", "/")</td>
+                    <td class="tableitem col-xs-3">@appointment.Description</td>
+                    <td class="tableitem col-xs-3">@appointment.RoomName</td>
+                    <td class="tableitem col-xs-3">@appointment.Email</td>
+                </tr>
 					}
 
 				}
@@ -41,23 +42,21 @@
 			<h3>Ziekmeldingen</h3>
 
 			<table class="ContactTable">
-				<tr>
-					<th class="tableheader">Datum</th>
-					<th class="tableheader">Beschrijving</th>
-					<th class="tableheader">Email</th>
-                    <th class="tableheader"></th>
-				</tr>
+                <tr>
+                    <th class="tableheader col-xs-3">Datum</th>
+                    <th class="tableheader col-xs-6">Beschrijving</th>
+                    <th class="tableheader col-xs-3">Email</th>
+                </tr>
 
 				@foreach (ApiSickReport sickReport in Model.Sickreports)
 				{
 					@if (sickReport.Email == loggedInUser.Emailaddress)
 					{
-						<tr>
-							<td class="tableitem">@sickReport.DatetimeStart</td>
-							<td class="tableitem">@sickReport.Description</td>
-							<td class="tableitem">@sickReport.Email</td>
-                            <td class="tableitem"></td>
-						</tr>
+                <tr>
+                    <td class="tableitem col-xs-3">@sickReport.DatetimeStart.Replace("-", "/")</td>
+                    <td class="tableitem col-xs-6">@sickReport.Description</td>
+                    <td class="tableitem col-xs-3">@sickReport.Email</td>
+                </tr>
 					}
 				}
 				</table>
@@ -69,7 +68,7 @@
 		@foreach (NewsfeedPost post in Model.NewsFeedPosts)
 		{
 			<div class="newsPost row">
-				<span class="newsFeedDate col-xs-10 col-xs-offset-1">@post.Date</span>
+				<span class="newsFeedDate col-xs-10 col-xs-offset-1">@post.Date.Replace("-", "/")</span>
 				<span class="newsFeedMessage col-xs-10 col-xs-offset-1">@post.Message</span>
 			</div>
 		}

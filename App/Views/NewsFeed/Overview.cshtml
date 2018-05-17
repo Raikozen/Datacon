@@ -34,7 +34,7 @@
 						@post.Id
 					</td>
 					<td
-						>@post.Date.ToString()
+						>@post.Date.Replace("-", "/").ToString()
 					</td>
 					<td>
 						@if(post.Message.Count() > 80)
