@@ -6,29 +6,29 @@
 
 <div class="row">
 	<div class="col-xs-9">
-		<h1>Dashboard</h1>
+		<h1 class="Headers">Home</h1>
 
 		<!--Api data-->
 		<!--Agenda appointments-->
 		@if (Model.AgendaAppointments != null)
 		{
 			<h3>Agenda appointments</h3>
-			<table class="apiTable">
+			<table class="ContactTable">
 				<tr>
-					<th>Datum</th>
-					<th>Kamernaam</th>
-					<th>Beschrijving</th>
-					<th>Reserveerder</th>
+					<th class="tableheader">Datum</th>
+					<th class="tableheader">Kamernaam</th>
+					<th class="tableheader">Beschrijving</th>
+					<th class="tableheader">Reserveerder</th>
 				</tr>
 				@foreach (ApiAgendaAppointment appointment in Model.AgendaAppointments)
 				{
 					@if (appointment.Email == loggedInUser.Emailaddress)
 					{
 						<tr>
-							<td>@appointment.Date</td>
-							<td>@appointment.RoomName</td>
-							<td>@appointment.Description</td>
-							<td>@appointment.Email</td>
+							<td class="tableitem">@appointment.Date</td>
+							<td class="tableitem">@appointment.RoomName</td>
+							<td class="tableitem">@appointment.Description</td>
+							<td class="tableitem">@appointment.Email</td>
 						</tr>
 					}
 
@@ -40,11 +40,12 @@
 		{
 			<h3>Ziekmeldingen</h3>
 
-			<table class="apiTable">
+			<table class="ContactTable">
 				<tr>
-					<th>Datum</th>
-					<th>Beschrijving</th>
-					<th>Email</th>
+					<th class="tableheader">Datum</th>
+					<th class="tableheader">Beschrijving</th>
+					<th class="tableheader">Email</th>
+                    <th class="tableheader"></th>
 				</tr>
 
 				@foreach (ApiSickReport sickReport in Model.Sickreports)
@@ -52,9 +53,10 @@
 					@if (sickReport.Email == loggedInUser.Emailaddress)
 					{
 						<tr>
-							<td>@sickReport.DatetimeStart</td>
-							<td>@sickReport.Description</td>
-							<td>@sickReport.Email</td>
+							<td class="tableitem">@sickReport.DatetimeStart</td>
+							<td class="tableitem">@sickReport.Description</td>
+							<td class="tableitem">@sickReport.Email</td>
+                            <td class="tableitem"></td>
 						</tr>
 					}
 				}
