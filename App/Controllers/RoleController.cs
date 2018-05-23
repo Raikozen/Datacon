@@ -137,8 +137,6 @@ namespace App.Controllers
 				model.SelectedRole = role;
 			}
 
-            ConfirmUpdateRights(model);
-
 			return View("ChangeRights", model);
 		}
 
@@ -156,10 +154,12 @@ namespace App.Controllers
 			RoleSQLContext contextRole = new RoleSQLContext();
 			RoleRepository repoRole = new RoleRepository(contextRole);
 
-			if(selectedRoleId != 1)
+            if (selectedRoleId != 1)
 			{
 				repoRole.UpdateRightsOfRole(selectedRoleId, selectedRights);
-			} else
+
+                ConfirmUpdateRights();
+            } else
 			{
 				ShowErrorMessage("The default admin user role cannnot be updated");
 			}
@@ -174,9 +174,9 @@ namespace App.Controllers
             
         }
 
-        private void ConfirmUpdateRights(ChangeRightsViewModel viewModel)
+        private void ConfirmUpdateRights()
         {
-            ViewData["ConfirmUpdateRights"] = "The rights for the role " + viewModel.SelectedRole.Name + " have been successfully updated.";
+            TempData["ConfirmUpdateRights"] = "The rights for the selected role have been updated successfully.";
         }
 
 		private void ShowErrorMessage(string message)

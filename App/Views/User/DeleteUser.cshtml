@@ -3,7 +3,7 @@
     ViewData["Title"] = "DeleteUser";
 }
 
-<h1 class="Headers">Delete User</h1>
+<h1 class="Headers">Delete user</h1>
 
 @using (Html.BeginForm("DeleteUser", "User"))
 {
@@ -19,7 +19,7 @@
         else if (Model.sortBy == "Email Address")
         {
             <option>Name</option>
-            <option selected>Email Address</option>
+            <option selected>Email address</option>
             <option>Role</option>
         }
         else if (Model.sortBy == "Role")

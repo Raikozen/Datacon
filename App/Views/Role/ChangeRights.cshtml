@@ -1,7 +1,7 @@
 ﻿@model ChangeRightsViewModel
 
 <div class="row">
-    <h2 class="HeaderRight">Change Rights</h2>
+    <h2 class="HeaderRight">Change rights</h2>
     <div class="Flex-ContainerRights col-xs-2 col-xs-offset-5" >
         <form class="dropdownform" asp-controller="Role" asp-action="ChangeSelectedRole" method="post">
             <select name="SelectedRoleId" onchange="this.form.submit()" class="dropdown">
@@ -18,7 +18,7 @@
                 }
             </select>
         </form>
-        <h4 class="midtext">Select Rights:</h4>
+        <h4 class="midtext">Select rights:</h4>
         <br />
         <form asp-controller="Role" asp-action="changeRights">
             @if (Model.SelectedRole != null)
@@ -48,7 +48,7 @@
 
             <input type="text" name="SelectedRoleId" value="@Model.SelectedRole.Id" style="display:none;" />
             <input class="buttonRight" type="submit" name="submit" value="Submit" />
-            <p>@ViewData["ConfirmUpdateRights"]</p>
+            <p>@TempData["ConfirmUpdateRights"]</p>
 			<p>@ViewData["ErrorMessage"]</p>
         </form>
     </div>
