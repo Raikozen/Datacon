@@ -48,7 +48,7 @@
 
             <input type="text" name="SelectedRoleId" value="@Model.SelectedRole.Id" style="display:none;" />
             <input class="buttonRight" type="submit" name="submit" value="Submit" />
-            <p>@ViewData["ConfirmUpdateRights"]</p>
+            <p>@TempData["ConfirmUpdateRights"]</p>
 			<p>@ViewData["ErrorMessage"]</p>
         </form>
     </div>
