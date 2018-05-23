@@ -149,8 +149,6 @@ namespace App.Controllers
                 RightsviewModel.SelectedRole = role;
             }
 
-            ConfirmUpdateRights(RightsviewModel);
-
             return View("ChangeRoleAndRights", Tuple.Create(RoleviewModel, RightsviewModel));
         }
 
