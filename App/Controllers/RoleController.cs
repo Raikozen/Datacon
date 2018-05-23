@@ -15,157 +15,170 @@ namespace App.Controllers
     public class RoleController : HomeController
     {
         [HttpGet]
-        public IActionResult Change()
+        public IActionResult ChangeRoleAndRights()
         {
-			base.CheckForLogin();
+            base.CheckForLogin();
+
+            if (!base.CheckForRight(8) && !base.CheckForRight(9))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            RoleRepository repoRole = new RoleRepository(new RoleSQLContext());
+            RightRepository repoRight = new RightRepository(new RightSQLContext());
+            UserRepository repoUser = new UserRepository(new UserSQLContext());
+
+            RoleViewModel RoleviewModel = new RoleViewModel();
+            if (base.CheckForRight(8))
+            {
+                RoleviewModel.HasRight = true;
+            }
+            RoleviewModel.Roles = repoRole.GetRoles();
+            RoleviewModel.Users = repoUser.GetUserList();
+            RoleviewModel.SelectedUser = RoleviewModel.Users.Find(u => u.Id == Convert.ToInt32(HttpContext.Session.GetInt32("id")));
+            RoleviewModel.SelectedRole = RoleviewModel.SelectedUser.Role;
+
+            ChangeRightsViewModel RightsviewModel = new ChangeRightsViewModel();
+            if (base.CheckForRight(9))
+            {
+                RightsviewModel.HasRight = true;
+            }
+            RightsviewModel.Roles = repoRole.GetRoles();
+            RightsviewModel.Rights = repoRight.GetRights();
+            RightsviewModel.SelectedRole = RightsviewModel.Roles[0];
+
+            return View("ChangeRoleAndRights", Tuple.Create(RoleviewModel, RightsviewModel));
+        }
+
+        [HttpPost]
+        public IActionResult ChangeRole(RoleViewModel RoleviewModel)
+        {
+            base.CheckForLogin();
 
             if (!base.CheckForRight(8))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            RoleViewModel viewModel = new RoleViewModel();
+            RoleRepository repoRole = new RoleRepository(new RoleSQLContext());
+            RightRepository repoRight = new RightRepository(new RightSQLContext());
+            UserRepository repoUser = new UserRepository(new UserSQLContext());
 
-            viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
-            viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
+            if (base.CheckForRight(8))
+            {
+                RoleviewModel.HasRight = true;
+            }
 
-            viewModel.SelectedUser = viewModel.Users.Find(u => u.Id == Convert.ToInt32(HttpContext.Session.GetInt32("id")));
-            viewModel.SelectedRole = viewModel.SelectedUser.Role;
+            RoleviewModel.Roles = repoRole.GetRoles();
+            RoleviewModel.Users = repoUser.GetUserList();
 
-            return View("Change", viewModel);
+            int selectedUserId = RoleviewModel.SelectedUserId;
+            int selectedRoleId = RoleviewModel.SelectedRoleId;
+
+            RoleviewModel.SelectedUser = RoleviewModel.Users.Find(x => x.Id == selectedUserId);
+            RoleviewModel.SelectedRole = RoleviewModel.Roles.Find(x => x.Id == selectedRoleId);
+
+            //Don't change the application's default admin
+            if (RoleviewModel.SelectedUser.Id != 21)
+            {
+                UserRepository userRepository = new UserRepository(new UserSQLContext());
+                userRepository.UpdateUserRole(RoleviewModel.SelectedUser, RoleviewModel.SelectedRole);
+
+                //Confirmation message apply / create other methods in other controllers (Tim)
+                ConfirmChange(RoleviewModel);
+            }
+            else
+            {
+                ShowErrorMessage("The application admin cannot be updated.");
+            }
+
+            ChangeRightsViewModel RightsviewModel = new ChangeRightsViewModel();
+            if (base.CheckForRight(9))
+            {
+                RightsviewModel.HasRight = true;
+            }
+            RightsviewModel.Roles = repoRole.GetRoles();
+            RightsviewModel.Rights = repoRight.GetRights();
+            RightsviewModel.SelectedRole = RightsviewModel.Roles[0];
+
+            return View("ChangeRoleAndRights", Tuple.Create(RoleviewModel, RightsviewModel));
         }
 
-
-		[HttpPost]
-        public IActionResult Change(RoleViewModel viewModel)
+        [HttpPost]
+        public IActionResult ChangeSelectedRole(int selectedRoleId)
         {
             base.CheckForLogin();
 
-            viewModel.Roles = new RoleRepository(new RoleSQLContext()).GetRoles();
-            viewModel.Users = new UserRepository(new UserSQLContext()).GetUserList();
-
-			int selectedUserId = viewModel.SelectedUserId;
-			int selectedRoleId = viewModel.SelectedRoleId;
-
-			viewModel.SelectedUser = viewModel.Users.Find(x => x.Id == selectedUserId);
-			viewModel.SelectedRole = viewModel.Roles.Find(x => x.Id == selectedRoleId);
-
-			//Don't change the application's default admin
-			if (viewModel.SelectedUser.Id != 21)
-			{
-				UserRepository userRepository = new UserRepository(new UserSQLContext());
-				userRepository.UpdateUserRole(viewModel.SelectedUser, viewModel.SelectedRole);
-
-				//Confirmation message apply / create other methods in other controllers (Tim)
-				ConfirmChange(viewModel);
-			}
-			else
-			{
-				ShowErrorMessage("The application admin cannot be updated.");
-			}
-
-            return View("Change", viewModel);
-        }
-
-
-		/// <summary>
-		/// Show the ChangeRights view
-		/// </summary>
-		/// <returns></returns>
-        [HttpPost]
-        public IActionResult Watch()
-        {
-            return null;
-        }
-
-		[HttpGet]
-		public IActionResult ChangeRights()
-		{
-			base.CheckForLogin();
             if (!base.CheckForRight(9))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            RoleSQLContext contextRole = new RoleSQLContext();
-            RoleRepository repoRole = new RoleRepository(contextRole);
+            RoleRepository repoRole = new RoleRepository(new RoleSQLContext());
+            RightRepository repoRight = new RightRepository(new RightSQLContext());
+            UserRepository repoUser = new UserRepository(new UserSQLContext());
 
-            RightSQLContext contextRight = new RightSQLContext();
-            RightRepository repoRight = new RightRepository(contextRight);
+            RoleViewModel RoleviewModel = new RoleViewModel();
+            if (base.CheckForRight(8))
+            {
+                RoleviewModel.HasRight = true;
+            }
+            RoleviewModel.Roles = repoRole.GetRoles();
+            RoleviewModel.Users = repoUser.GetUserList();
+            RoleviewModel.SelectedUser = RoleviewModel.Users.Find(u => u.Id == Convert.ToInt32(HttpContext.Session.GetInt32("id")));
+            RoleviewModel.SelectedRole = RoleviewModel.SelectedUser.Role;
 
-            List<Role> roles = repoRole.GetRoles();
+            List<Role> roleList = repoRole.GetRoles();
 
-            ChangeRightsViewModel model = new ChangeRightsViewModel();
-            model.Roles = roles;
-            model.Rights = repoRight.GetRights();
+            ChangeRightsViewModel RightsviewModel = new ChangeRightsViewModel();
+            if (base.CheckForRight(9))
+            {
+                RightsviewModel.HasRight = true;
+            }
+            RightsviewModel.Roles = roleList;
+            RightsviewModel.Rights = repoRight.GetRights();
 
-            model.SelectedRole = model.Roles[0];
+            //Linq query
+            var result = from role in roleList
+                         where role.Id == selectedRoleId
+                         select role;
 
-            return View("ChangeRights", model);
- 		}
+            //Iterate through Linq query result
+            foreach (var role in result)
+            {
+                RightsviewModel.SelectedRole = role;
+            }
 
-		/// <summary>
-		/// Change the selected role in the ChangeRights view
-		/// </summary>
-		/// <param name="selectedRoleId"></param>
-		/// <returns></returns>
-		[HttpPost]
-		public IActionResult ChangeSelectedRole(int selectedRoleId)
-		{
-			base.CheckForLogin();
+            ConfirmUpdateRights(RightsviewModel);
 
-			RoleSQLContext contextRole = new RoleSQLContext();
-			RoleRepository repoRole = new RoleRepository(contextRole);
+            return View("ChangeRoleAndRights", Tuple.Create(RoleviewModel, RightsviewModel));
+        }
 
-			RightSQLContext contextRight = new RightSQLContext();
-			RightRepository repoRight = new RightRepository(contextRight);
+        [HttpPost]
+        public IActionResult ChangeRights(int selectedRoleId, List<int> selectedRights)
+        {
+            base.CheckForLogin();
 
-			List<Role> roleList = repoRole.GetRoles();
+            if (!base.CheckForRight(9))
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-			ChangeRightsViewModel model = new ChangeRightsViewModel();
-			model.Roles = roleList;
-			model.Rights = repoRight.GetRights();
+            RoleRepository repoRole = new RoleRepository(new RoleSQLContext());
+            RightRepository repoRight = new RightRepository(new RightSQLContext());
+            UserRepository repoUser = new UserRepository(new UserSQLContext());
 
-			//Linq query
-			var result = from role in roleList
-						 where role.Id == selectedRoleId
-						 select role;
+            if (selectedRoleId != 1)
+            {
+                repoRole.UpdateRightsOfRole(selectedRoleId, selectedRights);
+            }
+            else
+            {
+                ShowErrorMessage("The default admin user role cannnot be updated");
+            }
 
-			//Iterate through Linq query result
-			foreach (var role in result)
-			{
-				model.SelectedRole = role;
-			}
-
-            ConfirmUpdateRights(model);
-
-			return View("ChangeRights", model);
-		}
-
-		/// <summary>
-		/// Update the role's rights
-		/// </summary>
-		/// <param name="selectedRoleId"></param>
-		/// <param name="selectedRights"></param>
-		/// <returns></returns>
-		[HttpPost]
-		public IActionResult ChangeRights(int selectedRoleId, List<int> selectedRights)
-		{
-			base.CheckForLogin();
-
-			RoleSQLContext contextRole = new RoleSQLContext();
-			RoleRepository repoRole = new RoleRepository(contextRole);
-
-			if(selectedRoleId != 1)
-			{
-				repoRole.UpdateRightsOfRole(selectedRoleId, selectedRights);
-			} else
-			{
-				ShowErrorMessage("The default admin user role cannnot be updated");
-			}
-
-			return RedirectToAction("ChangeRights", "Role");
-		}
+            return RedirectToAction("ChangeRoleAndRights");
+        }
 
         //Confirmation message apply / create other methods in other controllers (Tim)
         private void ConfirmChange(RoleViewModel viewModel)

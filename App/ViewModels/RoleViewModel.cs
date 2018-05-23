@@ -19,5 +19,7 @@ namespace App.ViewModels
 		public Role SelectedRole { get; set; }
 
         public User SelectedUser { get; set; }
+
+        public bool HasRight { get; set; }
     }
 }

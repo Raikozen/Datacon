@@ -12,6 +12,7 @@ namespace App.ViewModels
 		public Role SelectedRole { get; set; } = null;
 		public List<Role> Roles { get; set; }
 		public List<Right> Rights { get; set; }
+        public bool HasRight { get; set; }
 
 		public ChangeRightsViewModel()
 		{
