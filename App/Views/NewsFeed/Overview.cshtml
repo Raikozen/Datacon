@@ -8,10 +8,10 @@
 		<label class="col-xs-3 create-form-label">Message</label>
 		<textarea class="col-xs-9 form-control" type="text" name="Message"></textarea>
 		@Html.ValidationMessageFor(m => m.Message)
-		<label class="col-xs-3 create-form-label">Publish date</label>
+		<label class="col-xs-4 create-form-label">Publish date</label>
 		<input class="col-xs-9 form-control" type="date" name="Date" placeholder="Date" value="@DateTime.Now.ToString()" />
 		@Html.ValidationMessageFor(m => m.Date)
-		<input class="col-xs-12 buttonCreate" type="submit" name="submit" />
+		<input class="col-xs-12 buttonCreate" type="submit" name="submit" value="Submit" />
 	</form>
 	<div class="col-xs-5"></div>
 

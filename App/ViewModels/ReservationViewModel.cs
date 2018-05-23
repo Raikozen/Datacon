@@ -18,11 +18,11 @@ namespace App.ViewModels
         //Room object of where the reservation is located.
         public int RoomId { get; set;}
         //Name of Reservation
-        [Required(ErrorMessage ="Name of Reservation is required")]
-        [Display(Name ="ReservationName", Prompt ="Name of Reservation")]
+        [Required(ErrorMessage ="Name of reservation is required")]
+        [Display(Name ="ReservationName", Prompt ="Name of reservation")]
         public string ReservationName { get; set; }
         //Starttime and date of Reservation
-        [Required(ErrorMessage ="Start time of Reservation is required.")]
+        [Required(ErrorMessage ="Start time of reservation is required.")]
         [Display(Name ="ReservationStart")]
         public DateTime ReservationStart { get; set; }
 
@@ -32,7 +32,7 @@ namespace App.ViewModels
         }
 
         //Endtime and date of Reservation
-        [Required(ErrorMessage = "End time of Reservation is required.")]
+        [Required(ErrorMessage = "End time of reservation is required.")]
         [Display(Name ="ReservationEnd")]
         public DateTime ReservationEnd { get; set; }
 
