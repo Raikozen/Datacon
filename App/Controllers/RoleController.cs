@@ -169,13 +169,14 @@ namespace App.Controllers
             UserRepository repoUser = new UserRepository(new UserSQLContext());
 
             if (selectedRoleId != 1)
-            {
-                repoRole.UpdateRightsOfRole(selectedRoleId, selectedRights);
-            }
-            else
-            {
-                ShowErrorMessage("The default admin user role cannnot be updated");
-            }
+			{
+				repoRole.UpdateRightsOfRole(selectedRoleId, selectedRights);
+
+                ConfirmUpdateRights();
+            } else
+			{
+				ShowErrorMessage("The default admin user role cannnot be updated");
+			}
 
             return RedirectToAction("ChangeRoleAndRights");
         }
@@ -187,9 +188,9 @@ namespace App.Controllers
             
         }
 
-        private void ConfirmUpdateRights(ChangeRightsViewModel viewModel)
+        private void ConfirmUpdateRights()
         {
-            ViewData["ConfirmUpdateRights"] = "The rights for the role " + viewModel.SelectedRole.Name + " have been successfully updated.";
+            TempData["ConfirmUpdateRights"] = "The rights for the selected role have been updated successfully.";
         }
 
 		private void ShowErrorMessage(string message)
