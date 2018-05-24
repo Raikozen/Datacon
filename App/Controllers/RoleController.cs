@@ -89,7 +89,7 @@ namespace App.Controllers
             }
             else
             {
-                ShowErrorMessage("The application admin cannot be updated.");
+                ErrorRole();
             }
 
             ChangeRightsViewModel RightsviewModel = new ChangeRightsViewModel();
@@ -170,11 +170,12 @@ namespace App.Controllers
 			{
 				repoRole.UpdateRightsOfRole(selectedRoleId, selectedRights);
 
-                ConfirmUpdateRights();
             } else
 			{
-				ShowErrorMessage("The default admin user role cannnot be updated");
+				ErrorRights();
 			}
+
+            ConfirmUpdateRights();
 
             return RedirectToAction("ChangeRoleAndRights");
         }
@@ -191,9 +192,14 @@ namespace App.Controllers
             TempData["ConfirmUpdateRights"] = "The rights for the selected role have been updated successfully.";
         }
 
-		private void ShowErrorMessage(string message)
+		private void ErrorRole()
 		{
-			ViewData["ErrorMessage"] = message;
+			ViewData["ErrorRole"] = "The application admin cannot be updated.";
 		}
+
+        private void ErrorRights()
+        {
+            ViewData["ErrorRights"] = "The default admin user role cannnot be updated";
+        }
     }
 }

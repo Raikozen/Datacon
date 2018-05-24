@@ -10,7 +10,7 @@
 		<div class="col-md-5">
 			<form asp-controller="Role" asp-action="ChangeRole" method="post">
 				<div class="row">
-					<h2 class="Headers col-md-offset-2 col-md-4">Change Role</h2>
+					<h2 class="Headers col-md-offset-2 col-md-4">Change role</h2>
 				</div>
 				<div class="row">
 					<label class="col-md-2">Select user: </label>
@@ -61,7 +61,7 @@
 				</div>
 				<div class="row">
 					<p class="col-md-offset-2 col-md-4">@ViewData["ConfirmChange"]</p>
-					<p class="col-md-offset-2 col-md-4">@ViewData["ErrorMessage"]</p>
+					<p class="col-md-offset-2 col-md-4">@ViewData["ErrorRole"]</p>
 				</div>
 			</form>
 		</div>
@@ -131,8 +131,8 @@
 					<input class="buttonCreate col-md-offset-2 col-md-4" type="submit" name="submit" value="Submit" />
 				</div>
 				<div class="row">
-					<p class="col-md-offset-2 col-md-4">@ViewData["ConfirmUpdateRights"]</p>
-					<p class="col-md-offset-2 col-md-4">@ViewData["ErrorMessage"]</p>
+					<p class="col-md-offset-2 col-md-4">@TempData["ConfirmUpdateRights"]</p>
+					<p class="col-md-offset-2 col-md-4">@ViewData["ErrorRights"]</p>
 				</div>
 			</form>
 		</div>
