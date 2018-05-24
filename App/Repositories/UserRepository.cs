@@ -54,7 +54,7 @@ namespace App.Repositorys
         public void UpdateUserRole(User user, Role role)
         {
 			//don't update the default application admin
-			if(user.Id != 21)
+			if(user.Id != 5)
 			{
 				_Context.UpdateUserRole(user, role);
 			}

@@ -35,7 +35,7 @@ namespace App.Controllers
             }
             RoleviewModel.Roles = repoRole.GetRoles();
             RoleviewModel.Users = repoUser.GetUserList();
-            RoleviewModel.SelectedUser = HttpContext.Session.GetInt32("id") == 21 ? RoleviewModel.Users.Find(u=>u.Id != 21) : RoleviewModel.Users.Find(u => u.Id == Convert.ToInt32(HttpContext.Session.GetInt32("id")));
+            RoleviewModel.SelectedUser = HttpContext.Session.GetInt32("id") == 5 ? RoleviewModel.Users.Find(u=>u.Id != 5) : RoleviewModel.Users.Find(u => u.Id == Convert.ToInt32(HttpContext.Session.GetInt32("id")));
             RoleviewModel.SelectedRole = RoleviewModel.SelectedUser.Role;
 
             ChangeRightsViewModel RightsviewModel = new ChangeRightsViewModel();
@@ -79,7 +79,7 @@ namespace App.Controllers
             RoleviewModel.SelectedRole = RoleviewModel.Roles.Find(x => x.Id == selectedRoleId);
 
             //Don't change the application's default admin
-            if (RoleviewModel.SelectedUser.Id != 21)
+            if (RoleviewModel.SelectedUser.Id != 5)
             {
                 UserRepository userRepository = new UserRepository(new UserSQLContext());
                 userRepository.UpdateUserRole(RoleviewModel.SelectedUser, RoleviewModel.SelectedRole);
