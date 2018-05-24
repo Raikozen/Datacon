@@ -14,7 +14,7 @@ namespace App.Datalayer
 
         public RoleSQLContext()
         {
-            connection = new SqlConnection("Server = mssql.fhict.local; Database = dbi338912; User Id = dbi338912; Password = StealYoBike!");
+            connection = new SqlConnection("Server=tcp:proftaaks2.database.windows.net,1433;Initial Catalog=Datacon;Persist Security Info=False;User ID=adminuser;Password=StealY0Bike!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
         /// <summary>
@@ -24,12 +24,12 @@ namespace App.Datalayer
         {
             string query =
                 string.Format(
-                    "UPDATE proftaak.[Role_Right] " +
-                    "SET proftaak.[Role_Right].hasRight = 0 " +
-                    "WHERE proftaak.[Role_Right].roleId = @roleId; " +
-                    "UPDATE proftaak.[Role_Right] " +
-                    "SET proftaak.[Role_Right].hasRight = 1 " +
-                    "WHERE proftaak.[Role_Right].roleId = @roleId " +
+                    "UPDATE dbo.[Role_Right] " +
+                    "SET dbo.[Role_Right].hasRight = 0 " +
+                    "WHERE dbo.[Role_Right].roleId = @roleId; " +
+                    "UPDATE dbo.[Role_Right] " +
+                    "SET dbo.[Role_Right].hasRight = 1 " +
+                    "WHERE dbo.[Role_Right].roleId = @roleId " +
                     "AND rightId IN ({0}) ",
                     string.Join(",", rightIDs));
 
@@ -52,15 +52,15 @@ namespace App.Datalayer
         {
             string query =
                 "SELECT " +
-                "proftaak.[Role_Right].roleId as roleId, " +
-                "proftaak.[Role_Right].rightId as rightId, " +
-                "proftaak.[Role_Right].hasRight as hasRight, " +
-                "proftaak.[Role].name as roleName, " +
-                "proftaak.[Right].name as rightName " +
+                "dbo.[Role_Right].roleId as roleId, " +
+                "dbo.[Role_Right].rightId as rightId, " +
+                "dbo.[Role_Right].hasRight as hasRight, " +
+                "dbo.[Role].name as roleName, " +
+                "dbo.[Right].name as rightName " +
                 "FROM " +
-                "proftaak.[Role_Right] " +
-                "INNER JOIN proftaak.[Role] on proftaak.[Role].id = roleId " +
-                "INNER JOIN proftaak.[Right] on proftaak.[Right].id = rightId " +
+                "dbo.[Role_Right] " +
+                "INNER JOIN dbo.[Role] on dbo.[Role].id = roleId " +
+                "INNER JOIN dbo.[Right] on dbo.[Right].id = rightId " +
                 "WHERE [Role_Right].hasRight = 1 " +
                 "ORDER BY roleId, rightId ";
 

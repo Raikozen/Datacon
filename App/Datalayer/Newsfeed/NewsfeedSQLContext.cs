@@ -10,7 +10,7 @@ namespace App.Datalayer
 {
     public class NewsfeedSQLContext : INewsfeedContext
     {
-		private static readonly string connnectionstring = "Server = mssql.fhict.local; Database = dbi338912; User Id = dbi338912; Password = StealYoBike!";
+		private static readonly string connnectionstring = "Server=tcp:proftaaks2.database.windows.net,1433;Initial Catalog=Datacon;Persist Security Info=False;User ID=adminuser;Password=StealY0Bike!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
 		public List<NewsfeedPost> GetAllNewsfeedPosts()
 		{
@@ -19,7 +19,7 @@ namespace App.Datalayer
 			try
 			{
 				SqlDataReader myReader = null;
-				SqlCommand myCommand = new SqlCommand("SELECT * FROM proftaak.[NewsfeedPost]", new SqlConnection(connnectionstring));
+				SqlCommand myCommand = new SqlCommand("SELECT * FROM dbo.[NewsfeedPost]", new SqlConnection(connnectionstring));
 				myCommand.Connection.Open();
 
 				myReader = myCommand.ExecuteReader();
@@ -55,7 +55,7 @@ namespace App.Datalayer
 
 				SqlDataReader myReader = null;
 				SqlCommand myCommand = new SqlCommand(
-					"SELECT * FROM proftaak.[NewsfeedPost] " +
+					"SELECT * FROM dbo.[NewsfeedPost] " +
 					"WHERE [Date] >=dateadd(d,datediff(d,0, getdate()),-3) and [Date]<dateadd(d,datediff(d,0, getdate()),1)", myConnection
 				);
 
@@ -89,7 +89,7 @@ namespace App.Datalayer
 				myConnection.Open();
 
 				SqlCommand myCommand = new SqlCommand(
-					"INSERT INTO proftaak.[NewsfeedPost] " +
+					"INSERT INTO dbo.[NewsfeedPost] " +
 					"(Message, Date) " +
 					"VALUES (@Message, @Date);", myConnection
 				);
@@ -147,7 +147,7 @@ namespace App.Datalayer
 				myConnection.Open();
 
 				SqlCommand myCommand = new SqlCommand(
-					"DELETE FROM proftaak.[NewsfeedPost] WHERE ID = @ID", myConnection
+					"DELETE FROM dbo.[NewsfeedPost] WHERE ID = @ID", myConnection
 				);
 
 				myCommand.Parameters.AddWithValue("@ID", id);
