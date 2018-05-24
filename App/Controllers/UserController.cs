@@ -83,7 +83,7 @@ namespace App.Controllers
         {
 			base.CheckForLogin();
 
-            if (base.CheckForRight(7))
+            if (base.CheckForRight(4))
             {
                 UserViewModel userViewModel = new UserViewModel();
                 userViewModel.users = new UserRepository(new UserSQLContext()).GetUserList().OrderBy(o => o.FullName).ToList();
@@ -130,7 +130,7 @@ namespace App.Controllers
 			UserRepository userRep = new UserRepository(new UserSQLContext());
 
             viewModel.isSick = userRep.IsSick(id);
-            viewModel.hasOverviewRight = userRep.GetUser(id).Role.Rights.Any(r => r.Id == 10) ? true : false;
+            viewModel.hasOverviewRight = userRep.GetUser(id).Role.Rights.Any(r => r.Id == 7) ? true : false;
             viewModel.SickReportsUser = userRep.GetSickReportsUser(id);
             viewModel.SickReportsAll = userRep.GetSickReportsAll() == null ? null : userRep.GetSickReportsAll().OrderBy(o=>o.UserName).ToList();
 			return View("CallInSick", viewModel);
@@ -157,7 +157,7 @@ namespace App.Controllers
 
             ViewModels.CallInSickViewModel viewModel = new CallInSickViewModel();
             viewModel.isSick = userRep.IsSick(id);
-            viewModel.hasOverviewRight = userRep.GetUser(id).Role.Rights.Any(r => r.Id == 10) ? true : false;
+            viewModel.hasOverviewRight = userRep.GetUser(id).Role.Rights.Any(r => r.Id == 7) ? true : false;
             viewModel.SickReportsUser = userRep.GetSickReportsUser(id);
             viewModel.SickReportsAll = userRep.GetSickReportsAll().OrderBy(o => o.UserName).ToList();
             return View("CallInSick", viewModel);
@@ -169,7 +169,7 @@ namespace App.Controllers
             base.CheckForLogin();
 
             UserRepository userRep = new UserRepository(new UserSQLContext());
-            HolidaysViewModel holidaysViewModel = new HolidaysViewModel((userRep.GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights.Any(f=>f.Id == 11) ? true : false),
+            HolidaysViewModel holidaysViewModel = new HolidaysViewModel((userRep.GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights.Any(f=>f.Id == 8) ? true : false),
                 userRep.GetAllHolidayRequests(), userRep.GetUnapprovedHolidayRequests(), userRep.GetUserHolidayRequests(Convert.ToInt32(HttpContext.Session.GetInt32("id"))));
             return View(holidaysViewModel);
         }
@@ -182,7 +182,7 @@ namespace App.Controllers
             if (ModelState.IsValid)
             {
                 bool approved = false;
-                if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights.Any(f=>f.Id == 11))
+                if (new UserRepository(new UserSQLContext()).GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights.Any(f=>f.Id == 8))
                 {
                     approved = true;
                 }
@@ -198,7 +198,7 @@ namespace App.Controllers
                 }
             }
             UserRepository userRep = new UserRepository(new UserSQLContext());
-            holidaysViewModel.HasApproveHolidayRight = (userRep.GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights.Any(f => f.Id == 11) ? true : false);
+            holidaysViewModel.HasApproveHolidayRight = (userRep.GetUser(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Role.Rights.Any(f => f.Id == 8) ? true : false);
             holidaysViewModel.AllholidayRequests = userRep.GetAllHolidayRequests();
             holidaysViewModel.UnapprovedholidayRequests = userRep.GetUnapprovedHolidayRequests();
             holidaysViewModel.UserholidayRequests = userRep.GetUserHolidayRequests(Convert.ToInt32(HttpContext.Session.GetInt32("id")));
@@ -211,7 +211,7 @@ namespace App.Controllers
         {
             base.CheckForLogin();
             UserRepository userRep = new UserRepository(new UserSQLContext());
-            if (base.CheckForRight(11) || userRep.GetUserHolidayRequests(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Any(a=>a.Id == id))
+            if (base.CheckForRight(8) || userRep.GetUserHolidayRequests(Convert.ToInt32(HttpContext.Session.GetInt32("id"))).Any(a=>a.Id == id))
             {
                 userRep.DeleteHolidayRequest(id);
                 return RedirectToAction("Holidays");
@@ -227,7 +227,7 @@ namespace App.Controllers
         {
             base.CheckForLogin();
 
-            if (base.CheckForRight(11))
+            if (base.CheckForRight(8))
             {
                 new UserRepository(new UserSQLContext()).ApproveHolidayRequest(id);
                 return RedirectToAction("Holidays");
@@ -288,7 +288,7 @@ namespace App.Controllers
         public IActionResult DeleteSelectedUser(int userId)
         {
             base.CheckForLogin();
-            if (base.CheckForRight(1) && userId != 21)
+            if (base.CheckForRight(1) && userId != 5)
             {
                 new UserRepository(new UserSQLContext()).DeleteUser(userId);
             }

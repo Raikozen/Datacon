@@ -31,7 +31,7 @@ namespace App.Controllers
 		public IActionResult Overview()
 		{
 			base.CheckForLogin();
-			base.CheckForRight(1011);
+			base.CheckForRight(9);
 
 			NewsfeedRepository repoNews = new NewsfeedRepository(new NewsfeedSQLContext());
 			NewsFeedOverviewViewModel viewModel = new NewsFeedOverviewViewModel(repoNews.GetAllNewsfeedPosts());
