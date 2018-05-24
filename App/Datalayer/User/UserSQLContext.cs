@@ -17,7 +17,7 @@ namespace App.Datalayer
 
         public UserSQLContext()
         {
-            connection = new SqlConnection("Server = mssql.fhict.local; Database = dbi338912; User Id = dbi338912; Password = StealYoBike!");
+            connection = new SqlConnection("Server=tcp:proftaaks2.database.windows.net,1433;Initial Catalog=Datacon;Persist Security Info=False;User ID=adminuser;Password=StealY0Bike!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace App.Datalayer
 			SqlCommand command = new SqlCommand();
 
 			command.Connection = connection;
-			command.CommandText = "SELECT salt as salt FROM proftaak.[User] WHERE email = @email";
+			command.CommandText = "SELECT salt as salt FROM dbo.[User] WHERE email = @email";
 
 			command.Parameters.Add("@email", SqlDbType.VarChar);
 			command.Parameters["@email"].Value = emailAddress;
@@ -64,15 +64,15 @@ namespace App.Datalayer
 
 			//Get the user from the database
 			command.CommandText = "SELECT " +
-				"proftaak.[User].id as userId, proftaak.[User].email as email, proftaak.[User].password as password, proftaak.[User].firstName as firstName, proftaak.[User].lastName as lastName, proftaak.[User].infix as infix, proftaak.[User].telNr as telNr, proftaak.[User].roleId, " +
-				"proftaak.[Right].id as rightId, proftaak.[Right].name as rightName, " +
-				"proftaak.[Role].name as roleName " +
+				"dbo.[User].id as userId, dbo.[User].email as email, dbo.[User].password as password, dbo.[User].firstName as firstName, dbo.[User].lastName as lastName, dbo.[User].infix as infix, dbo.[User].telNr as telNr, dbo.[User].roleId, " +
+				"dbo.[Right].id as rightId, dbo.[Right].name as rightName, " +
+				"dbo.[Role].name as roleName " +
 				"FROM " +
-				"proftaak.[User] " +
-				"INNER JOIN proftaak.[Role_Right] on proftaak.[Role_Right].roleId = proftaak.[User].roleId " +
-				"INNER JOIN proftaak.[Right] on proftaak.[Role_Right].rightId = proftaak.[Right].id " +
-				"INNER JOIN proftaak.[Role] on proftaak.[Role_Right].roleId = proftaak.[Role].id " +
-				"WHERE proftaak.[Role_Right].hasRight != 0 AND email = @email AND password LIKE @password " +
+				"dbo.[User] " +
+				"INNER JOIN dbo.[Role_Right] on dbo.[Role_Right].roleId = dbo.[User].roleId " +
+				"INNER JOIN dbo.[Right] on dbo.[Role_Right].rightId = dbo.[Right].id " +
+				"INNER JOIN dbo.[Role] on dbo.[Role_Right].roleId = dbo.[Role].id " +
+				"WHERE dbo.[Role_Right].hasRight != 0 AND email = @email AND password LIKE @password " +
 				"ORDER BY userId";
 
 			command.Parameters.Add("@password", SqlDbType.VarChar);
@@ -146,15 +146,15 @@ namespace App.Datalayer
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
             command.CommandText = "SELECT " +
-                "proftaak.[User].id as userId, proftaak.[User].email as email, proftaak.[User].password as password, proftaak.[User].firstName as firstName, proftaak.[User].lastName as lastName, proftaak.[User].infix as infix, proftaak.[User].telNr as telNr, proftaak.[User].roleId, " +
-                "proftaak.[Right].id as rightId, proftaak.[Right].name as rightName, " +
-                "proftaak.[Role].name as roleName " +
+                "dbo.[User].id as userId, dbo.[User].email as email, dbo.[User].password as password, dbo.[User].firstName as firstName, dbo.[User].lastName as lastName, dbo.[User].infix as infix, dbo.[User].telNr as telNr, dbo.[User].roleId, " +
+                "dbo.[Right].id as rightId, dbo.[Right].name as rightName, " +
+                "dbo.[Role].name as roleName " +
                 "FROM " +
-                "proftaak.[User] " +
-                "INNER JOIN proftaak.[Role_Right] on proftaak.[Role_Right].roleId = proftaak.[User].roleId " +
-                "INNER JOIN proftaak.[Right] on proftaak.[Role_Right].rightId = proftaak.[Right].id " +
-                "INNER JOIN proftaak.[Role] on proftaak.[Role_Right].roleId = proftaak.[Role].id " +
-                "WHERE proftaak.[User].id = @userId AND proftaak.[Role_Right].hasRight = 1 " +
+                "dbo.[User] " +
+                "INNER JOIN dbo.[Role_Right] on dbo.[Role_Right].roleId = dbo.[User].roleId " +
+                "INNER JOIN dbo.[Right] on dbo.[Role_Right].rightId = dbo.[Right].id " +
+                "INNER JOIN dbo.[Role] on dbo.[Role_Right].roleId = dbo.[Role].id " +
+                "WHERE dbo.[User].id = @userId AND dbo.[Role_Right].hasRight = 1 " +
                 "ORDER BY userId";
 
             command.Parameters.Add("@userId", SqlDbType.Int);
@@ -228,15 +228,15 @@ namespace App.Datalayer
             command.Connection = connection;
 
             command.CommandText = "SELECT " +
-                "proftaak.[User].id as userId, proftaak.[User].email as email, proftaak.[User].password as password, proftaak.[User].firstName as firstName, proftaak.[User].lastName as lastName, proftaak.[User].infix as infix, proftaak.[User].telNr as telNr, proftaak.[User].roleId, " +
-                "proftaak.[Right].id as rightId, proftaak.[Right].name as rightName, " +
-                "proftaak.[Role].name as roleName " +
+                "dbo.[User].id as userId, dbo.[User].email as email, dbo.[User].password as password, dbo.[User].firstName as firstName, dbo.[User].lastName as lastName, dbo.[User].infix as infix, dbo.[User].telNr as telNr, dbo.[User].roleId, " +
+                "dbo.[Right].id as rightId, dbo.[Right].name as rightName, " +
+                "dbo.[Role].name as roleName " +
                 "FROM " +
-                "proftaak.[User] " +
-                "INNER JOIN proftaak.[Role_Right] on proftaak.[Role_Right].roleId = proftaak.[User].roleId " +
-                "INNER JOIN proftaak.[Right] on proftaak.[Role_Right].rightId = proftaak.[Right].id " +
-                "INNER JOIN proftaak.[Role] on proftaak.[Role_Right].roleId = proftaak.[Role].id " +
-                "WHERE proftaak.[Role_Right].hasRight != 0 " +
+                "dbo.[User] " +
+                "INNER JOIN dbo.[Role_Right] on dbo.[Role_Right].roleId = dbo.[User].roleId " +
+                "INNER JOIN dbo.[Right] on dbo.[Role_Right].rightId = dbo.[Right].id " +
+                "INNER JOIN dbo.[Role] on dbo.[Role_Right].roleId = dbo.[Role].id " +
+                "WHERE dbo.[Role_Right].hasRight != 0 " +
                 "ORDER BY userId";
 
             connection.Open();
@@ -331,9 +331,9 @@ namespace App.Datalayer
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "UPDATE proftaak.[User] " +
-				"SET proftaak.[User].roleId = @roleId " +
-				"WHERE proftaak.[User].id = @userid;"; ;
+            command.CommandText = "UPDATE dbo.[User] " +
+				"SET dbo.[User].roleId = @roleId " +
+				"WHERE dbo.[User].id = @userid;"; ;
 
             command.Parameters.Add("@roleId", SqlDbType.Int);
             command.Parameters.Add("@userId", SqlDbType.Int);
@@ -359,7 +359,7 @@ namespace App.Datalayer
         public void RegisterInfix(string email, string password, string firstName, string infix, string lastName, string telnr)
         {
 
-            string query = "INSERT INTO proftaak.[User](email, password, firstName, lastName, infix, telNr) " +
+            string query = "INSERT INTO dbo.[User](email, password, firstName, lastName, infix, telNr) " +
                            "VALUES (@emailaddress, @password, @firstname, @lastname, @infix, @telNr)";
             SqlCommand command = new SqlCommand(query);
             command.Connection = connection;
@@ -388,7 +388,7 @@ namespace App.Datalayer
         public void RegisterNoInfix(string email, string password, string firstName, string lastName, string telnr)
         {
 
-            string query = "INSERT INTO proftaak.[User](email, password, firstName, lastName, telNr) " +
+            string query = "INSERT INTO dbo.[User](email, password, firstName, lastName, telNr) " +
                            "VALUES (@emailaddress, @password, @firstname, @lastname, @telNr)";
             SqlCommand command = new SqlCommand(query);
             command.Connection = connection;
@@ -413,7 +413,7 @@ namespace App.Datalayer
 
 			if(infix != null)
 			{
-				command.CommandText = "INSERT INTO proftaak.[User] " +
+				command.CommandText = "INSERT INTO dbo.[User] " +
 				"(email, password, salt, firstName, lastName, telNr, infix) " +
 				"VALUES (@email, @password, @salt, @firstName, @lastName, @telNr, @infix);";
 
@@ -421,7 +421,7 @@ namespace App.Datalayer
 				command.Parameters["@infix"].Value = infix;
 			} else
 			{
-				command.CommandText = "INSERT INTO proftaak.[User] " +
+				command.CommandText = "INSERT INTO dbo.[User] " +
 				"(email, password, salt, firstName, lastName, telNr) " +
 				"VALUES (@email, @password, @salt, @firstName, @lastName, @telNr);";
 			}
@@ -449,7 +449,7 @@ namespace App.Datalayer
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "INSERT INTO proftaak.[SickReport] " +
+            command.CommandText = "INSERT INTO dbo.[SickReport] " +
                 "(UserId, DateTimeStart) " +
                 "VALUES (@userId, @datetimeStart)";
             command.Parameters.AddWithValue("@userId", userID);
@@ -464,7 +464,7 @@ namespace App.Datalayer
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "SELECT DateTimeEnd FROM proftaak.[SickReport] WHERE UserId = @userID";
+            command.CommandText = "SELECT DateTimeEnd FROM dbo.[SickReport] WHERE UserId = @userID";
             command.Parameters.AddWithValue("@userID", userID);
             using (command)
             {
@@ -495,7 +495,7 @@ namespace App.Datalayer
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "UPDATE proftaak.[SickReport] " +
+            command.CommandText = "UPDATE dbo.[SickReport] " +
                 "SET DateTimeEnd = @datetimeEnd " +
                 "WHERE UserId = @userID AND DateTimeEnd IS NULL";
             command.Parameters.AddWithValue("@datetimeEnd", DateTime.Today);
@@ -510,9 +510,9 @@ namespace App.Datalayer
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "SELECT UserId, DateTimeStart, DateTimeEnd, proftaak.[User].firstName, " +
-                "proftaak.[User].infix, proftaak.[User].lastName FROM proftaak.[SickReport] " +
-                "INNER JOIN proftaak.[User] ON UserId = proftaak.[User].id " +
+            command.CommandText = "SELECT UserId, DateTimeStart, DateTimeEnd, dbo.[User].firstName, " +
+                "dbo.[User].infix, dbo.[User].lastName FROM dbo.[SickReport] " +
+                "INNER JOIN dbo.[User] ON UserId = dbo.[User].id " +
                 "WHERE UserId = @userID";
             command.Parameters.AddWithValue("userID", userID);
 
@@ -548,9 +548,9 @@ namespace App.Datalayer
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "SELECT UserId, DateTimeStart, DateTimeEnd, proftaak.[User].firstName, " +
-                "proftaak.[User].infix, proftaak.[User].lastName FROM proftaak.[SickReport] " +
-                "INNER JOIN proftaak.[User] ON UserId = proftaak.[User].id ";
+            command.CommandText = "SELECT UserId, DateTimeStart, DateTimeEnd, dbo.[User].firstName, " +
+                "dbo.[User].infix, dbo.[User].lastName FROM dbo.[SickReport] " +
+                "INNER JOIN dbo.[User] ON UserId = dbo.[User].id ";
 
             using (command)
             {
@@ -585,7 +585,7 @@ namespace App.Datalayer
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
             command.CommandText = "SELECT id, userId, dateStart, dateEnd, description, approved " +
-                "FROM proftaak.[Holiday] WHERE approved = 0";
+                "FROM dbo.[Holiday] WHERE approved = 0";
             using (command)
             {
                 command.Connection.Open();
@@ -615,7 +615,7 @@ namespace App.Datalayer
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
             command.CommandText = "SELECT id, userId, dateStart, dateEnd, description, approved " +
-                "FROM proftaak.[Holiday]";
+                "FROM dbo.[Holiday]";
             using (command)
             {
                 command.Connection.Open();
@@ -644,7 +644,7 @@ namespace App.Datalayer
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "INSERT INTO proftaak.[Holiday] " +
+            command.CommandText = "INSERT INTO dbo.[Holiday] " +
                 "(userId, dateStart, dateEnd, description, approved) " +
                 "VALUES (@userid, @datestart, @dateend, @description, @approved)";
             command.Parameters.AddWithValue("@userid", holidayRequest.UserId);
@@ -665,7 +665,7 @@ namespace App.Datalayer
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "UPDATE proftaak.[Holiday] " +
+            command.CommandText = "UPDATE dbo.[Holiday] " +
                 "SET approved = 1 WHERE id = @id";
             command.Parameters.AddWithValue("@id", Id);
 
@@ -682,7 +682,7 @@ namespace App.Datalayer
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
             command.CommandText = "SELECT id, userId, dateStart, dateEnd, description, approved " +
-                "FROM proftaak.[Holiday] WHERE userId = @userID";
+                "FROM dbo.[Holiday] WHERE userId = @userID";
             command.Parameters.AddWithValue("@userID", userId);
             using (command)
             {
@@ -712,7 +712,7 @@ namespace App.Datalayer
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "DELETE FROM proftaak.[Holiday] WHERE id = @id";
+            command.CommandText = "DELETE FROM dbo.[Holiday] WHERE id = @id";
             command.Parameters.AddWithValue("@id", Id);
 
             using (command)
@@ -727,7 +727,7 @@ namespace App.Datalayer
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "DELETE FROM proftaak.[User] WHERE id = @userID";
+            command.CommandText = "DELETE FROM dbo.[User] WHERE id = @userID";
             command.Parameters.AddWithValue("@userID", userId);
             using (command)
             {

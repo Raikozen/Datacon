@@ -10,7 +10,7 @@ namespace App
 {
     class ReservationSQLContext : IReservationContext
     {
-        private static readonly string connnectionstring = "Server = mssql.fhict.local; Database = dbi338912; User Id = dbi338912; Password = StealYoBike!";
+        private static readonly string connnectionstring = "Server=tcp:proftaaks2.database.windows.net,1433;Initial Catalog=Datacon;Persist Security Info=False;User ID=adminuser;Password=StealY0Bike!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         /// <summary>
         /// Get a list from all of the rooms
@@ -18,7 +18,7 @@ namespace App
         /// <returns></returns>
         public List<Room> GetRooms()
         {
-            string query = "SELECT proftaak.Room.id, proftaak.Room.roomName FROM proftaak.Room";
+            string query = "SELECT dbo.Room.id, dbo.Room.roomName FROM dbo.Room";
             SqlCommand command = new SqlCommand(query, new SqlConnection(connnectionstring));
             using (command)
             {
@@ -44,9 +44,9 @@ namespace App
         /// <returns></returns>
         public List<Reservation> GetReservations(Room room)
         {
-            string query = "SELECT proftaak.Reservation.id, proftaak.Reservation.userId, proftaak.Reservation.roomId, " +
-                           "proftaak.Reservation.reservationName, proftaak.Reservation.reservationStart, proftaak.Reservation.reservationEnd " +
-                           "FROM proftaak.Reservation WHERE proftaak.Reservation.roomId = @roomId";
+            string query = "SELECT dbo.Reservation.id, dbo.Reservation.userId, dbo.Reservation.roomId, " +
+                           "dbo.Reservation.reservationName, dbo.Reservation.reservationStart, dbo.Reservation.reservationEnd " +
+                           "FROM dbo.Reservation WHERE dbo.Reservation.roomId = @roomId";
             SqlCommand command = new SqlCommand(query, new SqlConnection(connnectionstring));
             command.Parameters.AddWithValue("@roomId", room.Id);
             using (command)
@@ -78,7 +78,7 @@ namespace App
         /// <param name="reservationEnd"></param>
         public void AddReservation(int roomId, int userId, string reservationName, DateTime reservationStart, DateTime reservationEnd)
         {
-            string query = "INSERT INTO proftaak.Reservation (userId, roomId, reservationName, reservationStart, reservationEnd) " +
+            string query = "INSERT INTO dbo.Reservation (userId, roomId, reservationName, reservationStart, reservationEnd) " +
                            "VALUES (@userId, @roomId, @reservationName, @reservationStart, @reservationEnd)";
             SqlCommand command = new SqlCommand(query, new SqlConnection(connnectionstring));
             command.Parameters.AddWithValue("@userId", userId);
@@ -98,7 +98,7 @@ namespace App
         /// <param name="reservationId"></param>
         public void DeleteReservation(int reservationId)
         {
-            string query = "DELETE FROM proftaak.Reservation WHERE id = @reservationId";
+            string query = "DELETE FROM dbo.Reservation WHERE id = @reservationId";
             SqlCommand command = new SqlCommand(query, new SqlConnection(connnectionstring));
             command.Parameters.AddWithValue("@reservationId", reservationId);
 

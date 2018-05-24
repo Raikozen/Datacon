@@ -40,5 +40,13 @@ namespace App.Repositories
 		{
 			return context.DeleteNewsfeedPost(id);
 		}
+
+		/// <summary>
+		/// Delete all old newsfeed posts
+		/// </summary>
+		public void DeleteOldNewsFeedPosts()
+		{
+			context.DeleteOldNewsFeedPosts();
+		}
 	}
 }
