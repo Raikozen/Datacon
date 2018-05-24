@@ -17,18 +17,21 @@
 					<select class="dropdown col-md-4" name="SelectedUserId" id="SelectedUserId">
 						@foreach (User user in Model.Item1.Users)
 						{
-							if (Model.Item1.SelectedUser.Id == user.Id)
+							if (user.Id != 21)
 							{
-								<option selected value="@user.Id">
-									@user.Firstname
-								</option>
-							}
+								if (Model.Item1.SelectedUser.Id == user.Id)
+								{
+									<option selected value="@user.Id">
+										@user.Firstname
+									</option>
+								}
 
-							else
-							{
-								<option value="@user.Id">
-									@user.Firstname
-								</option>
+								else
+								{
+									<option value="@user.Id">
+										@user.Firstname
+									</option>
+								}
 							}
 						}
 					</select>
@@ -75,13 +78,16 @@
 					<select name="SelectedRoleId" onchange="this.form.submit()" class="dropdown col-md-4">
 						@foreach (Role role in Model.Item2.Roles)
 						{
-							if (role.Id == Model.Item2.SelectedRole.Id)
+							if (role.Id != 1)
 							{
-								<option value="@role.Id" selected>@role.Name</option>
-							}
-							else
-							{
-								<option value="@role.Id">@role.Name</option>
+								if (role.Id == Model.Item2.SelectedRole.Id)
+								{
+									<option value="@role.Id" selected>@role.Name</option>
+								}
+								else
+								{
+									<option value="@role.Id">@role.Name</option>
+								}
 							}
 						}
 					</select>

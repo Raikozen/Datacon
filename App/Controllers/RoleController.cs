@@ -35,7 +35,7 @@ namespace App.Controllers
             }
             RoleviewModel.Roles = repoRole.GetRoles();
             RoleviewModel.Users = repoUser.GetUserList();
-            RoleviewModel.SelectedUser = RoleviewModel.Users.Find(u => u.Id == Convert.ToInt32(HttpContext.Session.GetInt32("id")));
+            RoleviewModel.SelectedUser = HttpContext.Session.GetInt32("id") == 21 ? RoleviewModel.Users.Find(u=>u.Id != 21) : RoleviewModel.Users.Find(u => u.Id == Convert.ToInt32(HttpContext.Session.GetInt32("id")));
             RoleviewModel.SelectedRole = RoleviewModel.SelectedUser.Role;
 
             ChangeRightsViewModel RightsviewModel = new ChangeRightsViewModel();
@@ -45,7 +45,7 @@ namespace App.Controllers
             }
             RightsviewModel.Roles = repoRole.GetRoles();
             RightsviewModel.Rights = repoRight.GetRights();
-            RightsviewModel.SelectedRole = RightsviewModel.Roles[0];
+            RightsviewModel.SelectedRole = RightsviewModel.Roles.Find(f => f.Id != 1);
 
             return View("ChangeRoleAndRights", Tuple.Create(RoleviewModel, RightsviewModel));
         }
@@ -99,7 +99,7 @@ namespace App.Controllers
             }
             RightsviewModel.Roles = repoRole.GetRoles();
             RightsviewModel.Rights = repoRight.GetRights();
-            RightsviewModel.SelectedRole = RightsviewModel.Roles[0];
+            RightsviewModel.SelectedRole = RightsviewModel.Roles.Find(f => f.Id != 1);
 
             return View("ChangeRoleAndRights", Tuple.Create(RoleviewModel, RightsviewModel));
         }
