@@ -48,7 +48,7 @@ namespace App.Controllers
         public IActionResult DeleteReservation(int RoomId, int reservationId)
         {
             base.CheckForLogin();
-            if (!base.CheckForRight(6))
+            if (!base.CheckForRight(3))
             {
                 return RedirectToAction("Index", "Home");
             }

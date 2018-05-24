@@ -31,7 +31,7 @@ namespace App.Controllers
 		public IActionResult Overview()
 		{
 			base.CheckForLogin();
-			base.CheckForRight(1011);
+			base.CheckForRight(9);
 
 			NewsfeedRepository repoNews = new NewsfeedRepository(new NewsfeedSQLContext());
 			NewsFeedOverviewViewModel viewModel = new NewsFeedOverviewViewModel(repoNews.GetAllNewsfeedPosts());
@@ -68,6 +68,17 @@ namespace App.Controllers
 			repoNews.DeleteNewsfeedPost(id);
 
 			return RedirectToAction("Overview");
+		}
+
+
+		/// <summary>
+		/// Delete all old newsfeed posts
+		/// </summary>
+		public void DeleteOldNewsFeedPosts()
+		{
+			NewsfeedRepository repoNews = new NewsfeedRepository(new NewsfeedSQLContext());
+
+			repoNews.DeleteOldNewsFeedPosts();
 		}
     }
 }

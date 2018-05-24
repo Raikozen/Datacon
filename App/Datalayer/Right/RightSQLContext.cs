@@ -18,14 +18,14 @@ namespace App.Datalayer
 
         public RightSQLContext()
         {
-            connection = new SqlConnection("Server = mssql.fhict.local; Database = dbi338912; User Id = dbi338912; Password = StealYoBike!");
+            connection = new SqlConnection("Server=tcp:proftaaks2.database.windows.net,1433;Initial Catalog=Datacon;Persist Security Info=False;User ID=adminuser;Password=StealY0Bike!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
         public List<Models.Right> GetRights()
         {
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "SELECT proftaak.[Right].id as id, proftaak.[Right].name as name FROM proftaak.[Right]; ";
+            command.CommandText = "SELECT dbo.[Right].id as id, dbo.[Right].name as name FROM dbo.[Right]; ";
 
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();

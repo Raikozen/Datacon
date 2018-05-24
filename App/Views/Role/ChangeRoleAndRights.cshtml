@@ -1,0 +1,140 @@
+﻿@model Tuple<RoleViewModel, ChangeRightsViewModel>
+@{
+    ViewData["Title"] = "ChangeRoleAndRights";
+}
+
+<div class="row">
+	@if (Model.Item1.HasRight)
+	{
+		<div class="col-md-1"></div>
+		<div class="col-md-5">
+			<form asp-controller="Role" asp-action="ChangeRole" method="post">
+				<div class="row">
+					<h2 class="Headers col-md-offset-2 col-md-4">Change role</h2>
+				</div>
+				<div class="row">
+					<label class="col-md-2">Select user: </label>
+					<select class="dropdown col-md-4" name="SelectedUserId" id="SelectedUserId">
+						@foreach (User user in Model.Item1.Users)
+						{
+							if (user.Id != 5)
+							{
+								if (Model.Item1.SelectedUser.Id == user.Id)
+								{
+									<option selected value="@user.Id">
+										@user.Firstname
+									</option>
+								}
+
+								else
+								{
+									<option value="@user.Id">
+										@user.Firstname
+									</option>
+								}
+							}
+						}
+					</select>
+				</div>
+				<div class="row">
+					<label class="col-md-2">Select role: </label>
+					<select class="dropdown col-md-4" name="SelectedRoleId">
+						@foreach (Role role in Model.Item1.Roles)
+						{
+							if (Model.Item1.SelectedUser.Role.Id == role.Id)
+							{
+								<option selected value="@role.Id">
+									@role.Name
+								</option>
+							}
+							else
+							{
+								<option value="@role.Id">
+									@role.Name
+								</option>
+							}
+						}
+					</select>
+				</div>
+				<div class="row">
+					<input type="submit" value="Submit" class="buttonCreate col-md-offset-2 col-md-4" />
+				</div>
+				<div class="row">
+					<p class="col-md-offset-2 col-md-4">@ViewData["ConfirmChange"]</p>
+					<p class="col-md-offset-2 col-md-4">@ViewData["ErrorRole"]</p>
+				</div>
+			</form>
+		</div>
+	}
+	@if (Model.Item2.HasRight)
+	{
+		<div class="col-md-6">
+			<div class="row">
+				<h2 class="Headers col-md-offset-2 col-md-4">Change Rights</h2>
+			</div>
+			<div class="row">
+				<form class="dropdownform" asp-controller="Role" asp-action="ChangeSelectedRole" method="post">
+					<label class="col-md-2">Select role: </label>
+					<select name="SelectedRoleId" onchange="this.form.submit()" class="dropdown col-md-4">
+						@foreach (Role role in Model.Item2.Roles)
+						{
+							if (role.Id != 1)
+							{
+								if (role.Id == Model.Item2.SelectedRole.Id)
+								{
+									<option value="@role.Id" selected>@role.Name</option>
+								}
+								else
+								{
+									<option value="@role.Id">@role.Name</option>
+								}
+							}
+						}
+					</select>
+				</form>
+			</div>
+			<br />
+			<div class="row">
+				<label class="col-md-2">Select rights: </label>
+				<div class="col-md-offset-4"></div>
+			</div>
+			<br />
+			<form asp-controller="Role" asp-action="changeRights">
+				<div class="row">
+					@if (Model.Item2.SelectedRole != null)
+					{
+						for (int i = 0; i < Model.Item2.Rights.Count; i++)
+						{
+							bool hasRight = false;
+
+							foreach (Right roleRight in Model.Item2.SelectedRole.Rights)
+							{
+								if (Model.Item2.Rights[i].Id == roleRight.Id)
+								{
+									hasRight = true;
+								}
+							}
+
+							if (hasRight)
+							{
+								@Model.Item2.Rights[i].Name <label class="col-md-2"></label><input class="col-md-1" name="selectedRights" value="@Model.Item2.Rights[i].Id" type="checkbox" checked /><br />
+							}
+							else
+							{
+								@Model.Item2.Rights[i].Name <label class="col-md-2"></label><input class="col-md-1" name="selectedRights" value="@Model.Item2.Rights[i].Id" type="checkbox" /><br />
+							}
+						}
+					}
+				</div>
+				<div class="row">
+					<input type="text" name="SelectedRoleId" value="@Model.Item2.SelectedRole.Id" hidden />
+					<input class="buttonCreate col-md-offset-2 col-md-4" type="submit" name="submit" value="Submit" />
+				</div>
+				<div class="row">
+					<p class="col-md-offset-2 col-md-4">@TempData["ConfirmUpdateRights"]</p>
+					<p class="col-md-offset-2 col-md-4">@ViewData["ErrorRights"]</p>
+				</div>
+			</form>
+		</div>
+	}
+</div>

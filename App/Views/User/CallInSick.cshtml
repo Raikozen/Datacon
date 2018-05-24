@@ -1,7 +1,7 @@
 ﻿    @model CallInSickViewModel;
 
 
-<h2 class="Headers col-xs-12">Report Sick</h2>
+<h1 class="Headers">Sick report</h1>
 <div class="col-xs-8 col-xs-offset-2">
     <div class="CallSickButton">
 
@@ -21,7 +21,7 @@
             else
             {
                 <form asp-action="CallInSickPost" asp-controller="User" method="post">
-                    <input type="submit" value="Report Sick" />
+                    <input type="submit" value="Report sick" />
                     @ViewData["ConfirmNotSick"]
                 </form>
             }
@@ -30,8 +30,8 @@
 
     <table class="ContactTable">
         <tr>
-            <th class="tableheader">Date Sick</th>
-            <th class="tableheader">Date Restored</th>
+            <th class="tableheader">Date sick</th>
+            <th class="tableheader">Date restored</th>
         </tr>
 
         @if (Model.SickReportsUser != null)
@@ -55,9 +55,9 @@
 
             <table class="ContactTable" id="sickborder">
                 <tr>
-                    <th class="tableheader">Name User</th>
-                    <th class="tableheader">Date Sick</th>
-                    <th class="tableheader">Date Restored</th>
+                    <th class="tableheader">Name user</th>
+                    <th class="tableheader">Date sick</th>
+                    <th class="tableheader">Date restored</th>
                 </tr>
                 @foreach (SickReport report in Model.SickReportsAll)
                 {

@@ -1,19 +1,20 @@
 ﻿@model NewsFeedOverviewViewModel
 
+
+
+<h3 class="Headers">New message</h3>
 <div class="row">
 	<!--Create new newsfeed-->
-	<div class="col-xs-3"></div>
-	<form class="col-xs-4" asp-controller="NewsFeed" asp-action="New">
-        <h2 class="Headers col-xs-12">New Message</h2>
+	<form class="col-xs-4 col-xs-offset-4" asp-controller="NewsFeed" asp-action="New">
 		<label class="col-xs-3 create-form-label">Message</label>
 		<textarea class="col-xs-9 form-control" type="text" name="Message"></textarea>
 		@Html.ValidationMessageFor(m => m.Message)
-		<label class="col-xs-3 create-form-label">Publish date</label>
+		<label class="col-xs-4 create-form-label">Publish date</label>
 		<input class="col-xs-9 form-control" type="date" name="Date" placeholder="Date" value="@DateTime.Now.ToString()" />
 		@Html.ValidationMessageFor(m => m.Date)
-		<input class="col-xs-12 buttonCreate" type="submit" name="submit" />
+		<input class="col-xs-12 buttonCreate" type="submit" name="submit" value="Submit" />
 	</form>
-	<div class="col-xs-5"></div>
+
 
 	<!--All newsfeeds-->
 	<form class="col-xs-12" asp-controller="NewsFeed" asp-action="Delete">
@@ -46,7 +47,7 @@
 						}
 					</td>
 					<td>
-						<button type="submit" name="id" value="@post.Id">Remove</button>
+						<button class="btn btn-danger" type="submit" name="id" value="@post.Id">Remove</button>
 					</td>
 				</tr>
 			}

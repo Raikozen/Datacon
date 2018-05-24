@@ -15,10 +15,10 @@
 			<h3>Agenda appointments</h3>
 			<table class="ContactTable">
                 <tr>
-                    <th class="tableheader  col-xs-3">Datum</th>
-                    <th class="tableheader col-xs-3">Beschrijving</th>
-                    <th class="tableheader col-xs-3">Kamernaam</th>
-                    <th class="tableheader col-xs-3">Reserveerder</th>
+                    <th class="tableheader  col-xs-3">Date</th>
+                    <th class="tableheader col-xs-3">Description</th>
+                    <th class="tableheader col-xs-3">Room number</th>
+                    <th class="tableheader col-xs-3">Reservee</th>
                 </tr>
 				@foreach (ApiAgendaAppointment appointment in Model.AgendaAppointments)
 				{
@@ -39,12 +39,12 @@
 		<!--Ziekmeldingen-->
 		@if (Model.Sickreports != null)
 		{
-			<h3>Ziekmeldingen</h3>
+			<h3>Sick reports</h3>
 
 			<table class="ContactTable">
                 <tr>
-                    <th class="tableheader col-xs-3">Datum</th>
-                    <th class="tableheader col-xs-6">Beschrijving</th>
+                    <th class="tableheader col-xs-3">Date</th>
+                    <th class="tableheader col-xs-6">Description</th>
                     <th class="tableheader col-xs-3">Email</th>
                 </tr>
 

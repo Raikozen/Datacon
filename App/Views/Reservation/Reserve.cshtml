@@ -4,7 +4,26 @@
     <ul class="RoomList">
         @foreach (Room room in Model)
         {
-            <li class="RoomItems"><img src="http://www.willemvandinther.nl/wp-content/uploads/2012/02/digitalespeeltuin-300x193.jpg" class="RoomItemsImg col-xs-12" /><a class="Link" asp-controller="Reservation" asp-action="LoadReservations" asp-route-roomId="@room.Id"><div class="overlay">@room.RoomName</div></a></li>
+            <li class="RoomItems"> 
+            @switch (room.Id)
+            {
+                    case 1:
+                        <img src="~/images/GroenVoor.jpeg" class="RoomItemsImg col-xs-12" />
+                        break;
+                    case 2:
+                        <img src="~/images/GroenAchter.jpeg" class="RoomItemsImg col-xs-12" />
+                        break;
+                    case 3:
+                        <img src="~/images/GroenMidden.jpeg" class="RoomItemsImg col-xs-12" />
+                        break;
+                    case 4:
+                        <img src="~/images/BlauwGroot.jpg" class="RoomItemsImg col-xs-12" />
+                        break;
+                    case 5:
+                        <img src="~/images/Lobby.jpeg" class="RoomItemsImg col-xs-12" />
+                        break;
+                    }
+            <a class="Link" asp-controller="Reservation" asp-action="LoadReservations" asp-route-roomId="@room.Id"><div class="overlay">@room.RoomName</div></a></li>
         }
     </ul>
 </div>
