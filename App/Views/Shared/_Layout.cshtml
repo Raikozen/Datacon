@@ -42,19 +42,19 @@
 						<li><a asp-area="" asp-controller="User" asp-action="DeleteUser">Delete user</a></li>
 					}
 
-					@if (rights.Any(a => a.Id == 8 || a.Id == 9))
+					@if (rights.Any(a => a.Id == 5 || a.Id == 6))
 					{
 						<li><a asp-area="" asp-controller="Role" asp-action="ChangeRoleAndRights">Change role/rights</a></li>
 					}
 
 					<li><a asp-area="" asp-controller="Reservation" asp-action="LoadData">Reserve a Room</a></li>
 
-					@if (rights.Any(a => a.Id == 7))
+					@if (rights.Any(a => a.Id == 4))
 					{
 						<li><a asp-area="" asp-controller="User" asp-action="ContactList">Contact list</a></li>
 					}
 
-					@if (rights.Any(a => a.Id == 1011))
+					@if (rights.Any(a => a.Id == 9))
 					{
 						<li><a asp-controller="NewsFeed" asp-action="Overview">Newsfeed</a></li>
 					}

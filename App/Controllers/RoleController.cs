@@ -19,7 +19,7 @@ namespace App.Controllers
         {
             base.CheckForLogin();
 
-            if (!base.CheckForRight(8) && !base.CheckForRight(9))
+            if (!base.CheckForRight(5) && !base.CheckForRight(6))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -29,7 +29,7 @@ namespace App.Controllers
             UserRepository repoUser = new UserRepository(new UserSQLContext());
 
             RoleViewModel RoleviewModel = new RoleViewModel();
-            if (base.CheckForRight(8))
+            if (base.CheckForRight(5))
             {
                 RoleviewModel.HasRight = true;
             }
@@ -39,7 +39,7 @@ namespace App.Controllers
             RoleviewModel.SelectedRole = RoleviewModel.SelectedUser.Role;
 
             ChangeRightsViewModel RightsviewModel = new ChangeRightsViewModel();
-            if (base.CheckForRight(9))
+            if (base.CheckForRight(6))
             {
                 RightsviewModel.HasRight = true;
             }
@@ -55,7 +55,7 @@ namespace App.Controllers
         {
             base.CheckForLogin();
 
-            if (!base.CheckForRight(8))
+            if (!base.CheckForRight(5))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -64,7 +64,7 @@ namespace App.Controllers
             RightRepository repoRight = new RightRepository(new RightSQLContext());
             UserRepository repoUser = new UserRepository(new UserSQLContext());
 
-            if (base.CheckForRight(8))
+            if (base.CheckForRight(5))
             {
                 RoleviewModel.HasRight = true;
             }
@@ -93,7 +93,7 @@ namespace App.Controllers
             }
 
             ChangeRightsViewModel RightsviewModel = new ChangeRightsViewModel();
-            if (base.CheckForRight(9))
+            if (base.CheckForRight(6))
             {
                 RightsviewModel.HasRight = true;
             }
@@ -109,7 +109,7 @@ namespace App.Controllers
         {
             base.CheckForLogin();
 
-            if (!base.CheckForRight(9))
+            if (!base.CheckForRight(6))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -119,7 +119,7 @@ namespace App.Controllers
             UserRepository repoUser = new UserRepository(new UserSQLContext());
 
             RoleViewModel RoleviewModel = new RoleViewModel();
-            if (base.CheckForRight(8))
+            if (base.CheckForRight(5))
             {
                 RoleviewModel.HasRight = true;
             }
@@ -131,7 +131,7 @@ namespace App.Controllers
             List<Role> roleList = repoRole.GetRoles();
 
             ChangeRightsViewModel RightsviewModel = new ChangeRightsViewModel();
-            if (base.CheckForRight(9))
+            if (base.CheckForRight(6))
             {
                 RightsviewModel.HasRight = true;
             }
@@ -157,7 +157,7 @@ namespace App.Controllers
         {
             base.CheckForLogin();
 
-            if (!base.CheckForRight(9))
+            if (!base.CheckForRight(6))
             {
                 return RedirectToAction("Index", "Home");
             }
