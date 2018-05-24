@@ -3,13 +3,14 @@
 	ViewData["Title"] = "DeleteUser";
 }
 
-<h2 class="Headers col-xs-12">Delete User</h2>
+<h2 class="Headers col-sm-5">Delete User</h2>
 
 @using (Html.BeginForm("DeleteUser", "User"))
 {
 	<p class="aParent"> Sort by: </p>
 
-	<select name="Sort" onchange="this.form.submit()">
+
+	<select class="form-control row col-xs-1" name="Sort" onchange="this.form.submit()">
 		@if (Model.sortBy == "Name")
 		{
 			<option selected>Name</option>
@@ -29,6 +30,8 @@
 			<option selected>Role</option>
 		}
 	</select>
+      <br />
+
 }
 
 <table class="ContactTable">
