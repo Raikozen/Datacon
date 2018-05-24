@@ -69,5 +69,16 @@ namespace App.Controllers
 
 			return RedirectToAction("Overview");
 		}
+
+
+		/// <summary>
+		/// Delete all old newsfeed posts
+		/// </summary>
+		public void DeleteOldNewsFeedPosts()
+		{
+			NewsfeedRepository repoNews = new NewsfeedRepository(new NewsfeedSQLContext());
+
+			repoNews.DeleteOldNewsFeedPosts();
+		}
     }
 }

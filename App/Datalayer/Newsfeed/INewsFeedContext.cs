@@ -16,5 +16,7 @@ namespace App.Datalayer
 		bool UpdateNewsfeedPost(int id, string message, DateTime date);
 
 		bool DeleteNewsfeedPost(int id);
+
+		void DeleteOldNewsFeedPosts();
 	}
 }
