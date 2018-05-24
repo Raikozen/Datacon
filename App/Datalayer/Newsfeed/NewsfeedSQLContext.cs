@@ -163,5 +163,29 @@ namespace App.Datalayer
 				return false;
 			}
 		}
+
+		public void DeleteOldNewsFeedPosts()
+		{
+			try
+			{
+				SqlConnection myConnection = new SqlConnection(connnectionstring);			
+
+				SqlCommand myCommand = new SqlCommand();
+				myCommand.CommandText =
+					"DELETE FROM proftaak.[NewsfeedPost] " +
+					"WHERE date < @date";
+				myCommand.Connection = myConnection;
+
+				myCommand.Parameters.AddWithValue("@date", DateTime.Now.AddDays(-5).ToString());
+
+				myConnection.Open();
+				myCommand.ExecuteNonQuery();
+				myConnection.Close();
+			}
+			catch (ArgumentException x)
+			{
+				Console.WriteLine(x);
+			}
+		}
 	}
 }
